@@ -29,6 +29,8 @@ public:
     YoutubeDownloader(const YoutubeDownloader &) = delete;
     YoutubeDownloader& operator=(const YoutubeDownloader &) = delete;
 
+    void query(const std::string &q);
+
 private:
     struct Private;
     Private *p;

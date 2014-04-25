@@ -34,5 +34,6 @@ int main(int argc, char **argv) {
         return 1;
     }
     YoutubeDownloader yd(apikey);
+    yd.query("gangnam");
     return 0;
 }
