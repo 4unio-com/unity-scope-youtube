@@ -17,22 +17,21 @@
  *
  */
 
-#include<iostream>
-#include<fstream>
-#include"YoutubeDownloader.h"
+#ifndef YOUTUBEDOWNLOADER_H_
+#define YOUTUBEDOWNLOADER_H_
 
-int main(int argc, char **argv) {
-    std::ifstream apifile("apikey.txt", std::ios::in);
-    if(apifile.bad()) {
-        std::cout << "API file open is fail.\n";
-        return 1;
-    }
-    std::string apikey;
-    std::getline(apifile, apikey);
-    if(apikey.empty()) {
-        std::cout << "API file read is fail.\n";
-        return 1;
-    }
-    YoutubeDownloader yd(apikey);
-    return 0;
-}
+#include<string>
+
+class YoutubeDownloader final {
+public:
+    YoutubeDownloader(const std::string &apikey);
+    ~YoutubeDownloader();
+    YoutubeDownloader(const YoutubeDownloader &) = delete;
+    YoutubeDownloader& operator=(const YoutubeDownloader &) = delete;
+
+private:
+    struct Private;
+    Private *p;
+};
+
+#endif

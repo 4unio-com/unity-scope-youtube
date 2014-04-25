@@ -17,22 +17,23 @@
  *
  */
 
-#include<iostream>
-#include<fstream>
 #include"YoutubeDownloader.h"
 
-int main(int argc, char **argv) {
-    std::ifstream apifile("apikey.txt", std::ios::in);
-    if(apifile.bad()) {
-        std::cout << "API file open is fail.\n";
-        return 1;
-    }
+const char *urlbase = "https://www.googleapis.com/youtube/v3/search?";
+
+struct YoutubeDownloader::Private{
     std::string apikey;
-    std::getline(apifile, apikey);
-    if(apikey.empty()) {
-        std::cout << "API file read is fail.\n";
-        return 1;
+
+    Private(const std::string &apikey) : apikey(apikey) {
+
     }
-    YoutubeDownloader yd(apikey);
-    return 0;
+};
+
+
+YoutubeDownloader::YoutubeDownloader(const std::string &s) : p(new Private(s)) {
+
+}
+
+YoutubeDownloader::~YoutubeDownloader() {
+    delete p;
 }
