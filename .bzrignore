@@ -1,2 +1,5 @@
 build
 apikey.txt
+.cproject
+.project
+.settings

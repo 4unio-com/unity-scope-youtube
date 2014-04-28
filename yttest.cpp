@@ -34,6 +34,12 @@ int main(int argc, char **argv) {
         return 1;
     }
     YoutubeDownloader yd(apikey);
-    yd.query("gangnam");
+    auto results = yd.query("cats");
+    for(const auto &i : results) {
+        std::cout << i.title << std::endl;
+        std::cout << " description: " << i.description << std::endl;
+        std::cout << " screenshot:  " << i.screenshot << std::endl;
+        std::cout << std::endl;
+    }
     return 0;
 }

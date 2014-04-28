@@ -17,25 +17,18 @@
  *
  */
 
-#ifndef YOUTUBEDOWNLOADER_H_
-#define YOUTUBEDOWNLOADER_H_
+#ifndef YTUTIL_H
+#define YTUTIL_H
 
-#include"util.h"
-#include<string>
 #include<vector>
+#include<string>
 
-class YoutubeDownloader final {
-public:
-    YoutubeDownloader(const std::string &apikey);
-    ~YoutubeDownloader();
-    YoutubeDownloader(const YoutubeDownloader &) = delete;
-    YoutubeDownloader& operator=(const YoutubeDownloader &) = delete;
-
-    std::vector<YoutubeResult> query(const std::string &q);
-
-private:
-    struct Private;
-    Private *p;
+struct YoutubeResult {
+    std::string title;
+    std::string description;
+    std::string screenshot;
 };
+
+std::vector<YoutubeResult> parse_json(const std::string &input);
 
 #endif

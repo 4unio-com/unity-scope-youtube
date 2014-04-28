@@ -21,13 +21,13 @@
 #include<iostream>
 #include<memory>
 #include<libsoup/soup.h>
-#include<json/json.h>
+
 
 const char *urlbase = "https://www.googleapis.com/youtube/v3/search?part=snippet";
 
 const char *reply = R"XXX({
  "kind": "youtube#searchListResponse",
- "etag": "\"OilNCqKLXpFjeQ5CI-_BZqeMuCo/1MHT_ZCRHRM3vhrbPoOk-O_yh3Q\"",
+ "etag": "\"ag-oqvH8dumDXQP6JcFz5Tsa_OA/iK1JRGWv4_0okQDtI6-eU0b2rVc\"",
  "nextPageToken": "CAUQAA",
  "pageInfo": {
   "totalResults": 1000000,
@@ -36,136 +36,136 @@ const char *reply = R"XXX({
  "items": [
   {
    "kind": "youtube#searchResult",
-   "etag": "\"OilNCqKLXpFjeQ5CI-_BZqeMuCo/v3i40y19aP3qQOyhF0d_QOCfMgY\"",
+   "etag": "\"ag-oqvH8dumDXQP6JcFz5Tsa_OA/TjjO38dXPQzxaSgoCvxyjTvELeI\"",
    "id": {
     "kind": "youtube#video",
-    "videoId": "9bZkp7q19f0"
+    "videoId": "O-Q6lowLKXY"
    },
    "snippet": {
-    "publishedAt": "2012-07-15T07:46:32.000Z",
-    "channelId": "UCrDkAvwZum-UTjHmzDI2iIw",
-    "title": "PSY - GANGNAM STYLE (강남스타일) M/V",
-    "description": "PSY - Gangnam Style (강남스타일) ▷ NOW available on iTunes: http://Smarturl.it/psygangnam ▷ Official PSY Online Store US & International ...",
+    "publishedAt": "2014-04-27T22:58:04.000Z",
+    "channelId": "UCtxfV5XAFXQ7AE7vbUw6jOQ",
+    "title": "Santa Barbara Gauchos vs Arizona Lax Cats | SLC Playoffs presented by Total Lacrosse",
+    "description": "Subscribe to The Lacrosse Network for more great lacrosse content! http://www.youtube.com/subscription_center?add_user=TheLacrosseNetwork ...",
     "thumbnails": {
      "default": {
-      "url": "https://i.ytimg.com/vi/9bZkp7q19f0/default.jpg"
+      "url": "https://i.ytimg.com/vi/O-Q6lowLKXY/default.jpg"
      },
      "medium": {
-      "url": "https://i.ytimg.com/vi/9bZkp7q19f0/mqdefault.jpg"
+      "url": "https://i.ytimg.com/vi/O-Q6lowLKXY/mqdefault.jpg"
      },
      "high": {
-      "url": "https://i.ytimg.com/vi/9bZkp7q19f0/hqdefault.jpg"
+      "url": "https://i.ytimg.com/vi/O-Q6lowLKXY/hqdefault.jpg"
      }
     },
-    "channelTitle": "officialpsy",
+    "channelTitle": "TheLacrosseNetwork",
     "liveBroadcastContent": "none"
    }
   },
   {
    "kind": "youtube#searchResult",
-   "etag": "\"OilNCqKLXpFjeQ5CI-_BZqeMuCo/Z0p5gx9qGJ0kjWWCm8ezz3y-jXc\"",
+   "etag": "\"ag-oqvH8dumDXQP6JcFz5Tsa_OA/txATIiGtn_rgN91T0TBIDgncn5A\"",
    "id": {
     "kind": "youtube#video",
-    "videoId": "mIQToVqDMb8"
+    "videoId": "kPoQFzOOfPw"
    },
    "snippet": {
-    "publishedAt": "2012-12-12T23:03:05.000Z",
-    "channelId": "UCl-12mHomEdglO3seXyvr5A",
-    "title": "Gangnam Style Official Music Video - 2012 PSY with Oppan Lyrics & MP3 Download",
-    "description": "Gangnam Style official music video -▷ http://MUSlCDOWNLOADS.com/mp3 ◁- ♫ -▷ http://Vid2Audio.net/ ◁- Convert Video to Audio ...",
+    "publishedAt": "2014-04-26T11:48:47.000Z",
+    "channelId": "UCo2pAlAg46p3eVUX_lNHOKA",
+    "title": "Funny Videos - Fail Compilation, Funny Pranks and Funny Cats Videos | New Funny Video",
+    "description": "Funny Videos Funny Videos - Fails Compilation, Funny Pranks and Funny Animals Videos | New Funny Videos Don't forget to subscribe :) Funny Videos Funny ...",
     "thumbnails": {
      "default": {
-      "url": "https://i.ytimg.com/vi/mIQToVqDMb8/default.jpg"
+      "url": "https://i.ytimg.com/vi/kPoQFzOOfPw/default.jpg"
      },
      "medium": {
-      "url": "https://i.ytimg.com/vi/mIQToVqDMb8/mqdefault.jpg"
+      "url": "https://i.ytimg.com/vi/kPoQFzOOfPw/mqdefault.jpg"
      },
      "high": {
-      "url": "https://i.ytimg.com/vi/mIQToVqDMb8/hqdefault.jpg"
+      "url": "https://i.ytimg.com/vi/kPoQFzOOfPw/hqdefault.jpg"
      }
     },
-    "channelTitle": "kaboomtribe",
+    "channelTitle": "AnimeAllTheTimeHD",
     "liveBroadcastContent": "none"
    }
   },
   {
    "kind": "youtube#searchResult",
-   "etag": "\"OilNCqKLXpFjeQ5CI-_BZqeMuCo/hOYw1h4rRuP9g_ICakZ1SN8hUms\"",
+   "etag": "\"ag-oqvH8dumDXQP6JcFz5Tsa_OA/0bNA7HaHYXw0q7Tc7rglmikK1_s\"",
    "id": {
-    "kind": "youtube#channel",
-    "channelId": "UCrDkAvwZum-UTjHmzDI2iIw"
+    "kind": "youtube#video",
+    "videoId": "n_MSn2-mi6A"
    },
    "snippet": {
-    "publishedAt": "2010-10-04T02:50:53.000Z",
-    "channelId": "UCrDkAvwZum-UTjHmzDI2iIw",
-    "title": "officialpsy",
-    "description": "PSY Official YouTube Channel.",
+    "publishedAt": "2014-04-27T10:32:04.000Z",
+    "channelId": "UCSszrpGLUBZkS2hDkvggQKg",
+    "title": "Power v Cats highlights - Round 6, 2014",
+    "description": "Watch highlights from the Power's big win over the Cats in front of a record non-Showdown crowd at Adelaide Oval.",
     "thumbnails": {
      "default": {
-      "url": "https://lh3.googleusercontent.com/-0Xgl841SU7Y/AAAAAAAAAAI/AAAAAAAAAAA/_bKTxRDm1kw/photo.jpg"
+      "url": "https://i.ytimg.com/vi/n_MSn2-mi6A/default.jpg"
      },
      "medium": {
-      "url": "https://lh3.googleusercontent.com/-0Xgl841SU7Y/AAAAAAAAAAI/AAAAAAAAAAA/_bKTxRDm1kw/photo.jpg"
+      "url": "https://i.ytimg.com/vi/n_MSn2-mi6A/mqdefault.jpg"
      },
      "high": {
-      "url": "https://lh3.googleusercontent.com/-0Xgl841SU7Y/AAAAAAAAAAI/AAAAAAAAAAA/_bKTxRDm1kw/photo.jpg"
+      "url": "https://i.ytimg.com/vi/n_MSn2-mi6A/hqdefault.jpg"
      }
     },
-    "channelTitle": "officialpsy",
+    "channelTitle": "PortAdelaideFC",
     "liveBroadcastContent": "none"
    }
   },
   {
    "kind": "youtube#searchResult",
-   "etag": "\"OilNCqKLXpFjeQ5CI-_BZqeMuCo/7hHcHtNryjNxZ0NKkgo9EUI7OvU\"",
+   "etag": "\"ag-oqvH8dumDXQP6JcFz5Tsa_OA/mSWfFtsEz5Rufro1iZYppXESApE\"",
    "id": {
     "kind": "youtube#video",
-    "videoId": "60MQ3AG1c8o"
+    "videoId": "0gJTCZgHw9A"
    },
    "snippet": {
-    "publishedAt": "2012-07-16T15:14:04.000Z",
-    "channelId": "UCcpIYPgJrK2GQBYaJBZk2EQ",
-    "title": "[Live HD 720p] 120715 - PSY - Gangnam style (Comeback stage) - Inkigayo",
-    "description": "Introducing all CapsuleHD Channels; Performances from Mnet (M Countdown, MUST) - http://www.youtube.com/CapsuleHD13 Performances from K (Music ...",
+    "publishedAt": "2014-04-26T00:54:46.000Z",
+    "channelId": "UC-qEoO7dgas5RcikKyds7iA",
+    "title": "Funny Cats Compilation ~ Cute Cat Videos ~ Best Fail Kittens Compilations",
+    "description": "Hi, thanks for visiting my channel Like, Subscribe and Comment your favourite cat More Cats Videos go here http://goo.gl/CZQpTf Top Funny Cats Compilation ...",
     "thumbnails": {
      "default": {
-      "url": "https://i.ytimg.com/vi/60MQ3AG1c8o/default.jpg"
+      "url": "https://i.ytimg.com/vi/0gJTCZgHw9A/default.jpg"
      },
      "medium": {
-      "url": "https://i.ytimg.com/vi/60MQ3AG1c8o/mqdefault.jpg"
+      "url": "https://i.ytimg.com/vi/0gJTCZgHw9A/mqdefault.jpg"
      },
      "high": {
-      "url": "https://i.ytimg.com/vi/60MQ3AG1c8o/hqdefault.jpg"
+      "url": "https://i.ytimg.com/vi/0gJTCZgHw9A/hqdefault.jpg"
      }
     },
-    "channelTitle": "CapsuleHD20",
+    "channelTitle": "TheFunnyCuteCats",
     "liveBroadcastContent": "none"
    }
   },
   {
    "kind": "youtube#searchResult",
-   "etag": "\"OilNCqKLXpFjeQ5CI-_BZqeMuCo/_lB1QU40WAtuNI2Uk6gdykCBtws\"",
+   "etag": "\"ag-oqvH8dumDXQP6JcFz5Tsa_OA/wOm_6XB4yk2Yw_J2lkqa6mPKf-8\"",
    "id": {
     "kind": "youtube#video",
-    "videoId": "wcLNteez3c4"
+    "videoId": "S7b1aLY3tyI"
    },
    "snippet": {
-    "publishedAt": "2012-08-14T15:00:06.000Z",
-    "channelId": "UCrDkAvwZum-UTjHmzDI2iIw",
-    "title": "PSY (ft. HYUNA) 오빤 딱 내 스타일",
-    "description": "6TH STUDIO ALBUM [PSY 6甲] ▷ NOW available on iTunes: http://smarturl.it/psy6gap1 ▷ Official PSY Online Store US & International ...",
+    "publishedAt": "2014-03-12T14:00:03.000Z",
+    "channelId": "UCaIM6y9YvfUb_IxS2reKsqw",
+    "title": "Funny Cats Compilation 2014 | 20 min",
+    "description": "Subscribe: - https://www.youtube.com/user/ptichkalastochka?sub_confirmation=1 • Follow me on facebook, it's the cool thing to do these days ...",
     "thumbnails": {
      "default": {
-      "url": "https://i.ytimg.com/vi/wcLNteez3c4/default.jpg"
+      "url": "https://i.ytimg.com/vi/S7b1aLY3tyI/default.jpg"
      },
      "medium": {
-      "url": "https://i.ytimg.com/vi/wcLNteez3c4/mqdefault.jpg"
+      "url": "https://i.ytimg.com/vi/S7b1aLY3tyI/mqdefault.jpg"
      },
      "high": {
-      "url": "https://i.ytimg.com/vi/wcLNteez3c4/hqdefault.jpg"
+      "url": "https://i.ytimg.com/vi/S7b1aLY3tyI/hqdefault.jpg"
      }
     },
-    "channelTitle": "officialpsy",
+    "channelTitle": "PtichkaLastochka",
     "liveBroadcastContent": "none"
    }
   }
@@ -179,7 +179,6 @@ struct YoutubeDownloader::Private {
     Private(const std::string &apikey) : apikey(apikey) {
     }
     std::string download(const std::string &q);
-    void parse(const std::string &input);
 };
 
 std::string YoutubeDownloader::Private::download(const std::string &q) {
@@ -200,23 +199,6 @@ std::string YoutubeDownloader::Private::download(const std::string &q) {
     return result;
 }
 
-void YoutubeDownloader::Private::parse(const std::string &input) {
-    Json::Value root;
-    Json::Reader reader;
-    if(not reader.parse(input, root)) {
-        std::cerr << "Json parsing failed." << std::endl;
-        return;
-    }
-    const Json::Value items = root["items"];
-    for(unsigned int i=0; i<items.size(); i++) {
-        const Json::Value snippet = items[i]["snippet"];
-        std::string title = snippet["title"].asString();
-        std::string description = snippet["description"].asString();
-        std::string screenshot = snippet["thumbnails"]["high"]["url"].asString();
-        std::cout << title << "\n " << description << "\n " << screenshot << std::endl;
-    }
-}
-
 YoutubeDownloader::YoutubeDownloader(const std::string &s) : p(new Private(s)) {
 
 }
@@ -225,7 +207,7 @@ YoutubeDownloader::~YoutubeDownloader() {
     delete p;
 }
 
-void YoutubeDownloader::query(const std::string &q) {
-    std::string output(reply);// = p->download(q);
-    p->parse(output);
+std::vector<YoutubeResult> YoutubeDownloader::query(const std::string &q) {
+    std::string output(reply);//= p->download(q);
+    return parse_json(output);
 }
