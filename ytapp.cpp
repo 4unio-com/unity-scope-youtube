@@ -22,6 +22,10 @@
 #include"YoutubeDownloader.h"
 
 int main(int argc, char **argv) {
+    if(argc != 2) {
+        std::cout << "Usage: " << argv[0] << " <query term>" << std::endl;
+        return 1;
+    }
     std::ifstream apifile("apikey.txt", std::ios::in);
     if(apifile.bad()) {
         std::cout << "API file open is fail.\n";
@@ -34,7 +38,7 @@ int main(int argc, char **argv) {
         return 1;
     }
     YoutubeDownloader yd(apikey);
-    auto results = yd.query("cats");
+    auto results = yd.query(argv[1]);
     for(const auto &i : results) {
         std::cout << i.title << std::endl;
         std::cout << " description: " << i.description << std::endl;

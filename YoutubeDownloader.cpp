@@ -42,7 +42,7 @@ std::string YoutubeDownloader::Private::download(const std::string &q) {
     url += "&q=" + q; // FIXME: quote input
     url += "&key=" + apikey;
     std::unique_ptr<SoupMessage, void(*)(gpointer)> msg(soup_message_new("GET", url.c_str()), g_object_unref);
-    std::cout << "Downloading url " << url << std::endl;
+    //std::cout << "Downloading url " << url << std::endl;
     guint status = soup_session_send_message(session.get(), msg.get());
     if(!SOUP_STATUS_IS_SUCCESSFUL(status)) {
         std::cerr << "Download failed." << std::endl;
