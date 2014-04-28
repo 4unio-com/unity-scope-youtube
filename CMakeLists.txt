@@ -18,5 +18,12 @@ endif()
 
 include_directories(${SOUP_INCLUDE_DIRS} ${JSON_INCLUDE_DIRS})
 
-add_executable(yttest yttest.cpp YoutubeDownloader.cpp util.cpp)
-target_link_libraries(yttest ${SOUP_LDFLAGS} ${JSON_LDFLAGS})
+add_library(ytlib STATIC YoutubeDownloader.cpp util.cpp)
+
+add_executable(ytapp ytapp.cpp)
+target_link_libraries(ytapp ytlib ${SOUP_LDFLAGS} ${JSON_LDFLAGS})
+
+enable_testing()
+add_executable(parsetest parsetest.cpp)
+target_link_libraries(parsetest ytlib ${JSON_LDFLAGS})
+add_test(parsetest parsetest)
