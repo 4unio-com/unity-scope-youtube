@@ -7,6 +7,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -pedantic")
 include(FindPkgConfig)
 pkg_search_module(SOUP libsoup-2.4)
 pkg_search_module(JSON jsoncpp)
+pkg_search_module(ACC libaccounts-glib)
 
 if(NOT SOUP_FOUND)
     message(FATAL_ERROR "Libsoup not found.")
@@ -14,6 +15,10 @@ endif()
 
 if(NOT JSON_FOUND)
     message(FATAL_ERROR "Json-cpp not found.")
+endif()
+
+if(NOT ACC_FOUND)
+    message(FATAL_ERROR "Libaccounts-glib not found.")
 endif()
 
 include_directories(${SOUP_INCLUDE_DIRS} ${JSON_INCLUDE_DIRS})
@@ -27,3 +32,7 @@ enable_testing()
 add_executable(parsetest parsetest.cpp)
 target_link_libraries(parsetest ytlib ${JSON_LDFLAGS})
 add_test(parsetest parsetest)
+
+include_directories(${ACC_INCLUDE_DIRS})
+add_executable(accountstest accountstest.cpp)
+target_link_libraries(accountstest ${ACC_LDFLAGS})
