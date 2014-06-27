@@ -1,0 +1,11 @@
+[ScopeConfig]
+DisplayName = Youtube
+Description = Search Youtube for videos and browse channels
+Art = @SCOPE_INSTALL_DIR@/screenshot.jpg
+Author = Canonical Ltd.
+Icon = @SCOPE_INSTALL_DIR@/icon.png
+
+[Appearance]
+#PageHeader.Logo = @SCOPE_INSTALL_DIR@/logo.jpg
+#ForegroundColor = default text color
+#BackgroundColor = #ffffff

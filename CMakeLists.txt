@@ -1,38 +1,58 @@
-project(youtubescope C CXX)
-cmake_minimum_required(VERSION 2.8)
+project(unity-scope-youtube CXX)
+cmake_minimum_required(VERSION 2.8.10)
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -pedantic")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -pedantic")
+add_definitions(
+  -fno-permissive
+  -std=c++11
+  -pedantic
+  -Wall
+  -Wextra
+  -fPIC
+)
 
-include(FindPkgConfig)
-pkg_search_module(SOUP libsoup-2.4)
-pkg_search_module(JSON jsoncpp)
-pkg_search_module(ACC libaccounts-glib)
+include(GNUInstallDirs)
+find_package(PkgConfig)
 
-if(NOT SOUP_FOUND)
-    message(FATAL_ERROR "Libsoup not found.")
-endif()
+find_package(
+  Boost
+  COMPONENTS
+    filesystem
+    system
+  REQUIRED
+)
 
-if(NOT JSON_FOUND)
-    message(FATAL_ERROR "Json-cpp not found.")
-endif()
+pkg_check_modules(
+  SCOPE
+  glib-2.0
+  gio-unix-2.0
+  libaccounts-glib
+  libsignon-glib
+  libunity-scopes>=0.5.0
+  jsoncpp
+  net-cpp
+  process-cpp
+  REQUIRED
+)
 
-if(NOT ACC_FOUND)
-    message(FATAL_ERROR "Libaccounts-glib not found.")
-endif()
+include_directories(
+  "${CMAKE_SOURCE_DIR}/include"
+  ${Boost_INCLUDE_DIRS}
+  ${SCOPE_INCLUDE_DIRS}
+)
 
-include_directories(${SOUP_INCLUDE_DIRS} ${JSON_INCLUDE_DIRS})
+set(SCOPE_NAME unity-scope-youtube)
+_pkgconfig_invoke(libunity-scopes "SCOPE" "DIR" "" --variable=scopesdir)
+set(SCOPE_INSTALL_DIR "${SCOPE_DIR}/${SCOPE_NAME}")
+set(SYMBOL_MAP "${CMAKE_SOURCE_DIR}/data/${SCOPE_NAME}.map")
 
-add_library(ytlib STATIC YoutubeDownloader.cpp util.cpp)
+add_subdirectory(src)
+add_subdirectory(data)
+#enable_testing()
+#add_subdirectory(tests)
 
-add_executable(ytapp ytapp.cpp)
-target_link_libraries(ytapp ytlib ${SOUP_LDFLAGS} ${JSON_LDFLAGS})
+#add_custom_target(
+#        check
+#        ${CMAKE_CTEST_COMMAND} --force-new-ctest-process --output-on-failure
+#)
 
-enable_testing()
-add_executable(parsetest parsetest.cpp)
-target_link_libraries(parsetest ytlib ${JSON_LDFLAGS})
-add_test(parsetest parsetest)
-
-include_directories(${ACC_INCLUDE_DIRS})
-add_executable(accountstest accountstest.cpp)
-target_link_libraries(accountstest ${ACC_LDFLAGS})
