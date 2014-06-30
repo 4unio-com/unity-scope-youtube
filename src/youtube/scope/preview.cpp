@@ -65,7 +65,6 @@ void Preview::run(sc::PreviewReplyProxy const& reply) {
     sc::PreviewWidget actions("actions", "actions");
     {
         sc::VariantBuilder builder;
-        cerr << "click me: " << result().uri() << endl;
         builder.add_tuple( { { "id", sc::Variant("search") }, { "uri",
                 sc::Variant(result().uri()) },
                 { "label", sc::Variant("Search") } });
