@@ -27,7 +27,6 @@ using namespace youtube::api;
 using namespace std;
 
 Channel::Channel(const json::Value &data) {
-//    cerr << data.toStyledString() << endl;
 
     string kind = data["kind"].asString();
 
@@ -60,3 +59,4 @@ const std::string & Channel::id() const {
 Resource::Kind Channel::kind() const {
     return Resource::Kind::channel;
 }
+
