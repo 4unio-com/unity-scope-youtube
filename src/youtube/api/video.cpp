@@ -29,7 +29,7 @@ Video::Video(const json::Value &data) {
 
     json::Value snippet = data["snippet"];
 
-    name_ = snippet["title"].asString();
+    title_ = snippet["title"].asString();
     description_ = snippet["description"].asString();
 
     json::Value id = data["id"];
@@ -49,7 +49,7 @@ Video::Video(const json::Value &data) {
 }
 
 const string & Video::title() const {
-    return name_;
+    return title_;
 }
 
 const string & Video::username() const {

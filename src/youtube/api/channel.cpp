@@ -27,12 +27,9 @@ using namespace youtube::api;
 using namespace std;
 
 Channel::Channel(const json::Value &data) {
+//    cerr << data.toStyledString() << endl;
+
     string kind = data["kind"].asString();
-
-    json::Value snippet = data["snippet"];
-
-    name_ = snippet["title"].asString();
-
 
     json::Value id = data["id"];
     if (kind == "youtube#channel") {
@@ -41,6 +38,8 @@ Channel::Channel(const json::Value &data) {
         id_ = id["channelId"].asString();
     }
 
+    json::Value snippet = data["snippet"];
+    name_ = snippet["title"].asString();
     json::Value thumbnails = snippet["thumbnails"];
     json::Value picture = thumbnails["default"];
     picture_ = picture["url"].asString();

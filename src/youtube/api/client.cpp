@@ -36,8 +36,9 @@ namespace net = core::net;
 using namespace youtube::api;
 using namespace std;
 
-Client::Client(Config::Ptr config) :
-        config_(config), cancelled_(false) {
+Client::Client(Config::Ptr config, int cardinality, const string& locale) :
+        config_(config), cardinality_(cardinality), locale_(locale), cancelled_(
+        false) {
 }
 
 static string make_uri(const string host, const deque<string> &endpoints,
@@ -70,6 +71,10 @@ void Client::get(const deque<string> &path,
 
     http::Request::Configuration configuration;
     vector<pair<string, string>> complete_parameters(parameters);
+    if (cardinality_ > 0) {
+        complete_parameters.push_back(
+                { "maxResults", to_string(cardinality_) });
+    }
     if (config_->authenticated) {
         configuration.header.add("Authorization",
                 "bearer " + config_->access_token);
@@ -99,13 +104,19 @@ void Client::get(const deque<string> &path,
 }
 
 template<typename T>
-static deque<shared_ptr<T>> get_typed_list(const string &kind,
+static deque<shared_ptr<T>> get_typed_list(const string &filter,
         const json::Value &root) {
     deque<shared_ptr<T>> results;
     json::Value data = root["items"];
     for (json::ArrayIndex index = 0; index < data.size(); ++index) {
         json::Value item = data[index];
-        if (item["kind"].asString() == kind) {
+
+        string kind = item["kind"].asString();
+        if (kind == "youtube#searchResult") {
+            kind = item["id"]["kind"].asString();
+        }
+
+        if (kind == filter) {
             results.push_back(make_shared<T>(item));
         }
     }
@@ -156,37 +167,47 @@ Client::VideoCategoryList Client::video_categories() {
     // FIXME Get the real country code
     string country_code = "US";
     get( { "youtube", "v3", "videoCategories" }, { { "part", "snippet" }, {
-            "regionCode", country_code } }, root);
+            "regionCode", country_code }, { "h1", locale_ } }, root);
     return get_typed_list<VideoCategory>("youtube#videoCategory", root);
 }
 
-Client::ResourceList Client::category_videos(const string &category) {
+Client::GuideCategoryList Client::guide_categories() {
     json::Value root;
-    get( { "youtube", "v3", "videos" }, { { "part", "snippet" }, { "chart",
-            "mostPopular" }, { "videoCategoryId", category } }, root);
-    return get_list(root);
+    // FIXME Get the real country code
+    string country_code = "US";
+    get( { "youtube", "v3", "guideCategories" }, { { "part", "snippet" }, {
+            "regionCode", country_code }, { "h1", locale_ } }, root);
+    return get_typed_list<GuideCategory>("youtube#guideCategory", root);
 }
 
-Client::ResourceList Client::channel_videos(const string &channel) {
+Client::ChannelList Client::category_channels(const string &categoryId) {
+    json::Value root;
+    get( { "youtube", "v3", "channels" },
+            { { "part", "snippet,contentDetails" }, { "categoryId", categoryId } },
+            root);
+    return get_typed_list<Channel>("youtube#channel", root);
+}
+
+Client::VideoList Client::channel_videos(const string &channel) {
     json::Value root;
     get( { "youtube", "v3", "search" }, { { "part", "snippet" }, { "type",
             "video" }, { "order", "viewCount" }, { "channelId", channel } },
             root);
-    return get_list(root);
+    return get_typed_list<Video>("youtube#video", root);
 }
 
-Client::ResourceList Client::playlist_videos(const string &playlist) {
+Client::VideoList Client::playlist_videos(const string &playlist) {
     json::Value root;
     get( { "youtube", "v3", "search" }, { { "part", "snippet" }, { "type",
             "video" }, { "order", "viewCount" }, { "playlistId", playlist } },
             root);
-    return get_list(root);
+    return get_typed_list<Video>("youtube#video", root);
 }
 
 Client::ResourceList Client::feed() {
     json::Value root;
-    get( { "youtube", "v3", "videos" }, { { "part", "snippet" }, { "maxResults",
-            "10" }, { "chart", "mostPopular" } }, root);
+    get( { "youtube", "v3", "videos" }, { { "part", "snippet" }, { "chart",
+            "mostPopular" } }, root);
     return get_list(root);
 }
 

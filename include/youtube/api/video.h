@@ -54,7 +54,7 @@ public:
     Kind kind() const override;
 
 protected:
-    std::string name_;
+    std::string title_;
 
     std::string username_;
 

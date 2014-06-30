@@ -16,37 +16,35 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
-#ifndef YOUTUBE_API_RESOURCE_H_
-#define YOUTUBE_API_RESOURCE_H_
+#include <youtube/api/guide-category.h>
 
-#include <memory>
-#include <string>
+#include <iostream>
+#include <json/json.h>
 
-namespace youtube {
-namespace api {
+namespace json = Json;
 
-class Resource {
-public:
-    enum class Kind {
-        channel, guideCategory, playlist, video, videoCategory
-    };
+using namespace youtube::api;
+using namespace std;
 
-    typedef std::shared_ptr<Resource> Ptr;
+GuideCategory::GuideCategory(const json::Value &data) {
+    id_ = data["id"].asString();
 
-    Resource() = default;
-
-    virtual ~Resource() = default;
-
-    virtual const std::string & title() const = 0;
-
-    virtual const std::string & picture() const = 0;
-
-    virtual const std::string & id() const = 0;
-
-    virtual Kind kind() const = 0;
-};
-
-}
+    json::Value snippet = data["snippet"];
+    name_ = snippet["title"].asString();
 }
 
-#endif // YOUTUBE_API_RESOURCE_H_
+const std::string & GuideCategory::title() const {
+    return name_;
+}
+
+const std::string & GuideCategory::picture() const {
+    return picture_;
+}
+
+const std::string & GuideCategory::id() const {
+    return id_;
+}
+
+Resource::Kind GuideCategory::kind() const {
+    return Resource::Kind::guideCategory;
+}

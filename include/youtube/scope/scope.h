@@ -46,10 +46,6 @@ public:
             unity::scopes::CannedQuery const& q,
             unity::scopes::SearchMetadata const&) override;
 
-//    virtual unity::scopes::ActivationQueryBase::UPtr activate(
-//            unity::scopes::Result const& result,
-//            unity::scopes::ActionMetadata const& metadata) override;
-
 protected:
     youtube::api::Config::Ptr config_;
 };

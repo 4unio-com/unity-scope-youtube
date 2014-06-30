@@ -20,6 +20,8 @@
 #define YOUTUBE_API_CLIENT_H_
 
 #include <youtube/api/config.h>
+#include <youtube/api/channel.h>
+#include <youtube/api/guide-category.h>
 #include <youtube/api/video.h>
 #include <youtube/api/video-category.h>
 
@@ -40,23 +42,29 @@ class Client {
 public:
     typedef std::deque<Resource::Ptr> ResourceList;
 
+    typedef std::deque<Channel::Ptr> ChannelList;
+
+    typedef std::deque<GuideCategory::Ptr> GuideCategoryList;
+
     typedef std::deque<VideoCategory::Ptr> VideoCategoryList;
 
     typedef std::deque<Video::Ptr> VideoList;
 
-    Client(Config::Ptr config);
+    Client(Config::Ptr config, int cardinality, const std::string& locale);
 
     virtual ~Client() = default;
 
     virtual VideoCategoryList video_categories();
 
+    virtual GuideCategoryList guide_categories();
+
     virtual ResourceList search(const std::string &query = std::string());
 
-    virtual ResourceList category_videos(const std::string &category);
+    virtual ChannelList category_channels(const std::string &categoryId);
 
-    virtual ResourceList channel_videos(const std::string &channel);
+    virtual VideoList channel_videos(const std::string &channel);
 
-    virtual ResourceList playlist_videos(const std::string &channel);
+    virtual VideoList playlist_videos(const std::string &playlist);
 
     virtual ResourceList feed();
 
@@ -73,6 +81,10 @@ protected:
             const core::net::http::Request::Progress& progress);
 
     Config::Ptr config_;
+
+    int cardinality_;
+
+    std::string locale_;
 
     std::atomic<bool> cancelled_;
 };
