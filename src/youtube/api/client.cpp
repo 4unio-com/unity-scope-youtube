@@ -72,14 +72,13 @@ void Client::get(const deque<string> &path,
     http::Request::Configuration configuration;
     vector<pair<string, string>> complete_parameters(parameters);
     if (cardinality_ > 0) {
-        complete_parameters.push_back(
-                { "maxResults", to_string(cardinality_) });
+        complete_parameters.emplace_back("maxResults", to_string(cardinality_));
     }
     if (config_->authenticated) {
         configuration.header.add("Authorization",
                 "bearer " + config_->access_token);
     } else {
-        complete_parameters.push_back( { "key", config_->api_key });
+        complete_parameters.emplace_back("key", config_->api_key );
     }
     configuration.uri = make_uri(config_->apiroot, path, complete_parameters,
             client);
@@ -117,7 +116,7 @@ static deque<shared_ptr<T>> get_typed_list(const string &filter,
         }
 
         if (kind == filter) {
-            results.push_back(make_shared<T>(item));
+            results.emplace_back(make_shared<T>(item));
         }
     }
     return results;
@@ -143,13 +142,13 @@ static Client::ResourceList get_list(const json::Value &root) {
         if (kind == "youtube#searchResult") {
             kind = item["id"]["kind"].asString();
         }
-        auto f = TYPES.find(kind);
-        if (f == TYPES.end()) {
+        const auto f = TYPES.find(kind);
+        if (f == TYPES.cend()) {
             cerr << "Couldn't create type: " << kind << endl;
             cerr << item.toStyledString() << endl;
             cerr << "------------------" << endl;
         } else {
-            results.push_back(TYPES[kind](item));
+            results.emplace_back(f->second(item));
         }
     }
     return results;
