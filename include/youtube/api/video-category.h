@@ -19,6 +19,8 @@
 #ifndef YOUTUBE_API_VIDEOCATEGORY_H_
 #define YOUTUBE_API_VIDEOCATEGORY_H_
 
+#include <youtube/api/resource.h>
+
 #include <memory>
 
 namespace Json {
@@ -28,7 +30,7 @@ class Value;
 namespace youtube {
 namespace api {
 
-class VideoCategory {
+class VideoCategory: public Resource {
 public:
     typedef std::shared_ptr<VideoCategory> Ptr;
 
@@ -36,12 +38,18 @@ public:
 
     ~VideoCategory() = default;
 
-    const std::string & name() const;
+    const std::string & title() const override;
 
-    const std::string & id() const;
+    const std::string & picture() const override;
+
+    const std::string & id() const override;
+
+    Kind kind() const override;
 
 protected:
     std::string name_;
+
+    std::string picture_;
 
     std::string id_;
 

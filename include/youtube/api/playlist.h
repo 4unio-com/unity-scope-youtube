@@ -16,35 +16,45 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
-#include <youtube/api/video-category.h>
+#ifndef YOUTUBE_API_PLAYLIST_H_
+#define YOUTUBE_API_PLAYLIST_H_
 
-#include <iostream>
-#include <json/json.h>
+#include <youtube/api/resource.h>
 
-namespace json = Json;
+#include <memory>
 
-using namespace youtube::api;
-using namespace std;
-
-VideoCategory::VideoCategory(const json::Value &data) {
-    json::Value snippet = data["snippet"];
-
-    name_ = snippet["title"].asString();
-    id_ = data["id"].asString();
+namespace Json {
+class Value;
 }
 
-const std::string & VideoCategory::title() const {
-    return name_;
+namespace youtube {
+namespace api {
+
+class Playlist: public Resource {
+public:
+    typedef std::shared_ptr<Playlist> Ptr;
+
+    Playlist(const Json::Value &data);
+
+    ~Playlist() = default;
+
+    const std::string & title() const override;
+
+    const std::string & picture() const override;
+
+    const std::string & id() const override;
+
+    Kind kind() const override;
+
+protected:
+    std::string name_;
+
+    std::string picture_;
+
+    std::string id_;
+};
+
+}
 }
 
-const std::string & VideoCategory::picture() const {
-    return picture_;
-}
-
-const std::string & VideoCategory::id() const {
-    return id_;
-}
-
-Resource::Kind VideoCategory::kind() const {
-    return Resource::Kind::videoCategory;
-}
+#endif /* YOUTUBE_API_PLAYLIST_H_ */

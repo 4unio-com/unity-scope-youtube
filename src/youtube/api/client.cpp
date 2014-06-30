@@ -16,7 +16,9 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
+#include <youtube/api/channel.h>
 #include <youtube/api/client.h>
+#include <youtube/api/playlist.h>
 
 #include <core/net/error.h>
 #include <core/net/http/client.h>
@@ -25,6 +27,7 @@
 #include <json/json.h>
 
 #include <iostream>
+#include <unordered_map>
 
 namespace http = core::net::http;
 namespace json = Json;
@@ -96,20 +99,56 @@ void Client::get(const deque<string> &path,
 }
 
 template<typename T>
-static deque<shared_ptr<T>> get_list(const json::Value &root) {
+static deque<shared_ptr<T>> get_typed_list(const string &kind,
+        const json::Value &root) {
     deque<shared_ptr<T>> results;
     json::Value data = root["items"];
     for (json::ArrayIndex index = 0; index < data.size(); ++index) {
-        results.push_back(make_shared<T>(data[index]));
+        json::Value item = data[index];
+        if (item["kind"].asString() == kind) {
+            results.push_back(make_shared<T>(item));
+        }
     }
     return results;
 }
 
-Client::VideoList Client::videos(const string &query) {
+static unordered_map<string, function<Resource::Ptr(const json::Value &)>> TYPES =
+        { { "youtube#videoCategory", [](const json::Value &value) {
+            return make_shared<VideoCategory>(value);
+        } }, { "youtube#video", [](const json::Value &value) {
+            return make_shared<Video>(value);
+        } }, { "youtube#channel", [](const json::Value &value) {
+            return make_shared<Channel>(value);
+        } }, { "youtube#playlist", [](const json::Value &value) {
+            return make_shared<Playlist>(value);
+        } } };
+
+static Client::ResourceList get_list(const json::Value &root) {
+    Client::ResourceList results;
+    json::Value data = root["items"];
+    for (json::ArrayIndex index = 0; index < data.size(); ++index) {
+        json::Value item = data[index];
+        string kind = item["kind"].asString();
+        if (kind == "youtube#searchResult") {
+            kind = item["id"]["kind"].asString();
+        }
+        auto f = TYPES.find(kind);
+        if (f == TYPES.end()) {
+            cerr << "Couldn't create type: " << kind << endl;
+            cerr << item.toStyledString() << endl;
+            cerr << "------------------" << endl;
+        } else {
+            results.push_back(TYPES[kind](item));
+        }
+    }
+    return results;
+}
+
+Client::ResourceList Client::search(const string &query) {
     json::Value root;
-    get( { "youtube", "v3", "search" }, { { "type", "video" }, { "part",
-            "snippet" }, { "maxResults", "10" }, { "q", query } }, root);
-    return get_list<Video>(root);
+    get( { "youtube", "v3", "search" }, { { "part", "snippet" }, { "maxResults",
+            "10" }, { "q", query } }, root);
+    return get_list(root);
 }
 
 Client::VideoCategoryList Client::video_categories() {
@@ -118,21 +157,37 @@ Client::VideoCategoryList Client::video_categories() {
     string country_code = "US";
     get( { "youtube", "v3", "videoCategories" }, { { "part", "snippet" }, {
             "regionCode", country_code } }, root);
-    return get_list<VideoCategory>(root);
+    return get_typed_list<VideoCategory>("youtube#videoCategory", root);
 }
 
-Client::VideoList Client::category_videos(const string &category) {
+Client::ResourceList Client::category_videos(const string &category) {
     json::Value root;
     get( { "youtube", "v3", "videos" }, { { "part", "snippet" }, { "chart",
             "mostPopular" }, { "videoCategoryId", category } }, root);
-    return get_list<Video>(root);
+    return get_list(root);
 }
 
-Client::VideoList Client::feed() {
+Client::ResourceList Client::channel_videos(const string &channel) {
+    json::Value root;
+    get( { "youtube", "v3", "search" }, { { "part", "snippet" }, { "type",
+            "video" }, { "order", "viewCount" }, { "channelId", channel } },
+            root);
+    return get_list(root);
+}
+
+Client::ResourceList Client::playlist_videos(const string &playlist) {
+    json::Value root;
+    get( { "youtube", "v3", "search" }, { { "part", "snippet" }, { "type",
+            "video" }, { "order", "viewCount" }, { "playlistId", playlist } },
+            root);
+    return get_list(root);
+}
+
+Client::ResourceList Client::feed() {
     json::Value root;
     get( { "youtube", "v3", "videos" }, { { "part", "snippet" }, { "maxResults",
             "10" }, { "chart", "mostPopular" } }, root);
-    return get_list<Video>(root);
+    return get_list(root);
 }
 
 http::Request::Progress::Next Client::progress_report(

@@ -70,6 +70,19 @@ sc::PreviewQueryBase::UPtr Scope::preview(sc::Result const& result,
     return sc::PreviewQueryBase::UPtr(new Preview(result, metadata));
 }
 
+//class Activation: public sc::ActivationQueryBase {
+//public:
+//    Activation(sc::Result const& result, sc::ActionMetadata const& metadata) :
+//            sc::ActivationQueryBase(result, metadata) {
+//        cerr << "Hello" << endl;
+//    }
+//};
+//
+//sc::ActivationQueryBase::UPtr Scope::activate(sc::Result const& result,
+//        sc::ActionMetadata const& metadata) {
+//    return sc::ActivationQueryBase::UPtr(new Activation(result, metadata));
+//}
+
 #define EXPORT __attribute__ ((visibility ("default")))
 
 extern "C" {

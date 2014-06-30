@@ -40,14 +40,14 @@ void Preview::cancelled() {
 
 void Preview::run(sc::PreviewReplyProxy const& reply) {
     sc::ColumnLayout layout1col(1), layout2col(2), layout3col(3);
-    layout1col.add_column( { "video", "header", "summary" });
+    layout1col.add_column( { "video", "header", "summary", "actions" });
 
     layout2col.add_column( { "video" });
-    layout2col.add_column( { "header", "summary" });
+    layout2col.add_column( { "header", "summary", "actions" });
 
     layout3col.add_column( { "video" });
     layout3col.add_column( { "header", "summary" });
-    layout3col.add_column( { });
+    layout3col.add_column( { "actions" });
 
     reply->register_layout( { layout1col, layout2col, layout3col });
 
@@ -56,11 +56,21 @@ void Preview::run(sc::PreviewReplyProxy const& reply) {
     header.add_attribute_mapping("subtitle", "username");
 
     sc::PreviewWidget video("video", "video");
-    video.add_attribute_mapping("source", "uri");
+    video.add_attribute_mapping("source", "link");
     video.add_attribute_mapping("screenshot", "art");
 
     sc::PreviewWidget description("summary", "text");
     description.add_attribute_mapping("text", "description");
 
-    reply->push( { video, header, description });
+    sc::PreviewWidget actions("actions", "actions");
+    {
+        sc::VariantBuilder builder;
+        cerr << "click me: " << result().uri() << endl;
+        builder.add_tuple( { { "id", sc::Variant("search") }, { "uri",
+                sc::Variant(result().uri()) },
+                { "label", sc::Variant("Search") } });
+        actions.add_attribute_value("actions", builder.end());
+    }
+
+    reply->push( { video, header, description, actions });
 }

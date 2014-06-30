@@ -16,62 +16,47 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
-#include <youtube/api/video.h>
+#include <youtube/api/playlist.h>
 
+#include <iostream>
 #include <json/json.h>
 
 namespace json = Json;
+
 using namespace youtube::api;
 using namespace std;
 
-Video::Video(const json::Value &data) {
+Playlist::Playlist(const json::Value &data) {
     string kind = data["kind"].asString();
 
     json::Value snippet = data["snippet"];
 
     name_ = snippet["title"].asString();
-    description_ = snippet["description"].asString();
 
     json::Value id = data["id"];
-    if (kind == "youtube#video") {
+    if (kind == "youtube#playlist") {
         id_ = id.asString();
     } else {
-        id_ = id["videoId"].asString();
+        id_ = id["playlistId"].asString();
     }
 
-    link_ = "https://www.youtube.com/watch?v=" + id_;
-
-    username_ = snippet["channelTitle"].asString();
-
     json::Value thumbnails = snippet["thumbnails"];
-    json::Value picture = thumbnails["high"];
+    json::Value picture = thumbnails["default"];
     picture_ = picture["url"].asString();
 }
 
-const string & Video::title() const {
+const std::string & Playlist::title() const {
     return name_;
 }
 
-const string & Video::username() const {
-    return username_;
-}
-
-const string & Video::id() const {
-    return id_;
-}
-
-const string & Video::link() const {
-    return link_;
-}
-
-const string & Video::picture() const {
+const std::string & Playlist::picture() const {
     return picture_;
 }
 
-const string & Video::description() const {
-    return description_;
+const std::string & Playlist::id() const {
+    return id_;
 }
 
-Resource::Kind Video::kind() const {
-    return Resource::Kind::video;
+Resource::Kind Playlist::kind() const {
+    return Resource::Kind::playlist;
 }

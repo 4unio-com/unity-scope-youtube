@@ -34,7 +34,8 @@ namespace scope {
 
 class Scope: public unity::scopes::ScopeBase {
 public:
-    void start(std::string const&, unity::scopes::RegistryProxy const&) override;
+    void start(std::string const&, unity::scopes::RegistryProxy const&)
+            override;
 
     void stop() override;
 
@@ -44,6 +45,10 @@ public:
     virtual unity::scopes::SearchQueryBase::UPtr search(
             unity::scopes::CannedQuery const& q,
             unity::scopes::SearchMetadata const&) override;
+
+//    virtual unity::scopes::ActivationQueryBase::UPtr activate(
+//            unity::scopes::Result const& result,
+//            unity::scopes::ActionMetadata const& metadata) override;
 
 protected:
     youtube::api::Config::Ptr config_;

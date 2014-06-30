@@ -16,35 +16,37 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
-#include <youtube/api/video-category.h>
+#ifndef YOUTUBE_API_RESOURCE_H_
+#define YOUTUBE_API_RESOURCE_H_
 
-#include <iostream>
-#include <json/json.h>
+#include <memory>
+#include <string>
 
-namespace json = Json;
+namespace youtube {
+namespace api {
 
-using namespace youtube::api;
-using namespace std;
+class Resource {
+public:
+    enum class Kind {
+        video, channel, playlist, videoCategory
+    };
 
-VideoCategory::VideoCategory(const json::Value &data) {
-    json::Value snippet = data["snippet"];
+    typedef std::shared_ptr<Resource> Ptr;
 
-    name_ = snippet["title"].asString();
-    id_ = data["id"].asString();
+    Resource() = default;
+
+    virtual ~Resource() = default;
+
+    virtual const std::string & title() const = 0;
+
+    virtual const std::string & picture() const = 0;
+
+    virtual const std::string & id() const = 0;
+
+    virtual Kind kind() const = 0;
+};
+
+}
 }
 
-const std::string & VideoCategory::title() const {
-    return name_;
-}
-
-const std::string & VideoCategory::picture() const {
-    return picture_;
-}
-
-const std::string & VideoCategory::id() const {
-    return id_;
-}
-
-Resource::Kind VideoCategory::kind() const {
-    return Resource::Kind::videoCategory;
-}
+#endif // YOUTUBE_API_RESOURCE_H_

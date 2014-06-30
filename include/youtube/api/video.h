@@ -19,6 +19,8 @@
 #ifndef YOUTUBE_API_VIDEO_H_
 #define YOUTUBE_API_VIDEO_H_
 
+#include <youtube/api/resource.h>
+
 #include <memory>
 #include <string>
 
@@ -29,7 +31,7 @@ class Value;
 namespace youtube {
 namespace api {
 
-class Video {
+class Video: public Resource {
 public:
     typedef std::shared_ptr<Video> Ptr;
 
@@ -37,22 +39,28 @@ public:
 
     virtual ~Video() = default;
 
-    const std::string & name() const;
+    const std::string & title() const override;
 
     const std::string & username() const;
 
-    const std::string & uri() const;
+    const std::string & link() const;
 
-    const std::string & picture() const;
+    const std::string & picture() const override;
 
     const std::string & description() const;
+
+    const std::string & id() const override;
+
+    Kind kind() const override;
 
 protected:
     std::string name_;
 
     std::string username_;
 
-    std::string uri_;
+    std::string id_;
+
+    std::string link_;
 
     std::string picture_;
 

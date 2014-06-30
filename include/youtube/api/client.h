@@ -38,6 +38,8 @@ namespace api {
 
 class Client {
 public:
+    typedef std::deque<Resource::Ptr> ResourceList;
+
     typedef std::deque<VideoCategory::Ptr> VideoCategoryList;
 
     typedef std::deque<Video::Ptr> VideoList;
@@ -48,11 +50,15 @@ public:
 
     virtual VideoCategoryList video_categories();
 
-    virtual VideoList videos(const std::string &query = std::string());
+    virtual ResourceList search(const std::string &query = std::string());
 
-    virtual VideoList category_videos(const std::string &channel);
+    virtual ResourceList category_videos(const std::string &category);
 
-    virtual VideoList feed();
+    virtual ResourceList channel_videos(const std::string &channel);
+
+    virtual ResourceList playlist_videos(const std::string &channel);
+
+    virtual ResourceList feed();
 
     virtual void cancel();
 

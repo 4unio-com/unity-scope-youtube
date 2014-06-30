@@ -10,7 +10,9 @@ configure_file(
 add_library(
   ${SCOPE_NAME}-static OBJECT
   youtube/api/simple-oauth.cpp
+  youtube/api/channel.cpp
   youtube/api/client.cpp
+  youtube/api/playlist.cpp
   youtube/api/video.cpp
   youtube/api/video-category.cpp
   youtube/scope/preview.cpp

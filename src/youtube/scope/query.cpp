@@ -18,6 +18,9 @@
 
 #include <boost/algorithm/string/trim.hpp>
 
+#include <youtube/api/channel.h>
+#include <youtube/api/playlist.h>
+
 #include <youtube/scope/query.h>
 
 #include <unity/scopes/Annotation.h>
@@ -33,7 +36,8 @@ using namespace std;
 using namespace youtube::api;
 using namespace youtube::scope;
 
-const static string SEARCH_CATEGORY_TEMPLATE = R"(
+const static string SEARCH_CATEGORY_TEMPLATE =
+        R"(
 {
   "schema-version": 1,
   "template": {
@@ -52,7 +56,8 @@ const static string SEARCH_CATEGORY_TEMPLATE = R"(
 }
 )";
 
-const static string SEARCH_CATEGORY_LOGIN_NAG = R"(
+const static string SEARCH_CATEGORY_LOGIN_NAG =
+        R"(
 {
   "schema-version": 1,
   "template": {
@@ -95,38 +100,89 @@ void Query::run(sc::SearchReplyProxy const& reply) {
 
         string query_string = alg::trim_copy(query.query_string());
 
-        Client::VideoList videos;
+        Client::ResourceList resources;
 
         if (query_string.empty()) {
-
             sc::Department::SPtr all_depts = sc::Department::create("", query,
                     "My Feed");
-            for (VideoCategory::Ptr channel : client_.video_categories()) {
+            for (VideoCategory::Ptr videoCategory : client_.video_categories()) {
                 sc::Department::SPtr dept = sc::Department::create(
-                        channel->id(), query, channel->name());
+                        "videoCategory:" + videoCategory->id(), query,
+                        videoCategory->title());
                 all_depts->add_subdepartment(dept);
             }
-            reply->register_departments(all_depts);
 
-            if (!query.department_id().empty()) {
-                videos = client_.category_videos(query.department_id());
+            string department_id = query.department_id();
+            if (!department_id.empty()) {
+
+                if (department_id.find("videoCategory:") == 0) {
+                    resources = client_.category_videos(
+                            department_id.substr(14));
+                } else if (department_id.find("channel:") == 0) {
+                    sc::Department::SPtr dummy_dept = sc::Department::create(
+                            department_id, query, "Channel Department");
+                    all_depts->add_subdepartment(dummy_dept);
+                    resources = client_.channel_videos(department_id.substr(8));
+                } else if (department_id.find("playlist:") == 0) {
+                    sc::Department::SPtr dummy_dept = sc::Department::create(
+                            department_id, query, "Channel Playlist");
+                    all_depts->add_subdepartment(dummy_dept);
+                    resources = client_.playlist_videos(department_id.substr(9));
+                }
             } else {
-                videos = client_.feed();
+                resources = client_.feed();
             }
+
+            reply->register_departments(all_depts);
         } else {
-            videos = client_.videos(query_string);
+            resources = client_.search(query_string);
         }
 
         auto cat = reply->register_category("youtube", "Youtube", "",
                 sc::CategoryRenderer(SEARCH_CATEGORY_TEMPLATE));
 
-        for (Video::Ptr video : videos) {
+        for (const Resource::Ptr& resource : resources) {
             sc::CategorisedResult res(cat);
-            res.set_uri(video->uri());
-            res.set_title(video->name());
-            res.set_art(video->picture());
-            res["description"] = video->description();
-            res["username"] = video->username();
+            res.set_title(resource->title());
+            res.set_art(resource->picture());
+
+            sc::CannedQuery new_query("unity-scope-youtube");
+
+            switch (resource->kind()) {
+            case Resource::Kind::channel: {
+                Channel::Ptr channel(static_pointer_cast<Channel>(resource));
+
+                sc::FilterState filter_state;
+                new_query.set_department_id("channel:" + channel->id());
+                res.set_uri(new_query.to_uri());
+
+                break;
+            }
+            case Resource::Kind::playlist: {
+                Playlist::Ptr playlist(static_pointer_cast<Playlist>(resource));
+
+                new_query.set_department_id("playlist:" + playlist->id());
+                res.set_uri(new_query.to_uri());
+
+                break;
+            }
+            case Resource::Kind::video: {
+                Video::Ptr video(static_pointer_cast<Video>(resource));
+
+                res["link"] = video->link();
+                res["description"] = video->description();
+                res["username"] = video->username();
+
+                res.set_uri(video->id());
+
+                break;
+            }
+            case Resource::Kind::videoCategory: {
+                VideoCategory::Ptr videoCategory(
+                        static_pointer_cast<VideoCategory>(resource));
+                break;
+            }
+            }
 
             if (!reply->push(res)) {
                 return;
