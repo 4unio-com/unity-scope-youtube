@@ -37,7 +37,8 @@ using namespace youtube::api;
 using namespace std;
 
 Client::Client(Config::Ptr config, int cardinality, const string& locale) :
-        config_(config), cardinality_(cardinality), locale_(locale), cancelled_(
+        config_(config), cardinality_(cardinality == 0 ? 6 : cardinality), locale_(
+                locale), cancelled_(
         false) {
 }
 
@@ -78,7 +79,7 @@ void Client::get(const deque<string> &path,
         configuration.header.add("Authorization",
                 "bearer " + config_->access_token);
     } else {
-        complete_parameters.emplace_back("key", config_->api_key );
+        complete_parameters.emplace_back("key", config_->api_key);
     }
     configuration.uri = make_uri(config_->apiroot, path, complete_parameters,
             client);
@@ -181,9 +182,8 @@ Client::GuideCategoryList Client::guide_categories() {
 
 Client::ChannelList Client::category_channels(const string &categoryId) {
     json::Value root;
-    get( { "youtube", "v3", "channels" },
-            { { "part", "snippet,contentDetails" }, { "categoryId", categoryId } },
-            root);
+    get( { "youtube", "v3", "channels" }, { { "part", "snippet" }, {
+            "categoryId", categoryId } }, root);
     return get_typed_list<Channel>("youtube#channel", root);
 }
 

@@ -117,23 +117,28 @@ void Query::add_login_nag(const sc::SearchReplyProxy &reply) {
     reply->push(res);
 }
 
+void push_video(const sc::SearchReplyProxy &reply,
+        const sc::Category::SCPtr &category, const Video::Ptr &video) {
+    sc::CategorisedResult res(category);
+    res.set_title(video->title());
+    res.set_art(video->picture());
+    res["link"] = video->link();
+    res["description"] = video->description();
+    res["username"] = video->username();
+    res.set_uri(video->id());
+
+    if (!reply->push(res)) {
+        return;
+    }
+}
+
 void Query::run(sc::SearchReplyProxy const& reply) {
     try {
         const sc::CannedQuery &query(sc::SearchQueryBase::query());
         string query_string = alg::trim_copy(query.query_string());
 
-        auto cat = reply->register_category("dummy", "Popular Video", "",
+        auto popular = reply->register_category("youtube-popular", "", "",
                 sc::CategoryRenderer(SEARCH_VIDEO_TEMPLATE));
-        {
-            sc::CategorisedResult res(cat);
-            res.set_title("Popular video");
-            res.set_art("/usr/share/pixmaps/transmission.png");
-            res.set_uri("some_uri");
-            if (!reply->push(res)) {
-                return;
-            }
-        }
-
 //        Client::ResourceList resources;
 
         if (query_string.empty()) {
@@ -153,25 +158,28 @@ void Query::run(sc::SearchReplyProxy const& reply) {
 //                    resources = client_.category_channels(
 //                            department_id.substr(14));
                 } else if (department_id.find("guideCategory:") == 0) {
+                    bool first = true;
                     for (Channel::Ptr channel : client_.category_channels(
                             department_id.substr(14))) {
+                        Client::VideoList videos = client_.channel_videos(
+                                channel->id());
+                        auto it = videos.cbegin();
+
+                        if (first) {
+                            first = false;
+                            if (it != videos.cend()) {
+                                Video::Ptr video(*it);
+                                push_video(reply, popular, video);
+                                ++it;
+                            }
+                        }
+
                         auto cat = reply->register_category(channel->id(),
                                 channel->title(), "",
                                 sc::CategoryRenderer(SEARCH_CATEGORY_TEMPLATE));
-                        Client::VideoList videos = client_.channel_videos(
-                                channel->id());
-                        for (Video::Ptr video : videos) {
-                            sc::CategorisedResult res(cat);
-                            res.set_title(video->title());
-                            res.set_art(video->picture());
-                            res["link"] = video->link();
-                            res["description"] = video->description();
-                            res["username"] = video->username();
-                            res.set_uri(video->id());
-
-                            if (!reply->push(res)) {
-                                return;
-                            }
+                        for (; it != videos.cend(); ++it) {
+                            Video::Ptr video(*it);
+                            push_video(reply, cat, video);
                         }
                     }
                 } else if (department_id.find("channel:") == 0) {
