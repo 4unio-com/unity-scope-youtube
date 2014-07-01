@@ -77,7 +77,7 @@ void Client::get(const deque<string> &path,
     }
     if (config_->authenticated) {
         configuration.header.add("Authorization",
-                "bearer " + config_->access_token);
+                "Bearer " + config_->access_token);
     } else {
         complete_parameters.emplace_back("key", config_->api_key);
     }

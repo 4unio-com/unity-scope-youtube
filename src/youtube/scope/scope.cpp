@@ -40,7 +40,7 @@ void Scope::start(string const&, sc::RegistryProxy const&) {
         config_->apiroot = getenv("YOUTUBE_SCOPE_APIROOT");
     }
 
-    SimpleOAuth oauth("google");
+    SimpleOAuth oauth("youtube");
     SimpleOAuth::AuthData auth_data;
     if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") == nullptr) {
         auth_data = oauth.auth_data();
