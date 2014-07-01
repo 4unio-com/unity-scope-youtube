@@ -21,12 +21,12 @@
 #include <youtube/api/playlist.h>
 
 #include <core/net/error.h>
-#include <core/net/http/client.h>
 #include <core/net/http/content_type.h>
 #include <core/net/http/response.h>
 #include <json/json.h>
 
 #include <iostream>
+#include <future>
 #include <unordered_map>
 
 namespace http = core::net::http;
@@ -37,9 +37,16 @@ using namespace youtube::api;
 using namespace std;
 
 Client::Client(Config::Ptr config, int cardinality, const string& locale) :
-        config_(config), cardinality_(cardinality == 0 ? 6 : cardinality), locale_(
-                locale), cancelled_(
+        client_(http::make_client()), worker_ { [this]() {client_->run();} }, config_(
+                config), cardinality_(cardinality), locale_(locale), cancelled_(
         false) {
+}
+
+Client::~Client() {
+    client_->stop();
+    if (worker_.joinable()) {
+        worker_.join();
+    }
 }
 
 static string make_uri(const string host, const deque<string> &endpoints,
@@ -68,13 +75,8 @@ void Client::get(const deque<string> &path,
         const vector<pair<string, string>> &parameters, json::Value &root) {
     cancelled_ = false;
 
-    auto client = http::make_client();
-
     http::Request::Configuration configuration;
     vector<pair<string, string>> complete_parameters(parameters);
-    if (cardinality_ > 0) {
-        complete_parameters.emplace_back("maxResults", to_string(cardinality_));
-    }
     if (config_->authenticated) {
         configuration.header.add("Authorization",
                 "Bearer " + config_->access_token);
@@ -82,11 +84,11 @@ void Client::get(const deque<string> &path,
         complete_parameters.emplace_back("key", config_->api_key);
     }
     configuration.uri = make_uri(config_->apiroot, path, complete_parameters,
-            client);
+            client_);
     configuration.header.add("Accept", config_->accept);
     configuration.header.add("User-Agent", config_->user_agent);
 
-    auto request = client->head(configuration);
+    auto request = client_->head(configuration);
 
     try {
         auto response = request->execute(
@@ -187,20 +189,28 @@ Client::ChannelList Client::category_channels(const string &categoryId) {
     return get_typed_list<Channel>("youtube#channel", root);
 }
 
-Client::VideoList Client::channel_videos(const string &channel) {
+Client::ChannelSectionList Client::channel_sections(const string &channelId,
+        int maxResults) {
+    json::Value root;
+    get( { "youtube", "v3", "channelSections" },
+            { { "part", "contentDetails" }, { "channelId", channelId }, {
+                    "maxResults", to_string(maxResults) } }, root);
+    return get_typed_list<ChannelSection>("youtube#channelSection", root);
+}
+
+Client::VideoList Client::channel_videos(const string &channelId) {
     json::Value root;
     get( { "youtube", "v3", "search" }, { { "part", "snippet" }, { "type",
-            "video" }, { "order", "viewCount" }, { "channelId", channel } },
+            "video" }, { "order", "viewCount" }, { "channelId", channelId } },
             root);
     return get_typed_list<Video>("youtube#video", root);
 }
 
-Client::VideoList Client::playlist_videos(const string &playlist) {
+Client::PlaylistItemList Client::playlist_items(const string &playlistId) {
     json::Value root;
-    get( { "youtube", "v3", "search" }, { { "part", "snippet" }, { "type",
-            "video" }, { "order", "viewCount" }, { "playlistId", playlist } },
-            root);
-    return get_typed_list<Video>("youtube#video", root);
+    get( { "youtube", "v3", "playlistItems" }, { { "part",
+            "snippet,contentDetails" }, { "playlistId", playlistId } }, root);
+    return get_typed_list<PlaylistItem>("youtube#playlistItem", root);
 }
 
 Client::ResourceList Client::feed() {

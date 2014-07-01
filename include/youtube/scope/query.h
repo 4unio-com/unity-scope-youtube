@@ -32,7 +32,7 @@ public:
     Query(const unity::scopes::CannedQuery &query,
             const unity::scopes::SearchMetadata &metadata, youtube::api::Config::Ptr config);
 
-    ~Query() = default;
+    ~Query();
 
     void cancelled() override;
 

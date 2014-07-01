@@ -103,6 +103,9 @@ Query::Query(const sc::CannedQuery &query, const sc::SearchMetadata &metadata,
                 metadata.cardinality(), metadata.locale()) {
 }
 
+Query::~Query() {
+}
+
 void Query::cancelled() {
     client_.cancel();
 }
@@ -117,6 +120,23 @@ void Query::add_login_nag(const sc::SearchReplyProxy &reply) {
     reply->push(res);
 }
 
+void push_playlist_item(const sc::SearchReplyProxy &reply,
+        const sc::Category::SCPtr &category, const PlaylistItem::Ptr &item) {
+    sc::CategorisedResult res(category);
+    res.set_title(item->title());
+    res.set_art(item->picture());
+    res["link"] = item->link();
+    res["description"] = item->description();
+    res["username"] = item->username();
+    res.set_uri(item->id());
+
+    cerr << "    item: " << item->id() << " " << item->title() << endl;
+
+    if (!reply->push(res)) {
+        return;
+    }
+}
+
 void push_video(const sc::SearchReplyProxy &reply,
         const sc::Category::SCPtr &category, const Video::Ptr &video) {
     sc::CategorisedResult res(category);
@@ -126,6 +146,8 @@ void push_video(const sc::SearchReplyProxy &reply,
     res["description"] = video->description();
     res["username"] = video->username();
     res.set_uri(video->id());
+
+    cerr << "    video: " << video->id() << " " << video->title() << endl;
 
     if (!reply->push(res)) {
         return;
@@ -144,12 +166,17 @@ void Query::run(sc::SearchReplyProxy const& reply) {
         if (query_string.empty()) {
             sc::Department::SPtr all_depts = sc::Department::create("", query,
                     "My Feed");
+            cerr << "Categories:" << endl;
             for (GuideCategory::Ptr category : client_.guide_categories()) {
                 sc::Department::SPtr dept = sc::Department::create(
                         "guideCategory:" + category->id(), query,
                         category->title());
+
+                cerr << "  guideCategory: " << category->id() << " "
+                        << category->title() << endl;
                 all_depts->add_subdepartment(dept);
             }
+            reply->register_departments(all_depts);
 
             string department_id = query.department_id();
             if (!department_id.empty()) {
@@ -159,17 +186,42 @@ void Query::run(sc::SearchReplyProxy const& reply) {
 //                            department_id.substr(14));
                 } else if (department_id.find("guideCategory:") == 0) {
                     bool first = true;
+                    cerr << "Finding channels" << endl;
                     for (Channel::Ptr channel : client_.category_channels(
                             department_id.substr(14))) {
-                        Client::VideoList videos = client_.channel_videos(
-                                channel->id());
-                        auto it = videos.cbegin();
+                        cerr << "  channel: " << channel->id() << " "
+                                << channel->title() << endl;
+                        Client::ChannelSectionList sections =
+                                client_.channel_sections(channel->id(), 1);
+
+                        ChannelSection::Ptr section;
+                        for (auto it : sections) {
+                            if (!it->playlist_id().empty()) {
+                                section = it;
+                                break;
+                            }
+                        }
+
+                        cerr << "  section: " << section->id() << " "
+                                << section->playlist_id() << endl;
+
+                        if (!section) {
+                            cerr << "    empty playlist" << endl;
+                            continue;
+                        }
+
+                        Client::PlaylistItemList items = client_.playlist_items(
+                                section->playlist_id());
+
+//                        Client::VideoList videos = client_.channel_videos(
+//                                channel->id());
+                        auto it = items.cbegin();
 
                         if (first) {
                             first = false;
-                            if (it != videos.cend()) {
-                                Video::Ptr video(*it);
-                                push_video(reply, popular, video);
+                            if (it != items.cend()) {
+                                PlaylistItem::Ptr video(*it);
+                                push_playlist_item(reply, popular, video);
                                 ++it;
                             }
                         }
@@ -177,9 +229,9 @@ void Query::run(sc::SearchReplyProxy const& reply) {
                         auto cat = reply->register_category(channel->id(),
                                 channel->title(), "",
                                 sc::CategoryRenderer(SEARCH_CATEGORY_TEMPLATE));
-                        for (; it != videos.cend(); ++it) {
-                            Video::Ptr video(*it);
-                            push_video(reply, cat, video);
+                        for (; it != items.cend(); ++it) {
+                            PlaylistItem::Ptr video(*it);
+                            push_playlist_item(reply, cat, video);
                         }
                     }
                 } else if (department_id.find("channel:") == 0) {
@@ -198,7 +250,6 @@ void Query::run(sc::SearchReplyProxy const& reply) {
 //                resources = client_.feed();
             }
 
-            reply->register_departments(all_depts);
         } else {
 //            resources = client_.search(query_string);
         }

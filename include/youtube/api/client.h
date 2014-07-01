@@ -21,7 +21,9 @@
 
 #include <youtube/api/config.h>
 #include <youtube/api/channel.h>
+#include <youtube/api/channel-section.h>
 #include <youtube/api/guide-category.h>
+#include <youtube/api/playlist-item.h>
 #include <youtube/api/video.h>
 #include <youtube/api/video-category.h>
 
@@ -29,6 +31,9 @@
 #include <deque>
 #include <vector>
 #include <string>
+#include <thread>
+
+#include <core/net/http/client.h>
 #include <core/net/http/request.h>
 
 namespace Json {
@@ -44,15 +49,19 @@ public:
 
     typedef std::deque<Channel::Ptr> ChannelList;
 
+    typedef std::deque<ChannelSection::Ptr> ChannelSectionList;
+
     typedef std::deque<GuideCategory::Ptr> GuideCategoryList;
 
     typedef std::deque<VideoCategory::Ptr> VideoCategoryList;
+
+    typedef std::deque<PlaylistItem::Ptr> PlaylistItemList;
 
     typedef std::deque<Video::Ptr> VideoList;
 
     Client(Config::Ptr config, int cardinality, const std::string& locale);
 
-    virtual ~Client() = default;
+    virtual ~Client();
 
     virtual VideoCategoryList video_categories();
 
@@ -62,9 +71,12 @@ public:
 
     virtual ChannelList category_channels(const std::string &categoryId);
 
-    virtual VideoList channel_videos(const std::string &channel);
+    virtual ChannelSectionList channel_sections(const std::string &channelId,
+            int maxResults);
 
-    virtual VideoList playlist_videos(const std::string &playlist);
+    virtual VideoList channel_videos(const std::string &channelId);
+
+    virtual PlaylistItemList playlist_items(const std::string &playlistId);
 
     virtual ResourceList feed();
 
@@ -79,6 +91,10 @@ protected:
 
     core::net::http::Request::Progress::Next progress_report(
             const core::net::http::Request::Progress& progress);
+
+    std::shared_ptr<core::net::http::Client> client_;
+
+    std::thread worker_;
 
     Config::Ptr config_;
 

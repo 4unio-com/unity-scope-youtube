@@ -16,37 +16,45 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
-#ifndef YOUTUBE_API_RESOURCE_H_
-#define YOUTUBE_API_RESOURCE_H_
+#ifndef YOUTUBE_API_CHANNELSECTION_H_
+#define YOUTUBE_API_CHANNELSECTION_H_
+
+#include <youtube/api/resource.h>
 
 #include <memory>
-#include <string>
+
+namespace Json {
+class Value;
+}
 
 namespace youtube {
 namespace api {
 
-class Resource {
+class ChannelSection: public Resource {
 public:
-    enum class Kind {
-        channel, channelSection, guideCategory, playlist, playlistItem, video, videoCategory
-    };
+    typedef std::shared_ptr<ChannelSection> Ptr;
 
-    typedef std::shared_ptr<Resource> Ptr;
+    ChannelSection(const Json::Value &data);
 
-    Resource() = default;
+    ~ChannelSection() = default;
 
-    virtual ~Resource() = default;
+    const std::string & title() const override;
 
-    virtual const std::string & title() const = 0;
+    const std::string & picture() const override;
 
-    virtual const std::string & picture() const = 0;
+    const std::string & id() const override;
 
-    virtual const std::string & id() const = 0;
+    const std::string & playlist_id() const;
 
-    virtual Kind kind() const = 0;
+    Kind kind() const override;
+
+protected:
+    std::string id_;
+
+    std::string playlist_id_;
 };
 
 }
 }
 
-#endif // YOUTUBE_API_RESOURCE_H_
+#endif /* YOUTUBE_API_CHANNELSECTION_H_ */
