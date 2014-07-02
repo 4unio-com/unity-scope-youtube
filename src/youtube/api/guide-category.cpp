@@ -30,11 +30,11 @@ GuideCategory::GuideCategory(const json::Value &data) {
     id_ = data["id"].asString();
 
     json::Value snippet = data["snippet"];
-    name_ = snippet["title"].asString();
+    title_ = snippet["title"].asString();
 }
 
 const std::string & GuideCategory::title() const {
-    return name_;
+    return title_;
 }
 
 const std::string & GuideCategory::picture() const {
