@@ -38,7 +38,7 @@ using namespace youtube::api;
 using namespace youtube::scope;
 
 namespace {
-const static string SEARCH_CATEGORY_TEMPLATE =
+const static string BROWSE_TEMPLATE =
         R"(
 {
   "schema-version": 1,
@@ -59,7 +59,27 @@ const static string SEARCH_CATEGORY_TEMPLATE =
 }
 )";
 
-const static string SEARCH_VIDEO_TEMPLATE =
+const static string SEARCH_TEMPLATE =
+        R"(
+{
+  "schema-version": 1,
+  "template": {
+    "category-layout": "grid",
+    "card-size": "medium",
+    "card-layout": "horizontal"
+  },
+  "components": {
+    "title": "title",
+    "art" : {
+      "field": "art",
+      "aspect-ratio": 1.7
+    },
+    "subtitle": "username"
+  }
+}
+)";
+
+const static string POPULAR_TEMPLATE =
         R"(
 {
   "schema-version": 1,
@@ -167,7 +187,7 @@ void Query::add_login_nag(const sc::SearchReplyProxy &reply) {
 void Query::guide_category(const sc::SearchReplyProxy &reply,
         const string &department_id) {
     auto popular = reply->register_category("youtube-popular", "", "",
-            sc::CategoryRenderer(SEARCH_VIDEO_TEMPLATE));
+            sc::CategoryRenderer(POPULAR_TEMPLATE));
 
     bool first = true;
     cerr << "Finding channels: " << department_id << endl;
@@ -211,7 +231,6 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
         auto it = items.cbegin();
 
         if (first) {
-            cerr << "debug 6" << endl;
             first = false;
             if (it != items.cend()) {
                 PlaylistItem::Ptr video(*it);
@@ -221,7 +240,7 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
         }
 
         auto cat = reply->register_category(channel->id(), channel->title(), "",
-                sc::CategoryRenderer(SEARCH_CATEGORY_TEMPLATE));
+                sc::CategoryRenderer(BROWSE_TEMPLATE));
         for (; it != items.cend(); ++it) {
             PlaylistItem::Ptr video(*it);
             push_playlist_item(reply, cat, video);
@@ -276,12 +295,12 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
 
 void Query::search(const sc::SearchReplyProxy &reply,
         const string &query_string) {
-    auto cat = reply->register_category("youtube", "Youtube", "",
-            sc::CategoryRenderer(SEARCH_CATEGORY_TEMPLATE));
-
     auto resources_future = client_.search(query_string);
     auto resources = get_or_throw(resources_future);
 
+    auto cat = reply->register_category("youtube",
+            to_string(resources.size()) + " results from Youtube", "",
+            sc::CategoryRenderer(SEARCH_TEMPLATE));
     for (const Resource::Ptr& resource : resources) {
         sc::CategorisedResult res(cat);
         res.set_title(resource->title());
