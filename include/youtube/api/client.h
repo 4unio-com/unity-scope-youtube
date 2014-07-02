@@ -24,6 +24,7 @@
 #include <youtube/api/channel-section.h>
 #include <youtube/api/guide-category.h>
 #include <youtube/api/playlist-item.h>
+#include <youtube/api/search-list-response.h>
 #include <youtube/api/video.h>
 #include <youtube/api/video-category.h>
 
@@ -46,8 +47,6 @@ namespace api {
 
 class Client {
 public:
-    typedef std::deque<Resource::Ptr> ResourceList;
-
     typedef std::deque<Channel::Ptr> ChannelList;
 
     typedef std::deque<ChannelSection::Ptr> ChannelSectionList;
@@ -68,7 +67,7 @@ public:
 
     virtual std::future<GuideCategoryList> guide_categories();
 
-    virtual std::future<ResourceList> search(const std::string &query = std::string());
+    virtual std::future<SearchListResponse::Ptr> search(const std::string &query = std::string());
 
     virtual std::future<ChannelList> category_channels(const std::string &categoryId);
 
@@ -78,8 +77,6 @@ public:
     virtual std::future<VideoList> channel_videos(const std::string &channelId);
 
     virtual std::future<PlaylistItemList> playlist_items(const std::string &playlistId);
-
-    virtual std::future<ResourceList> feed();
 
     virtual void cancel();
 

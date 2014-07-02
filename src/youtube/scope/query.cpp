@@ -105,7 +105,7 @@ const static string SEARCH_CATEGORY_LOGIN_NAG =
   "schema-version": 1,
   "template": {
     "category-layout": "grid",
-    "card-size": "large",
+    "card-total_results": "large",
     "card-background": "color:///#DD4814"
   },
   "components": {
@@ -299,9 +299,9 @@ void Query::search(const sc::SearchReplyProxy &reply,
     auto resources = get_or_throw(resources_future);
 
     auto cat = reply->register_category("youtube",
-            to_string(resources.size()) + " results from Youtube", "",
+            to_string(resources->total_results()) + " results from Youtube", "",
             sc::CategoryRenderer(SEARCH_TEMPLATE));
-    for (const Resource::Ptr& resource : resources) {
+    for (const Resource::Ptr& resource : resources->items()) {
         sc::CategorisedResult res(cat);
         res.set_title(resource->title());
         res.set_art(resource->picture());

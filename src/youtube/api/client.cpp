@@ -28,7 +28,6 @@
 #include <json/json.h>
 
 #include <iostream>
-#include <unordered_map>
 
 namespace http = core::net::http;
 namespace json = Json;
@@ -39,16 +38,7 @@ using namespace youtube::api;
 using namespace std;
 
 namespace {
-static unordered_map<string, function<Resource::Ptr(const json::Value &)>> TYPES =
-        { { "youtube#videoCategory", [](const json::Value &value) {
-            return make_shared<VideoCategory>(value);
-        } }, { "youtube#video", [](const json::Value &value) {
-            return make_shared<Video>(value);
-        } }, { "youtube#channel", [](const json::Value &value) {
-            return make_shared<Channel>(value);
-        } }, { "youtube#playlist", [](const json::Value &value) {
-            return make_shared<Playlist>(value);
-        } } };
+
 
 template<typename T>
 static deque<shared_ptr<T>> get_typed_list(const string &filter,
@@ -65,27 +55,6 @@ static deque<shared_ptr<T>> get_typed_list(const string &filter,
 
         if (kind == filter) {
             results.emplace_back(make_shared<T>(item));
-        }
-    }
-    return results;
-}
-
-static Client::ResourceList get_list(const json::Value &root) {
-    Client::ResourceList results;
-    json::Value data = root["items"];
-    for (json::ArrayIndex index = 0; index < data.size(); ++index) {
-        json::Value item = data[index];
-        string kind = item["kind"].asString();
-        if (kind == "youtube#searchResult") {
-            kind = item["id"]["kind"].asString();
-        }
-        const auto f = TYPES.find(kind);
-        if (f == TYPES.cend()) {
-            cerr << "Couldn't create type: " << kind << endl;
-            cerr << item.toStyledString() << endl;
-            cerr << "------------------" << endl;
-        } else {
-            results.emplace_back(f->second(item));
         }
     }
     return results;
@@ -217,12 +186,12 @@ Client::Client(Config::Ptr config, int cardinality, const string& locale) :
         p(new Priv(config, cardinality, locale)) {
 }
 
-future<Client::ResourceList> Client::search(const string &query) {
-    return p->async_get<ResourceList>( { "youtube", "v3", "search" }, { {
-            "part", "snippet" }, { "maxResults", "10" }, { "q", query } },
-            [](const json::Value &root) {
-                return get_list(root);
-            });
+future<SearchListResponse::Ptr> Client::search(const string &query) {
+    return p->async_get<SearchListResponse::Ptr>( { "youtube", "v3", "search" }, { {
+            "part", "snippet" }, { "type", "video" }, { "maxResults", "10" }, {
+            "q", query } }, [](const json::Value &root) {
+        return make_shared<SearchListResponse>(root);
+    });
 }
 
 future<Client::VideoCategoryList> Client::video_categories() {
@@ -280,14 +249,6 @@ future<Client::PlaylistItemList> Client::playlist_items(
             { { "part", "snippet,contentDetails" }, { "playlistId", playlistId } },
             [](const json::Value &root) {
                 return get_typed_list<PlaylistItem>("youtube#playlistItem", root);
-            });
-}
-
-future<Client::ResourceList> Client::feed() {
-    return p->async_get<ResourceList>( { "youtube", "v3", "videos" }, { {
-            "part", "snippet" }, { "chart", "mostPopular" } },
-            [](const json::Value &root) {
-                return get_list(root);
             });
 }
 
