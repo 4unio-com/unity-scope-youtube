@@ -29,9 +29,10 @@
 
 #include <atomic>
 #include <deque>
-#include <vector>
+#include <future>
 #include <string>
 #include <thread>
+#include <vector>
 
 #include <core/net/http/client.h>
 #include <core/net/http/request.h>
@@ -61,48 +62,34 @@ public:
 
     Client(Config::Ptr config, int cardinality, const std::string& locale);
 
-    virtual ~Client();
+    virtual ~Client() = default;
 
-    virtual VideoCategoryList video_categories();
+    virtual std::future<VideoCategoryList> video_categories();
 
-    virtual GuideCategoryList guide_categories();
+    virtual std::future<GuideCategoryList> guide_categories();
 
-    virtual ResourceList search(const std::string &query = std::string());
+    virtual std::future<ResourceList> search(const std::string &query = std::string());
 
-    virtual ChannelList category_channels(const std::string &categoryId);
+    virtual std::future<ChannelList> category_channels(const std::string &categoryId);
 
-    virtual ChannelSectionList channel_sections(const std::string &channelId,
+    virtual std::future<ChannelSectionList> channel_sections(const std::string &channelId,
             int maxResults);
 
-    virtual VideoList channel_videos(const std::string &channelId);
+    virtual std::future<VideoList> channel_videos(const std::string &channelId);
 
-    virtual PlaylistItemList playlist_items(const std::string &playlistId);
+    virtual std::future<PlaylistItemList> playlist_items(const std::string &playlistId);
 
-    virtual ResourceList feed();
+    virtual std::future<ResourceList> feed();
 
     virtual void cancel();
 
     virtual Config::Ptr config();
 
 protected:
-    void get(const std::deque<std::string> &endpoint,
-            const std::vector<std::pair<std::string, std::string>> &querys,
-            Json::Value &root);
+    class Priv;
+    friend Priv;
 
-    core::net::http::Request::Progress::Next progress_report(
-            const core::net::http::Request::Progress& progress);
-
-    std::shared_ptr<core::net::http::Client> client_;
-
-    std::thread worker_;
-
-    Config::Ptr config_;
-
-    int cardinality_;
-
-    std::string locale_;
-
-    std::atomic<bool> cancelled_;
+    std::shared_ptr<Priv> p;
 };
 
 }

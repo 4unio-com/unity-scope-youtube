@@ -30,7 +30,8 @@ namespace scope {
 class Query: public unity::scopes::SearchQueryBase {
 public:
     Query(const unity::scopes::CannedQuery &query,
-            const unity::scopes::SearchMetadata &metadata, youtube::api::Config::Ptr config);
+            const unity::scopes::SearchMetadata &metadata,
+            youtube::api::Config::Ptr config);
 
     ~Query();
 
@@ -40,6 +41,14 @@ public:
 
 private:
     void add_login_nag(const unity::scopes::SearchReplyProxy &reply);
+
+    void guide_category(const unity::scopes::SearchReplyProxy &reply,
+            const std::string &department_id);
+
+    void surfacing(const unity::scopes::SearchReplyProxy &reply);
+
+    void search(const unity::scopes::SearchReplyProxy &reply,
+            const std::string &query_string);
 
     youtube::api::Client client_;
 };
