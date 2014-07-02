@@ -20,6 +20,8 @@
 #include <youtube/api/client.h>
 #include <youtube/api/playlist.h>
 
+#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
 #include <core/net/error.h>
 #include <core/net/http/content_type.h>
 #include <core/net/http/response.h>
@@ -30,6 +32,7 @@
 
 namespace http = core::net::http;
 namespace json = Json;
+namespace io = boost::iostreams;
 namespace net = core::net;
 
 using namespace youtube::api;
@@ -155,7 +158,8 @@ public:
         configuration.uri = make_uri(config_->apiroot, path,
                 complete_parameters, client_);
         configuration.header.add("Accept", config_->accept);
-        configuration.header.add("User-Agent", config_->user_agent);
+        configuration.header.add("User-Agent", config_->user_agent + " (gzip)");
+        configuration.header.add("Accept-Encoding", "gzip");
 
         auto request = client_->head(configuration);
         request->async_execute(handler);
@@ -184,9 +188,17 @@ public:
         handler.on_response(
                 [prom,func](const http::Response& response)
                 {
+                    string decompressed;
+
+                    io::filtering_ostream os;
+                    os.push(io::gzip_decompressor());
+                    os.push(io::back_inserter(decompressed));
+                    os << response.body;
+                    boost::iostreams::close(os);
+
                     json::Value root;
                     json::Reader reader;
-                    reader.parse(response.body, root);
+                    reader.parse(decompressed, root);
 
                     if (response.status != http::Status::ok) {
                         prom->set_exception(make_exception_ptr(domain_error(root["error"].asString())));
