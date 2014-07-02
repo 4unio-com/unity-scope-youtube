@@ -98,6 +98,14 @@ const static string SEARCH_CATEGORY_LOGIN_NAG =
 }
 )";
 
+template<typename T>
+static T get_or_throw(future<T> &f) {
+    if (f.wait_for(std::chrono::seconds(5)) != future_status::ready) {
+        throw domain_error("Timeout");
+    }
+    return f.get();
+}
+
 static void push_playlist_item(const sc::SearchReplyProxy &reply,
         const sc::Category::SCPtr &category, const PlaylistItem::Ptr &item) {
     sc::CategorisedResult res(category);
@@ -162,22 +170,24 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
             sc::CategoryRenderer(SEARCH_VIDEO_TEMPLATE));
 
     bool first = true;
-    cerr << "Finding channels" << endl;
+    cerr << "Finding channels: " << department_id << endl;
 
-    auto channels = client_.category_channels(department_id.substr(14)).get();
+    auto channels_future = client_.category_channels(department_id.substr(14));
+    auto channels = get_or_throw(channels_future);
     deque<future<Client::ChannelSectionList>> channel_section_futures;
     for (Channel::Ptr channel : channels) {
-        cerr << "  channel: " << channel->id() << " " << channel->title()
-                << endl;
         channel_section_futures.emplace_back(
                 client_.channel_sections(channel->id(), 1));
+        cerr << "  channel: " << channel->id() << " " << channel->title()
+                << endl;
     }
 
     int channel_number = 0;
     for (future<Client::ChannelSectionList> &channel_section_future : channel_section_futures) {
-        Channel::Ptr channel = channels.at(channel_number);
+        Channel::Ptr channel = channels.at(channel_number++);
 
-        Client::ChannelSectionList sections = channel_section_future.get();
+        Client::ChannelSectionList sections = get_or_throw(
+                channel_section_future);
 
         ChannelSection::Ptr section;
         for (auto it : sections) {
@@ -187,20 +197,21 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
             }
         }
 
-        cerr << "  section: " << section->id() << " " << section->playlist_id()
-                << endl;
-
         if (!section) {
             cerr << "    empty playlist" << endl;
             continue;
         }
 
-        Client::PlaylistItemList items = client_.playlist_items(
-                section->playlist_id()).get();
+        cerr << "  section: " << section->id() << " " << section->playlist_id()
+                << endl;
+
+        auto playlist_future = client_.playlist_items(section->playlist_id());
+        Client::PlaylistItemList items = get_or_throw(playlist_future);
 
         auto it = items.cbegin();
 
         if (first) {
+            cerr << "debug 6" << endl;
             first = false;
             if (it != items.cend()) {
                 PlaylistItem::Ptr video(*it);
@@ -215,18 +226,28 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
             PlaylistItem::Ptr video(*it);
             push_playlist_item(reply, cat, video);
         }
-
-        ++channel_number;
     }
 }
 
 void Query::surfacing(const sc::SearchReplyProxy &reply) {
     const sc::CannedQuery &query(sc::SearchQueryBase::query());
 
-    sc::Department::SPtr all_depts = sc::Department::create("", query,
-            "My Feed");
-
+    sc::Department::SPtr all_depts;
+    bool first_dept = true;
     auto categories_future = client_.guide_categories();
+    auto categories = get_or_throw(categories_future);
+    for (GuideCategory::Ptr category : categories) {
+        if (first_dept) {
+            first_dept = false;
+            all_depts = sc::Department::create("", query, category->title());
+        } else {
+            sc::Department::SPtr dept = sc::Department::create(
+                    "guideCategory:" + category->id(), query,
+                    category->title());
+            all_depts->add_subdepartment(dept);
+        }
+    }
+    reply->register_departments(all_depts);
 
     string department_id = query.department_id();
     if (!department_id.empty()) {
@@ -248,19 +269,9 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
 //                            department_id.substr(9));
         }
     } else {
+        guide_category(reply, "guideCategory:" + categories.at(0)->id());
 //                resources = client_.feed();
     }
-
-    for (GuideCategory::Ptr category : categories_future.get()) {
-        sc::Department::SPtr dept = sc::Department::create(
-                "guideCategory:" + category->id(), query, category->title());
-
-        cerr << "  guideCategory: " << category->id() << " "
-                << category->title() << endl;
-        all_depts->add_subdepartment(dept);
-    }
-    reply->register_departments(all_depts);
-
 }
 
 void Query::search(const sc::SearchReplyProxy &reply,
@@ -268,7 +279,8 @@ void Query::search(const sc::SearchReplyProxy &reply,
     auto cat = reply->register_category("youtube", "Youtube", "",
             sc::CategoryRenderer(SEARCH_CATEGORY_TEMPLATE));
 
-    auto resources = client_.search(query_string).get();
+    auto resources_future = client_.search(query_string);
+    auto resources = get_or_throw(resources_future);
 
     for (const Resource::Ptr& resource : resources) {
         sc::CategorisedResult res(cat);
