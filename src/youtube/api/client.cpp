@@ -39,7 +39,6 @@ using namespace std;
 
 namespace {
 
-
 template<typename T>
 static deque<shared_ptr<T>> get_typed_list(const string &filter,
         const json::Value &root) {
@@ -88,7 +87,8 @@ class Client::Priv {
 public:
     Priv(Config::Ptr config, int cardinality, const string& locale) :
             client_(http::make_client()), worker_ { [this]() {client_->run();} }, config_(
-                    config), cardinality_(cardinality), locale_(locale), cancelled_(
+                    config), cardinality_(cardinality == 0 ? 10 : cardinality_), locale_(
+                    locale), cancelled_(
             false) {
     }
 
@@ -159,11 +159,16 @@ public:
                 {
                     string decompressed;
 
-                    io::filtering_ostream os;
-                    os.push(io::gzip_decompressor());
-                    os.push(io::back_inserter(decompressed));
-                    os << response.body;
-                    boost::iostreams::close(os);
+                    try {
+                        io::filtering_ostream os;
+                        os.push(io::gzip_decompressor());
+                        os.push(io::back_inserter(decompressed));
+                        os << response.body;
+                        boost::iostreams::close(os);
+                    } catch(io::gzip_error &e) {
+                        prom->set_exception(make_exception_ptr(e));
+                        return;
+                    }
 
                     json::Value root;
                     json::Reader reader;
@@ -187,11 +192,12 @@ Client::Client(Config::Ptr config, int cardinality, const string& locale) :
 }
 
 future<SearchListResponse::Ptr> Client::search(const string &query) {
-    return p->async_get<SearchListResponse::Ptr>( { "youtube", "v3", "search" }, { {
-            "part", "snippet" }, { "type", "video" }, { "maxResults", "10" }, {
-            "q", query } }, [](const json::Value &root) {
-        return make_shared<SearchListResponse>(root);
-    });
+    return p->async_get<SearchListResponse::Ptr>( { "youtube", "v3", "search" },
+            { { "part", "snippet" }, { "type", "video" }, { "maxResults",
+                    to_string(p->cardinality_) }, { "q", query } },
+            [](const json::Value &root) {
+                return make_shared<SearchListResponse>(root);
+            });
 }
 
 future<Client::VideoCategoryList> Client::video_categories() {

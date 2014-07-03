@@ -49,11 +49,11 @@ set(SYMBOL_MAP "${CMAKE_SOURCE_DIR}/data/${SCOPE_NAME}.map")
 
 add_subdirectory(src)
 add_subdirectory(data)
-#enable_testing()
-#add_subdirectory(tests)
+enable_testing()
+add_subdirectory(tests)
 
-#add_custom_target(
-#        check
-#        ${CMAKE_CTEST_COMMAND} --force-new-ctest-process --output-on-failure
-#)
+add_custom_target(
+        check
+        ${CMAKE_CTEST_COMMAND} --force-new-ctest-process --output-on-failure
+)
 
