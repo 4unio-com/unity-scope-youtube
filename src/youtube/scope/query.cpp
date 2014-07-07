@@ -30,6 +30,8 @@
 #include <unity/scopes/SearchReply.h>
 #include <unity/scopes/SearchMetadata.h>
 
+#include <sstream>
+
 namespace sc = unity::scopes;
 namespace alg = boost::algorithm;
 
@@ -159,6 +161,80 @@ static void push_video(const sc::SearchReplyProxy &reply,
         return;
     }
 }
+
+enum class DepartmentType {
+    guide_category, channel, playlist
+};
+
+enum class SectionType {
+    none, videos, playlists, channels
+};
+
+struct DepartmentPath {
+    DepartmentType department_type;
+    string department;
+    SectionType section_type = SectionType::none;
+
+    DepartmentPath(DepartmentType department_type_, const string &department_,
+            SectionType section_type_ = SectionType::none) :
+            department_type(department_type_), department(department_), section_type(
+                    section_type_) {
+    }
+
+    DepartmentPath(const string &s) {
+        if (s.find("guideCategory:") == 0) {
+            department_type = DepartmentType::guide_category;
+        } else if (s.find("guideCategory-videos:") == 0) {
+            department_type = DepartmentType::guide_category;
+            section_type = SectionType::videos;
+        } else if (s.find("guideCategory-playlists:") == 0) {
+            department_type = DepartmentType::guide_category;
+            section_type = SectionType::playlists;
+        } else if (s.find("guideCategory-channels:") == 0) {
+            department_type = DepartmentType::guide_category;
+            section_type = SectionType::channels;
+        } else if (s.find("channel:") == 0) {
+            department_type = DepartmentType::channel;
+        } else if (s.find("playlist:") == 0) {
+            department_type = DepartmentType::playlist;
+        }
+
+        department = s.substr(s.find(':') + 1);
+    }
+
+    string to_string() const {
+        ostringstream result;
+        switch (department_type) {
+        case DepartmentType::guide_category: {
+            switch (section_type) {
+            case SectionType::none:
+                result << "guideCategory:";
+                break;
+            case SectionType::videos:
+                result << "guideCategory-videos:";
+                break;
+            case SectionType::playlists:
+                result << "guideCategory-playlists:";
+                break;
+            case SectionType::channels:
+                result << "guideCategory-channels:";
+                break;
+            }
+            break;
+        }
+        case DepartmentType::playlist:
+            result << "playlist:";
+            break;
+        case DepartmentType::channel:
+            result << "channel:";
+            break;
+        }
+
+        result << department;
+        return result.str();
+    }
+};
+
 }
 
 Query::Query(const sc::CannedQuery &query, const sc::SearchMetadata &metadata,
@@ -192,7 +268,7 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
     bool first = true;
     cerr << "Finding channels: " << department_id << endl;
 
-    auto channels_future = client_.category_channels(department_id.substr(14));
+    auto channels_future = client_.category_channels(department_id);
     auto channels = get_or_throw(channels_future);
     deque<future<Client::ChannelSectionList>> channel_section_futures;
     for (Channel::Ptr channel : channels) {
@@ -260,9 +336,10 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
             first_dept = false;
             all_depts = sc::Department::create("", query, category->title());
         } else {
-            sc::Department::SPtr dept = sc::Department::create(
-                    "guideCategory:" + category->id(), query,
-                    category->title());
+            DepartmentPath path { DepartmentType::guide_category,
+                    category->id(), SectionType::none };
+            sc::Department::SPtr dept = sc::Department::create(path.to_string(),
+                    query, category->title());
             all_depts->add_subdepartment(dept);
         }
     }
@@ -270,26 +347,16 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
 
     string department_id = query.department_id();
     if (!department_id.empty()) {
-        if (department_id.find("videoCategory:") == 0) {
-//                    resources = client_.category_channels(
-//                            department_id.substr(14));
-        } else if (department_id.find("guideCategory:") == 0) {
-            guide_category(reply, department_id);
-        } else if (department_id.find("channel:") == 0) {
-//                    sc::Department::SPtr dummy_dept = sc::Department::create(
-//                            department_id, query, "Channel Department");
-//                    all_depts->add_subdepartment(dummy_dept);
-//                    resources = client_.channel_videos(department_id.substr(8));
-        } else if (department_id.find("playlist:") == 0) {
-//                    sc::Department::SPtr dummy_dept = sc::Department::create(
-//                            department_id, query, "Channel Playlist");
-//                    all_depts->add_subdepartment(dummy_dept);
-//                    resources = client_.playlist_videos(
-//                            department_id.substr(9));
+        DepartmentPath path(department_id);
+        switch (path.department_type) {
+        case DepartmentType::guide_category:
+            guide_category(reply, path.department);
+            break;
+        default:
+            throw domain_error("Corrupt department ID");
         }
     } else {
-        guide_category(reply, "guideCategory:" + categories.at(0)->id());
-//                resources = client_.feed();
+        guide_category(reply, categories.at(0)->id());
     }
 }
 
