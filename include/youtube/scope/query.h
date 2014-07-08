@@ -39,10 +39,23 @@ public:
 
     void run(const unity::scopes::SearchReplyProxy &reply) override;
 
+protected:
+    youtube::api::Client::GuideCategoryList load_departments(
+            const unity::scopes::SearchReplyProxy &reply);
+
 private:
     void add_login_nag(const unity::scopes::SearchReplyProxy &reply);
 
     void guide_category(const unity::scopes::SearchReplyProxy &reply,
+            const std::string &department_id);
+
+    void guide_category_videos(const unity::scopes::SearchReplyProxy &reply,
+            const std::string &department_id);
+
+    void guide_category_channels(const unity::scopes::SearchReplyProxy &reply,
+            const std::string &department_id);
+
+    void guide_category_playlists(const unity::scopes::SearchReplyProxy &reply,
             const std::string &department_id);
 
     void surfacing(const unity::scopes::SearchReplyProxy &reply);

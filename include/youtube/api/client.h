@@ -23,10 +23,10 @@
 #include <youtube/api/channel.h>
 #include <youtube/api/channel-section.h>
 #include <youtube/api/guide-category.h>
+#include <youtube/api/playlist.h>
 #include <youtube/api/playlist-item.h>
 #include <youtube/api/search-list-response.h>
 #include <youtube/api/video.h>
-#include <youtube/api/video-category.h>
 
 #include <atomic>
 #include <deque>
@@ -53,17 +53,15 @@ public:
 
     typedef std::deque<GuideCategory::Ptr> GuideCategoryList;
 
-    typedef std::deque<VideoCategory::Ptr> VideoCategoryList;
-
     typedef std::deque<PlaylistItem::Ptr> PlaylistItemList;
+
+    typedef std::deque<Playlist::Ptr> PlaylistList;
 
     typedef std::deque<Video::Ptr> VideoList;
 
     Client(Config::Ptr config, int cardinality, const std::string& locale);
 
     virtual ~Client() = default;
-
-    virtual std::future<VideoCategoryList> video_categories();
 
     virtual std::future<GuideCategoryList> guide_categories();
 
@@ -75,6 +73,8 @@ public:
             int maxResults);
 
     virtual std::future<VideoList> channel_videos(const std::string &channelId);
+
+    virtual std::future<PlaylistList> channel_playlists(const std::string &channelId);
 
     virtual std::future<PlaylistItemList> playlist_items(const std::string &playlistId);
 

@@ -18,7 +18,6 @@ add_library(
   youtube/api/simple-oauth.cpp
   youtube/api/search-list-response.cpp
   youtube/api/video.cpp
-  youtube/api/video-category.cpp
   youtube/scope/preview.cpp
   youtube/scope/query.cpp
   youtube/scope/scope.cpp

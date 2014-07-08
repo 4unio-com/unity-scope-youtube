@@ -200,17 +200,6 @@ future<SearchListResponse::Ptr> Client::search(const string &query) {
             });
 }
 
-future<Client::VideoCategoryList> Client::video_categories() {
-    // FIXME Get the real country code
-    string country_code = "US";
-    return p->async_get<VideoCategoryList>(
-            { "youtube", "v3", "videoCategories" }, { { "part", "snippet" }, {
-                    "regionCode", country_code }, { "h1", p->locale_ } },
-            [](const json::Value &root) {
-                return get_typed_list<VideoCategory>("youtube#videoCategory", root);
-            });
-}
-
 future<Client::GuideCategoryList> Client::guide_categories() {
     // FIXME Get the real country code
     string country_code = "US";
@@ -247,6 +236,15 @@ future<Client::VideoList> Client::channel_videos(const string &channelId) {
             "channelId", channelId } }, [](const json::Value &root) {
         return get_typed_list<Video>("youtube#video", root);
     });
+}
+
+future<Client::PlaylistList> Client::channel_playlists(
+        const string &channelId) {
+    return p->async_get<PlaylistList>( { "youtube", "v3", "playlists" }, { {
+            "part", "snippet" }, { "channelId", channelId } },
+            [](const json::Value &root) {
+                return get_typed_list<Playlist>("youtube#playlist", root);
+            });
 }
 
 future<Client::PlaylistItemList> Client::playlist_items(

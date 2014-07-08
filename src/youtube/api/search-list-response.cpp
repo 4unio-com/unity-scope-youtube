@@ -20,7 +20,6 @@
 #include <youtube/api/playlist.h>
 #include <youtube/api/search-list-response.h>
 #include <youtube/api/video.h>
-#include <youtube/api/video-category.h>
 
 #include <iostream>
 #include <unordered_map>
@@ -34,9 +33,7 @@ using namespace std;
 
 namespace {
 static unordered_map<string, function<Resource::Ptr(const json::Value &)>> TYPES =
-        { { "youtube#videoCategory", [](const json::Value &value) {
-            return make_shared<VideoCategory>(value);
-        } }, { "youtube#video", [](const json::Value &value) {
+        { { "youtube#video", [](const json::Value &value) {
             return make_shared<Video>(value);
         } }, { "youtube#channel", [](const json::Value &value) {
             return make_shared<Channel>(value);

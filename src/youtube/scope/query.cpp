@@ -128,40 +128,6 @@ static T get_or_throw(future<T> &f) {
     return f.get();
 }
 
-static void push_playlist_item(const sc::SearchReplyProxy &reply,
-        const sc::Category::SCPtr &category, const PlaylistItem::Ptr &item) {
-    sc::CategorisedResult res(category);
-    res.set_title(item->title());
-    res.set_art(item->picture());
-    res["link"] = item->link();
-    res["description"] = item->description();
-    res["username"] = item->username();
-    res.set_uri(item->id());
-
-    cerr << "    item: " << item->id() << " " << item->title() << endl;
-
-    if (!reply->push(res)) {
-        return;
-    }
-}
-
-static void push_video(const sc::SearchReplyProxy &reply,
-        const sc::Category::SCPtr &category, const Video::Ptr &video) {
-    sc::CategorisedResult res(category);
-    res.set_title(video->title());
-    res.set_art(video->picture());
-    res["link"] = video->link();
-    res["description"] = video->description();
-    res["username"] = video->username();
-    res.set_uri(video->id());
-
-    cerr << "    video: " << video->id() << " " << video->title() << endl;
-
-    if (!reply->push(res)) {
-        return;
-    }
-}
-
 enum class DepartmentType {
     guide_category, channel, playlist
 };
@@ -170,6 +136,9 @@ enum class SectionType {
     none, videos, playlists, channels
 };
 
+/**
+ * This class helps to encode/decode the department identity to/from string form
+ */
 struct DepartmentPath {
     DepartmentType department_type;
     string department;
@@ -234,6 +203,65 @@ struct DepartmentPath {
         return result.str();
     }
 };
+
+void push_resource(const sc::SearchReplyProxy &reply,
+        const sc::Category::SCPtr &category, const Resource::Ptr &resource) {
+    sc::CategorisedResult res(category);
+    res.set_title(resource->title());
+    res.set_art(resource->picture());
+
+    sc::CannedQuery new_query("unity-scope-youtube");
+
+    switch (resource->kind()) {
+    case Resource::Kind::channel: {
+        Channel::Ptr channel(static_pointer_cast<Channel>(resource));
+        DepartmentPath path { DepartmentType::channel, channel->id() };
+        new_query.set_department_id(path.to_string());
+        res.set_uri(new_query.to_uri());
+        break;
+    }
+    case Resource::Kind::channelSection: {
+        break;
+    }
+    case Resource::Kind::guideCategory: {
+        GuideCategory::Ptr guide_category(
+                static_pointer_cast<GuideCategory>(resource));
+        DepartmentPath path { DepartmentType::guide_category,
+                guide_category->id() };
+        new_query.set_department_id(path.to_string());
+        res.set_uri(new_query.to_uri());
+        break;
+    }
+    case Resource::Kind::playlist: {
+        Playlist::Ptr playlist(static_pointer_cast<Playlist>(resource));
+        DepartmentPath path { DepartmentType::playlist, playlist->id() };
+        new_query.set_department_id(path.to_string());
+        res.set_uri(new_query.to_uri());
+        break;
+    }
+    case Resource::Kind::playlistItem: {
+        PlaylistItem::Ptr playlist_item(
+                static_pointer_cast<PlaylistItem>(resource));
+        res["link"] = playlist_item->link();
+        res["description"] = playlist_item->description();
+        res["username"] = playlist_item->username();
+        res.set_uri(playlist_item->id());
+        break;
+    }
+    case Resource::Kind::video: {
+        Video::Ptr video(static_pointer_cast<Video>(resource));
+        res["link"] = video->link();
+        res["description"] = video->description();
+        res["username"] = video->username();
+        res.set_uri(video->id());
+        break;
+    }
+    }
+
+    if (!reply->push(res)) {
+        return;
+    }
+}
 
 }
 
@@ -310,7 +338,7 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
             first = false;
             if (it != items.cend()) {
                 PlaylistItem::Ptr video(*it);
-                push_playlist_item(reply, popular, video);
+                push_resource(reply, popular, video);
                 ++it;
             }
         }
@@ -319,19 +347,88 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
                 sc::CategoryRenderer(BROWSE_TEMPLATE));
         for (; it != items.cend(); ++it) {
             PlaylistItem::Ptr video(*it);
-            push_playlist_item(reply, cat, video);
+            push_resource(reply, cat, video);
         }
     }
 }
 
-void Query::surfacing(const sc::SearchReplyProxy &reply) {
+void Query::guide_category_videos(const sc::SearchReplyProxy &reply,
+        const string &department_id) {
+    cerr << "Finding videos: " << department_id << endl;
+
+    auto cat = reply->register_category("youtube", "Videos", "",
+            sc::CategoryRenderer(SEARCH_TEMPLATE));
+
+    auto channels_future = client_.category_channels(department_id);
+    auto channels = get_or_throw(channels_future);
+    deque<future<Client::VideoList>> videos_futures;
+    for (Channel::Ptr channel : channels) {
+        cerr << "  channel: " << channel->id() << " " << channel->title()
+                << endl;
+        videos_futures.emplace_back(client_.channel_videos(channel->id()));
+    }
+
+    for (auto &it : videos_futures) {
+        Client::VideoList videos = it.get();
+        for (auto &video : videos) {
+            cerr << "    video: " << video->id() << " " << video->title()
+                    << endl;
+            push_resource(reply, cat, video);
+        }
+    }
+}
+
+void Query::guide_category_channels(const sc::SearchReplyProxy &reply,
+        const string &department_id) {
+    cerr << "Finding channels: " << department_id << endl;
+
+    auto cat = reply->register_category("youtube", "Channels", "",
+            sc::CategoryRenderer(SEARCH_TEMPLATE));
+    auto channels_future = client_.category_channels(department_id);
+    auto channels = get_or_throw(channels_future);
+    for (Channel::Ptr channel : channels) {
+        push_resource(reply, cat, channel);
+        cerr << "  channel: " << channel->id() << " " << channel->title()
+                << endl;
+    }
+}
+
+void Query::guide_category_playlists(const sc::SearchReplyProxy &reply,
+        const string &department_id) {
+    cerr << "Finding playlists: " << department_id << endl;
+
+    auto cat = reply->register_category("youtube", "Playlists", "",
+            sc::CategoryRenderer(SEARCH_TEMPLATE));
+
+    auto channels_future = client_.category_channels(department_id);
+    auto channels = get_or_throw(channels_future);
+    deque<future<Client::PlaylistList>> playlists_futures;
+    for (Channel::Ptr channel : channels) {
+        cerr << "  channel: " << channel->id() << " " << channel->title()
+                << endl;
+        playlists_futures.emplace_back(
+                client_.channel_playlists(channel->id()));
+    }
+
+    for (auto &it : playlists_futures) {
+        Client::PlaylistList playlists = it.get();
+        for (auto &playlist : playlists) {
+            cerr << "    playlist: " << playlist->id() << " "
+                    << playlist->title() << endl;
+            push_resource(reply, cat, playlist);
+        }
+    }
+}
+
+Client::GuideCategoryList Query::load_departments(
+        const sc::SearchReplyProxy& reply) {
     const sc::CannedQuery &query(sc::SearchQueryBase::query());
 
     sc::Department::SPtr all_depts;
     bool first_dept = true;
-    auto categories_future = client_.guide_categories();
-    auto categories = get_or_throw(categories_future);
-    for (GuideCategory::Ptr category : categories) {
+    auto departments_future = client_.guide_categories();
+    auto departments = get_or_throw(departments_future);
+    for (GuideCategory::Ptr category : departments) {
         if (first_dept) {
             first_dept = false;
             all_depts = sc::Department::create("", query, category->title());
@@ -341,22 +438,77 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
             sc::Department::SPtr dept = sc::Department::create(path.to_string(),
                     query, category->title());
             all_depts->add_subdepartment(dept);
+
+            DepartmentPath videos_path { DepartmentType::guide_category,
+                    category->id(), SectionType::videos };
+            sc::Department::SPtr videos = sc::Department::create(
+                    videos_path.to_string(), query, "Videos");
+            dept->add_subdepartment(videos);
+
+            DepartmentPath playlists_path { DepartmentType::guide_category,
+                    category->id(), SectionType::playlists };
+            sc::Department::SPtr playlists = sc::Department::create(
+                    playlists_path.to_string(), query, "Playlists");
+            dept->add_subdepartment(playlists);
+
+            DepartmentPath channels_path { DepartmentType::guide_category,
+                    category->id(), SectionType::channels };
+            sc::Department::SPtr channels = sc::Department::create(
+                    channels_path.to_string(), query, "Channels");
+            dept->add_subdepartment(channels);
         }
     }
     reply->register_departments(all_depts);
+    return departments;
+}
+
+void Query::surfacing(const sc::SearchReplyProxy &reply) {
+    const sc::CannedQuery &query(sc::SearchQueryBase::query());
+
+    auto departments = load_departments(reply);
 
     string department_id = query.department_id();
     if (!department_id.empty()) {
         DepartmentPath path(department_id);
         switch (path.department_type) {
-        case DepartmentType::guide_category:
-            guide_category(reply, path.department);
+        case DepartmentType::guide_category: {
+            switch (path.section_type) {
+            case SectionType::none: {
+                // If we have picked a top level department
+                guide_category(reply, path.department);
+                break;
+            }
+            case SectionType::videos: {
+                // If we only want to see the videos of a department
+                guide_category_videos(reply, path.department);
+                break;
+            }
+            case SectionType::channels: {
+                // If we only want to see the channels of a department
+                guide_category_channels(reply, path.department);
+                break;
+            }
+            case SectionType::playlists: {
+                // If we only want to see the playlists of a department
+                guide_category_playlists(reply, path.department);
+                break;
+            }
+            default: {
+                break;
+            }
+            }
             break;
-        default:
-            throw domain_error("Corrupt department ID");
+        }
+        case DepartmentType::playlist: {
+            break;
+        }
+        case DepartmentType::channel: {
+            break;
+        }
         }
     } else {
-        guide_category(reply, categories.at(0)->id());
+        // This is the initial surfacing screen
+        guide_category(reply, departments.at(0)->id());
     }
 }
 
@@ -369,62 +521,7 @@ void Query::search(const sc::SearchReplyProxy &reply,
             to_string(resources->total_results()) + " results from Youtube", "",
             sc::CategoryRenderer(SEARCH_TEMPLATE));
     for (const Resource::Ptr& resource : resources->items()) {
-        sc::CategorisedResult res(cat);
-        res.set_title(resource->title());
-        res.set_art(resource->picture());
-
-        sc::CannedQuery new_query("unity-scope-youtube");
-
-        switch (resource->kind()) {
-        case Resource::Kind::channel: {
-            Channel::Ptr channel(static_pointer_cast<Channel>(resource));
-
-            sc::FilterState filter_state;
-            new_query.set_department_id("channel:" + channel->id());
-            res.set_uri(new_query.to_uri());
-
-            break;
-        }
-        case Resource::Kind::channelSection: {
-            break;
-        }
-        case Resource::Kind::guideCategory: {
-            GuideCategory::Ptr channel(
-                    static_pointer_cast<GuideCategory>(resource));
-
-            new_query.set_department_id("guideCategory:" + channel->id());
-            res.set_uri(new_query.to_uri());
-            break;
-        }
-        case Resource::Kind::playlist: {
-            Playlist::Ptr playlist(static_pointer_cast<Playlist>(resource));
-            new_query.set_department_id("playlist:" + playlist->id());
-            res.set_uri(new_query.to_uri());
-            break;
-        }
-        case Resource::Kind::playlistItem: {
-            break;
-        }
-        case Resource::Kind::video: {
-            Video::Ptr video(static_pointer_cast<Video>(resource));
-            res["link"] = video->link();
-            res["description"] = video->description();
-            res["username"] = video->username();
-            res.set_uri(video->id());
-            break;
-        }
-        case Resource::Kind::videoCategory: {
-            VideoCategory::Ptr videoCategory(
-                    static_pointer_cast<VideoCategory>(resource));
-            new_query.set_department_id("videoCategory:" + videoCategory->id());
-            res.set_uri(new_query.to_uri());
-            break;
-        }
-        }
-
-        if (!reply->push(res)) {
-            return;
-        }
+        push_resource(reply, cat, resource);
     }
 }
 
