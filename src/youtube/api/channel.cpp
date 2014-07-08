@@ -42,18 +42,25 @@ Channel::Channel(const json::Value &data) {
     json::Value thumbnails = snippet["thumbnails"];
     json::Value picture = thumbnails["default"];
     picture_ = picture["url"].asString();
+
+    json::Value statistics = data["statistics"];
+    subscriber_count_ = statistics["subscriberCount"].asString();
 }
 
-const std::string & Channel::title() const {
+const string & Channel::title() const {
     return name_;
 }
 
-const std::string & Channel::picture() const {
+const string & Channel::picture() const {
     return picture_;
 }
 
-const std::string & Channel::id() const {
+const string & Channel::id() const {
     return id_;
+}
+
+const string & Channel::subscriber_count() const {
+    return subscriber_count_;
 }
 
 Resource::Kind Channel::kind() const {

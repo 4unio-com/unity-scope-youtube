@@ -56,7 +56,7 @@ const static string BROWSE_TEMPLATE =
       "field": "art",
       "aspect-ratio": 1.5
     },
-    "subtitle": "username"
+    "subtitle": "subtitle"
   }
 }
 )";
@@ -76,7 +76,7 @@ const static string SEARCH_TEMPLATE =
       "field": "art",
       "aspect-ratio": 1.7
     },
-    "subtitle": "username"
+    "subtitle": "subtitle"
   }
 }
 )";
@@ -96,7 +96,7 @@ const static string POPULAR_TEMPLATE =
       "field": "art",
       "aspect-ratio": 2.0
     },
-    "subtitle": "username"
+    "subtitle": "subtitle"
   }
 }
 )";
@@ -122,8 +122,8 @@ const static string SEARCH_CATEGORY_LOGIN_NAG =
 
 template<typename T>
 static T get_or_throw(future<T> &f) {
-    if (f.wait_for(std::chrono::seconds(5)) != future_status::ready) {
-        throw domain_error("Timeout");
+    if (f.wait_for(std::chrono::seconds(10)) != future_status::ready) {
+        throw domain_error("HTTP request timeout");
     }
     return f.get();
 }
@@ -218,6 +218,7 @@ void push_resource(const sc::SearchReplyProxy &reply,
         DepartmentPath path { DepartmentType::channel, channel->id() };
         new_query.set_department_id(path.to_string());
         res.set_uri(new_query.to_uri());
+        res["subtitle"] = channel->subscriber_count() + " subscribers";
         break;
     }
     case Resource::Kind::channelSection: {
@@ -237,6 +238,7 @@ void push_resource(const sc::SearchReplyProxy &reply,
         DepartmentPath path { DepartmentType::playlist, playlist->id() };
         new_query.set_department_id(path.to_string());
         res.set_uri(new_query.to_uri());
+        res["subtitle"] = to_string(playlist->item_count()) + " videos";
         break;
     }
     case Resource::Kind::playlistItem: {
@@ -244,7 +246,7 @@ void push_resource(const sc::SearchReplyProxy &reply,
                 static_pointer_cast<PlaylistItem>(resource));
         res["link"] = playlist_item->link();
         res["description"] = playlist_item->description();
-        res["username"] = playlist_item->username();
+        res["subtitle"] = playlist_item->username();
         res.set_uri(playlist_item->id());
         break;
     }
@@ -252,7 +254,7 @@ void push_resource(const sc::SearchReplyProxy &reply,
         Video::Ptr video(static_pointer_cast<Video>(resource));
         res["link"] = video->link();
         res["description"] = video->description();
-        res["username"] = video->username();
+        res["subtitle"] = video->username();
         res.set_uri(video->id());
         break;
     }
@@ -420,6 +422,21 @@ void Query::guide_category_playlists(const sc::SearchReplyProxy &reply,
     }
 }
 
+void Query::playlist(const sc::SearchReplyProxy &reply,
+        const string &playlist_id) {
+    cerr << "Playlist: " << playlist_id << endl;
+
+    auto cat = reply->register_category("youtube", "Playlist contents", "",
+            sc::CategoryRenderer(SEARCH_TEMPLATE));
+
+    auto playlist_future = client_.playlist_items(playlist_id);
+    Client::PlaylistItemList items = get_or_throw(playlist_future);
+
+    for (auto &playlist: items) {
+        push_resource(reply, cat, playlist);
+    }
+}
+
 Client::GuideCategoryList Query::load_departments(
         const sc::SearchReplyProxy& reply) {
     const sc::CannedQuery &query(sc::SearchQueryBase::query());
@@ -467,9 +484,9 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
 
     auto departments = load_departments(reply);
 
-    string department_id = query.department_id();
-    if (!department_id.empty()) {
-        DepartmentPath path(department_id);
+    string raw_department_id = query.department_id();
+    if (!raw_department_id.empty()) {
+        DepartmentPath path(raw_department_id);
         switch (path.department_type) {
         case DepartmentType::guide_category: {
             switch (path.section_type) {
@@ -493,16 +510,16 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                 guide_category_playlists(reply, path.department);
                 break;
             }
-            default: {
-                break;
-            }
             }
             break;
         }
         case DepartmentType::playlist: {
+            // If we click on a playlist in the search results
+            client_.playlist_items(path.department);
             break;
         }
         case DepartmentType::channel: {
+            // If we click on a channel in the search results
             break;
         }
         }

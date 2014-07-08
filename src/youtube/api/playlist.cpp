@@ -43,6 +43,9 @@ Playlist::Playlist(const json::Value &data) {
     json::Value thumbnails = snippet["thumbnails"];
     json::Value picture = thumbnails["default"];
     picture_ = picture["url"].asString();
+
+    json::Value content_details = data["contentDetails"];
+    item_count_ = content_details["itemCount"].asInt();
 }
 
 const std::string & Playlist::title() const {
@@ -55,6 +58,10 @@ const std::string & Playlist::picture() const {
 
 const std::string & Playlist::id() const {
     return id_;
+}
+
+int Playlist::item_count() const {
+    return item_count_;
 }
 
 Resource::Kind Playlist::kind() const {

@@ -46,12 +46,16 @@ public:
 
     Kind kind() const override;
 
+    int item_count() const;
+
 protected:
     std::string name_;
 
     std::string picture_;
 
     std::string id_;
+
+    int item_count_;
 };
 
 }

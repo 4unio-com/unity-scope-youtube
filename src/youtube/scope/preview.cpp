@@ -53,7 +53,7 @@ void Preview::run(sc::PreviewReplyProxy const& reply) {
 
     sc::PreviewWidget header("header", "header");
     header.add_attribute_mapping("title", "title");
-    header.add_attribute_mapping("subtitle", "username");
+    header.add_attribute_mapping("subtitle", "subtitle");
 
     sc::PreviewWidget video("video", "video");
     video.add_attribute_mapping("source", "link");

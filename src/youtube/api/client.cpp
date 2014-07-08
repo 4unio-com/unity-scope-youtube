@@ -214,7 +214,7 @@ future<Client::GuideCategoryList> Client::guide_categories() {
 future<Client::ChannelList> Client::category_channels(
         const string &categoryId) {
     return p->async_get<ChannelList>( { "youtube", "v3", "channels" }, { {
-            "part", "snippet" }, { "categoryId", categoryId } },
+            "part", "snippet,statistics" }, { "categoryId", categoryId } },
             [](const json::Value &root) {
                 return get_typed_list<Channel>("youtube#channel", root);
             });
@@ -241,7 +241,7 @@ future<Client::VideoList> Client::channel_videos(const string &channelId) {
 future<Client::PlaylistList> Client::channel_playlists(
         const string &channelId) {
     return p->async_get<PlaylistList>( { "youtube", "v3", "playlists" }, { {
-            "part", "snippet" }, { "channelId", channelId } },
+            "part", "snippet,contentDetails" }, { "channelId", channelId } },
             [](const json::Value &root) {
                 return get_typed_list<Playlist>("youtube#playlist", root);
             });

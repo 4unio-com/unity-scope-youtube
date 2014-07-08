@@ -43,7 +43,6 @@ protected:
     youtube::api::Client::GuideCategoryList load_departments(
             const unity::scopes::SearchReplyProxy &reply);
 
-private:
     void add_login_nag(const unity::scopes::SearchReplyProxy &reply);
 
     void guide_category(const unity::scopes::SearchReplyProxy &reply,
@@ -57,6 +56,9 @@ private:
 
     void guide_category_playlists(const unity::scopes::SearchReplyProxy &reply,
             const std::string &department_id);
+
+    void playlist(const unity::scopes::SearchReplyProxy &reply,
+            const std::string &playlist_id);
 
     void surfacing(const unity::scopes::SearchReplyProxy &reply);
 
