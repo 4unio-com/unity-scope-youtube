@@ -30,7 +30,7 @@ ChannelSection::ChannelSection(const json::Value &data) {
     string kind = data["kind"].asString();
 
     json::Value id = data["id"];
-    if (kind == "youtube#channelSection") {
+    if (kind == kind_str()) {
         id_ = id.asString();
     } else {
         id_ = id["channelSectionId"].asString();
@@ -62,3 +62,6 @@ Resource::Kind ChannelSection::kind() const {
     return Resource::Kind::channelSection;
 }
 
+std::string ChannelSection::kind_str() const {
+    return "youtube#channelSection";
+}

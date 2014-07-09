@@ -238,6 +238,14 @@ future<Client::VideoList> Client::channel_videos(const string &channelId) {
     });
 }
 
+future<Client::VideoList> Client::videos(const string &video_id) {
+    return p->async_get<VideoList>( { "youtube", "v3", "videos" }, { { "part",
+            "snippet,statistics" }, { "id", video_id } },
+            [](const json::Value &root) {
+                return get_typed_list<Video>("youtube#video", root);
+            });
+}
+
 future<Client::PlaylistList> Client::channel_playlists(
         const string &channelId) {
     return p->async_get<PlaylistList>( { "youtube", "v3", "playlists" }, { {

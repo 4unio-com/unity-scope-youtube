@@ -25,39 +25,80 @@
 #include <unity/scopes/VariantBuilder.h>
 
 #include <iostream>
+#include <unordered_set>
 
 namespace sc = unity::scopes;
 
 using namespace std;
 using namespace youtube::scope;
+using namespace youtube::api;
 
-Preview::Preview(const sc::Result &result, const sc::ActionMetadata &metadata) :
-        sc::PreviewQueryBase(result, metadata) {
+namespace {
+static const unordered_set<string> PLAYABLE = { "youtube#video",
+        "youtube#playlistItem" };
+}
+
+Preview::Preview(const sc::Result &result, const sc::ActionMetadata &metadata,
+        Client::Ptr client) :
+        sc::PreviewQueryBase(result, metadata), client_(client) {
 }
 
 void Preview::cancelled() {
 }
 
-void Preview::run(sc::PreviewReplyProxy const& reply) {
+void Preview::playable(const sc::PreviewReplyProxy& reply) {
+    cerr << "Looking up video details: " << result().uri() << endl;
+    auto videos_future = client_->videos(result().uri());
+    auto videos = videos_future.get();
+    auto v = videos.front();
+    auto s = v->statistics();
+
     sc::ColumnLayout layout1col(1), layout2col(2), layout3col(3);
-    layout1col.add_column( { "video", "header", "summary", "actions" });
+    layout1col.add_column( { "video", "header", "summary", "statistics" });
 
     layout2col.add_column( { "video" });
-    layout2col.add_column( { "header", "summary", "actions" });
+    layout2col.add_column( { "header", "summary", "statistics" });
 
     layout3col.add_column( { "video" });
+    layout3col.add_column( { "header", "summary", "statistics" });
+    layout3col.add_column( { "" });
+
+    reply->register_layout( { layout1col, layout2col, layout3col });
+
+    sc::PreviewWidget header("header", "header");
+    header.add_attribute_mapping("title", "title");
+    header.add_attribute_value("subtitle", sc::Variant(s.view_count + " views"));
+
+    sc::PreviewWidget video("video", "video");
+    video.add_attribute_mapping("source", "link");
+    video.add_attribute_mapping("screenshot", "art");
+
+    sc::PreviewWidget description("summary", "text");
+    description.add_attribute_mapping("text", "description");
+
+    sc::PreviewWidget statistics("statistics", "header");
+    statistics.add_attribute_value("title",
+            sc::Variant(u8"\u261d " + s.like_count + u8"   \u261f " + s.dislike_count));
+
+    reply->push( { video, header, description, statistics });
+}
+
+void Preview::playlist(const sc::PreviewReplyProxy& reply) {
+    sc::ColumnLayout layout1col(1), layout2col(2), layout3col(3);
+    layout1col.add_column( { "image", "header", "summary", "actions" });
+    layout2col.add_column( { "image" });
+    layout2col.add_column( { "header", "summary", "actions" });
+    layout3col.add_column( { "image" });
     layout3col.add_column( { "header", "summary" });
     layout3col.add_column( { "actions" });
-
     reply->register_layout( { layout1col, layout2col, layout3col });
 
     sc::PreviewWidget header("header", "header");
     header.add_attribute_mapping("title", "title");
     header.add_attribute_mapping("subtitle", "subtitle");
 
-    sc::PreviewWidget video("video", "video");
-    video.add_attribute_mapping("source", "link");
-    video.add_attribute_mapping("screenshot", "art");
+    sc::PreviewWidget image("image", "image");
+    image.add_attribute_mapping("source", "link");
 
     sc::PreviewWidget description("summary", "text");
     description.add_attribute_mapping("text", "description");
@@ -71,5 +112,17 @@ void Preview::run(sc::PreviewReplyProxy const& reply) {
         actions.add_attribute_value("actions", builder.end());
     }
 
-    reply->push( { video, header, description, actions });
+    reply->push( { image, header, description, actions });
+}
+
+void Preview::run(sc::PreviewReplyProxy const& reply) {
+    string kind = result()["kind"].get_string();
+
+    if (PLAYABLE.find(kind) == PLAYABLE.cend()) {
+        playlist(reply);
+    } else {
+        playable(reply);
+
+    }
+
 }

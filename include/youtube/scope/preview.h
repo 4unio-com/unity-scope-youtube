@@ -19,6 +19,8 @@
 #ifndef YOUTUBE_SCOPE_PREVIEW_H_
 #define YOUTUBE_SCOPE_PREVIEW_H_
 
+#include <youtube/api/client.h>
+
 #include <unity/scopes/PreviewQueryBase.h>
 
 namespace unity {
@@ -33,13 +35,21 @@ namespace scope {
 class Preview: public unity::scopes::PreviewQueryBase {
 public:
     Preview(const unity::scopes::Result &result,
-            const unity::scopes::ActionMetadata &metadata);
+            const unity::scopes::ActionMetadata &metadata,
+            youtube::api::Client::Ptr client);
 
     ~Preview() = default;
 
     void cancelled() override;
 
     void run(unity::scopes::PreviewReplyProxy const& reply) override;
+
+protected:
+    void playable(const unity::scopes::PreviewReplyProxy& reply);
+
+    void playlist(const unity::scopes::PreviewReplyProxy& reply);
+
+    youtube::api::Client::Ptr client_;
 };
 
 }

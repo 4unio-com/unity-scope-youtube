@@ -48,3 +48,7 @@ const std::string & GuideCategory::id() const {
 Resource::Kind GuideCategory::kind() const {
     return Resource::Kind::guideCategory;
 }
+
+std::string GuideCategory::kind_str() const {
+    return "youtube#guideCategory";
+}

@@ -44,6 +44,8 @@ public:
     virtual const std::string & id() const = 0;
 
     virtual Kind kind() const = 0;
+
+    virtual std::string kind_str() const = 0;
 };
 
 }

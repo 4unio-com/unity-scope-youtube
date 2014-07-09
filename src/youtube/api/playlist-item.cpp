@@ -28,7 +28,7 @@ PlaylistItem::PlaylistItem(const json::Value &data) {
     string kind = data["kind"].asString();
 
     json::Value id = data["id"];
-    if (kind == "youtube#playlistItem") {
+    if (kind == kind_str()) {
         id_ = id.asString();
     } else {
         id_ = id["videoId"].asString();
@@ -45,7 +45,8 @@ PlaylistItem::PlaylistItem(const json::Value &data) {
     picture_ = picture["url"].asString();
 
     json::Value content_details = data["contentDetails"];
-    link_ = "https://www.youtube.com/watch?v=" + content_details["videoId"].asString();
+    video_id_ = content_details["videoId"].asString();
+    link_ = "https://www.youtube.com/watch?v=" + video_id_;
 }
 
 const string & PlaylistItem::title() const {
@@ -58,6 +59,10 @@ const string & PlaylistItem::username() const {
 
 const string & PlaylistItem::id() const {
     return id_;
+}
+
+const string & PlaylistItem::video_id() const {
+    return video_id_;
 }
 
 const string & PlaylistItem::link() const {
@@ -74,4 +79,8 @@ const string & PlaylistItem::description() const {
 
 Resource::Kind PlaylistItem::kind() const {
     return Resource::Kind::playlistItem;
+}
+
+std::string PlaylistItem::kind_str() const {
+    return "youtube#playlistItem";
 }

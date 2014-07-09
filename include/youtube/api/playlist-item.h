@@ -51,7 +51,11 @@ public:
 
     const std::string & id() const override;
 
+    const std::string & video_id() const ;
+
     Kind kind() const override;
+
+    std::string kind_str() const override;
 
 protected:
     std::string title_;
@@ -59,6 +63,8 @@ protected:
     std::string username_;
 
     std::string id_;
+
+    std::string video_id_;
 
     std::string link_;
 

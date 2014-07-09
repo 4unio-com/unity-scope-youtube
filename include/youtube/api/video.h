@@ -35,6 +35,14 @@ class Video: public Resource {
 public:
     typedef std::shared_ptr<Video> Ptr;
 
+    struct Statistics {
+        std::string comment_count;
+        std::string dislike_count;
+        std::string favorite_count;
+        std::string like_count;
+        std::string view_count;
+    };
+
     Video(const Json::Value &data);
 
     virtual ~Video() = default;
@@ -53,6 +61,12 @@ public:
 
     Kind kind() const override;
 
+    std::string kind_str() const override;
+
+    bool has_statistics() const;
+
+    const Statistics & statistics() const;
+
 protected:
     std::string title_;
 
@@ -65,6 +79,10 @@ protected:
     std::string picture_;
 
     std::string description_;
+
+    bool has_statistics_;
+
+    Statistics statistics_;
 };
 
 }

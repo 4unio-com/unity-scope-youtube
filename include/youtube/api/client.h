@@ -47,6 +47,8 @@ namespace api {
 
 class Client {
 public:
+    typedef std::shared_ptr<Client> Ptr;
+
     typedef std::deque<Channel::Ptr> ChannelList;
 
     typedef std::deque<ChannelSection::Ptr> ChannelSectionList;
@@ -77,6 +79,8 @@ public:
     virtual std::future<PlaylistList> channel_playlists(const std::string &channelId);
 
     virtual std::future<PlaylistItemList> playlist_items(const std::string &playlistId);
+
+    virtual std::future<VideoList> videos(const std::string &videoId);
 
     virtual void cancel();
 

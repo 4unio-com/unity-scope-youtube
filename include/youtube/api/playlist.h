@@ -48,6 +48,8 @@ public:
 
     int item_count() const;
 
+    std::string kind_str() const override;
+
 protected:
     std::string name_;
 

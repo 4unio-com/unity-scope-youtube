@@ -62,12 +62,15 @@ void Scope::stop() {
 
 sc::SearchQueryBase::UPtr Scope::search(const sc::CannedQuery &query,
         const sc::SearchMetadata &metadata) {
-    return sc::SearchQueryBase::UPtr(new Query(query, metadata, config_));
+    auto client = make_shared<Client>(config_, metadata.cardinality(),
+            metadata.locale());
+    return sc::SearchQueryBase::UPtr(new Query(query, metadata, client));
 }
 
 sc::PreviewQueryBase::UPtr Scope::preview(sc::Result const& result,
         sc::ActionMetadata const& metadata) {
-    return sc::PreviewQueryBase::UPtr(new Preview(result, metadata));
+    auto client = make_shared<Client>(config_, 0, metadata.locale());
+    return sc::PreviewQueryBase::UPtr(new Preview(result, metadata, client));
 }
 
 #define EXPORT __attribute__ ((visibility ("default")))

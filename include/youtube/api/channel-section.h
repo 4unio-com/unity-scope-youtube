@@ -48,6 +48,8 @@ public:
 
     Kind kind() const override;
 
+    std::string kind_str() const override;
+
 protected:
     std::string id_;
 

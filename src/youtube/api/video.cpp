@@ -19,12 +19,23 @@
 #include <youtube/api/video.h>
 
 #include <json/json.h>
+#include <sstream>
 
 namespace json = Json;
 using namespace youtube::api;
 using namespace std;
 
-Video::Video(const json::Value &data) {
+namespace {
+static string format_fixed(const string &s) {
+    std::stringstream ss;
+    ss.imbue(std::locale(""));
+    ss << std::fixed << stoi(s);
+    return ss.str();
+}
+}
+
+Video::Video(const json::Value &data) :
+        has_statistics_(false) {
     string kind = data["kind"].asString();
 
     json::Value snippet = data["snippet"];
@@ -33,7 +44,7 @@ Video::Video(const json::Value &data) {
     description_ = snippet["description"].asString();
 
     json::Value id = data["id"];
-    if (kind == "youtube#video") {
+    if (kind == kind_str()) {
         id_ = id.asString();
     } else {
         id_ = id["videoId"].asString();
@@ -46,6 +57,17 @@ Video::Video(const json::Value &data) {
     json::Value thumbnails = snippet["thumbnails"];
     json::Value picture = thumbnails["high"];
     picture_ = picture["url"].asString();
+
+    if (data.isMember("statistics")) {
+        json::Value statistics = data["statistics"];
+        has_statistics_ = true;
+
+        statistics_.comment_count = format_fixed(statistics["commentCount"].asString());
+        statistics_.dislike_count = format_fixed(statistics["dislikeCount"].asString());
+        statistics_.favorite_count = format_fixed(statistics["favoriteCount"].asString());
+        statistics_.like_count = format_fixed(statistics["likeCount"].asString());
+        statistics_.view_count = format_fixed(statistics["viewCount"].asString());
+    }
 }
 
 const string & Video::title() const {
@@ -72,6 +94,18 @@ const string & Video::description() const {
     return description_;
 }
 
+bool Video::has_statistics() const {
+    return has_statistics_;
+}
+
+const Video::Statistics & Video::statistics() const {
+    return statistics_;
+}
+
 Resource::Kind Video::kind() const {
     return Resource::Kind::video;
+}
+
+std::string Video::kind_str() const {
+    return "youtube#video";
 }

@@ -34,7 +34,7 @@ Playlist::Playlist(const json::Value &data) {
     name_ = snippet["title"].asString();
 
     json::Value id = data["id"];
-    if (kind == "youtube#playlist") {
+    if (kind == kind_str()) {
         id_ = id.asString();
     } else {
         id_ = id["playlistId"].asString();
@@ -66,4 +66,8 @@ int Playlist::item_count() const {
 
 Resource::Kind Playlist::kind() const {
     return Resource::Kind::playlist;
+}
+
+std::string Playlist::kind_str() const {
+    return "youtube#playlist";
 }

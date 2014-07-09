@@ -31,9 +31,9 @@ class Query: public unity::scopes::SearchQueryBase {
 public:
     Query(const unity::scopes::CannedQuery &query,
             const unity::scopes::SearchMetadata &metadata,
-            youtube::api::Config::Ptr config);
+            youtube::api::Client::Ptr client);
 
-    ~Query();
+    ~Query() = default;
 
     void cancelled() override;
 
@@ -65,7 +65,7 @@ protected:
     void search(const unity::scopes::SearchReplyProxy &reply,
             const std::string &query_string);
 
-    youtube::api::Client client_;
+    youtube::api::Client::Ptr client_;
 };
 
 }
