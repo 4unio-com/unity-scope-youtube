@@ -345,4 +345,175 @@ TEST_F(TestYoutubeScope, basic_surfacing) {
     search_query->run(reply_proxy);
 }
 
+TEST_F(TestYoutubeScope, pick_department) {
+    const sc::CategoryRenderer renderer;
+    NaggyMock<sct::MockSearchReply> reply;
+
+    sc::CannedQuery query(SCOPE_ID, "", "guideCategory:GCTXVzaWM"); // pick the music department
+
+    sc::Department::SPtr departments = sc::Department::create("", query,
+            "Best of YouTube");
+    add_department(departments, "GCRmVhdHVyZWQ", "Featured", query);
+    add_department(departments, "GCUGFpZCBDaGFubmVscw", "Paid Channels", query);
+    add_department(departments, "GCTXVzaWM", "Music", query);
+    add_department(departments, "GCQ29tZWR5", "Comedy", query);
+    EXPECT_CALL(reply, register_departments(IsDepartment(departments))).Times(
+            1);
+
+    expect_category(reply, renderer, "youtube-popular", "");
+
+    expect_category(reply, renderer, "UCdI8evszfZvyAl2UVCypkTA", "MileyCyrusVEVO");
+    expect_category(reply, renderer, "UC_TVqp_SyG6j5hG-xVRy95A", "Skrillex");
+    expect_category(reply, renderer, "UC20vb-R_px4CguHzzBPhoyQ", "EminemVEVO");
+    expect_category(reply, renderer, "UCpDJl2EmP7Oh90Vylx0dZtA", "Spinnin' Records");
+    expect_category(reply, renderer, "UCrDkAvwZum-UTjHmzDI2iIw", "officialpsy");
+
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "0EdAYgjthWQ"),
+            ResultProp("title", "#VEVOCertified, Pt 1:  Miley Talks About Her Fans"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/0EdAYgjthWQ/hqdefault.jpg"),
+            ResultProp("subtitle", "MileyCyrusVEVO")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "ukF1t-PeZWE"),
+            ResultProp("title", "Miley Cyrus - #VEVOCertified, Pt 2:  Award Presentation"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/ukF1t-PeZWE/hqdefault.jpg"),
+            ResultProp("subtitle", "MileyCyrusVEVO")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "NThkyod_A0A"),
+            ResultProp("title", "#VEVOCertified, Pt 3: Miley On Making Music Videos"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/NThkyod_A0A/hqdefault.jpg"),
+            ResultProp("subtitle", "MileyCyrusVEVO")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "gf4p-nJ4BmM"),
+            ResultProp("title", "#VEVOCertified, Pt 4: Wrecking Ball (Miley Commentary)"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/gf4p-nJ4BmM/hqdefault.jpg"),
+            ResultProp("subtitle", "MileyCyrusVEVO")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "OLxsBS-tI5k"),
+            ResultProp("title", "#VEVOCertified, Pt 5: We Can't Stop (Miley Commentary)"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/OLxsBS-tI5k/hqdefault.jpg"),
+            ResultProp("subtitle", "MileyCyrusVEVO")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "6JYIGclVQdw"),
+            ResultProp("title", "Skrillex - All Is Fair in Love and Brostep with Ragga Twins [AUDIO]"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/6JYIGclVQdw/hqdefault.jpg"),
+            ResultProp("subtitle", "Skrillex")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "R8i6VZ1vIY8"),
+            ResultProp("title", "Skrillex - Recess with Kill the Noise, Fatman Scoop, and Michael Angelakos [AUDIO]"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/R8i6VZ1vIY8/hqdefault.jpg"),
+            ResultProp("subtitle", "Skrillex")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "6t7wQ2BLBUg"),
+            ResultProp("title", "Skrillex - Stranger with KillaGraham from Milo and Otis and Sam Dew [AUDIO]"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/6t7wQ2BLBUg/hqdefault.jpg"),
+            ResultProp("subtitle", "Skrillex")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "nOqUvLmwfTg"),
+            ResultProp("title", "Skrillex & Alvin Risk - Try It Out (Neon Mix) [AUDIO]"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/nOqUvLmwfTg/hqdefault.jpg"),
+            ResultProp("subtitle", "Skrillex")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "Nu3cezCkzf4"),
+            ResultProp("title", "Skrillex - Coast Is Clear with Chance The Rapper and the Social Experiment [AUDIO]"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/Nu3cezCkzf4/hqdefault.jpg"),
+            ResultProp("subtitle", "Skrillex")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "O-zpOMYRi0w"),
+            ResultProp("title", "Iggy Azalea - Fancy (Explicit) ft. Charli XCX"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/O-zpOMYRi0w/hqdefault.jpg"),
+            ResultProp("subtitle", "Vevo")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "2iZonnn1nIs"),
+            ResultProp("title", "Phife - Dear Dilla"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/2iZonnn1nIs/hqdefault.jpg"),
+            ResultProp("subtitle", "Vevo")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "rEMsjeq43_U"),
+            ResultProp("title", "ScHoolboy Q - Man Of The Year"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/rEMsjeq43_U/hqdefault.jpg"),
+            ResultProp("subtitle", "Vevo")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "cI9ifCMk0Dg"),
+            ResultProp("title", "Rick Ross - Nobody (Explicit) ft. French Montana, Puff Daddy"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/cI9ifCMk0Dg/hqdefault.jpg"),
+            ResultProp("subtitle", "Vevo")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "6l7J1i1OkKs"),
+            ResultProp("title", "YG - My Nigga (Remix) (Explicit) ft. Lil Wayne, Rich Homie Quan, Meek Mill, Nicki Minaj"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/6l7J1i1OkKs/hqdefault.jpg"),
+            ResultProp("subtitle", "Vevo")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "zrEucH0E8Ic"),
+            ResultProp("title", "Spinnin' Sessions 061 - Guest: Sander Kleinenberg"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/zrEucH0E8Ic/hqdefault.jpg"),
+            ResultProp("subtitle", "Spinnin' Records")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "YuWfQPJoLw0"),
+            ResultProp("title", "Ferreck Dawn & Redondo - Love Too Deep (Official Music Video)"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/YuWfQPJoLw0/hqdefault.jpg"),
+            ResultProp("subtitle", "Spinnin' Records")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "fMP8xZdKs4Y"),
+            ResultProp("title", "DubVision - Backlash (Martin Garrix Edit) [Official Music Video]"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/fMP8xZdKs4Y/hqdefault.jpg"),
+            ResultProp("subtitle", "Spinnin' Records")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "e15Qwu5Z390"),
+            ResultProp("title", "Nick Double & Sam O Neall - Live Life (Official Lyric Video)"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/e15Qwu5Z390/hqdefault.jpg"),
+            ResultProp("subtitle", "Spinnin' Records")
+        )))).WillOnce(Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+            ResultProp("uri", "Ykj_wJKkaAg"),
+            ResultProp("title", "Ummet Ozcan - SMASH! (Official Music Video)"),
+            ResultProp("kind", "youtube#playlistItem"),
+            ResultProp("art", "https://i1.ytimg.com/vi/Ykj_wJKkaAg/hqdefault.jpg"),
+            ResultProp("subtitle", "Spinnin' Records")
+        )))).WillOnce(Return(true));
+
+    sc::SearchReplyProxy reply_proxy(&reply, [](sc::SearchReply*) {}); // note: this is a std::shared_ptr with empty deleter
+    sc::SearchMetadata meta_data("en_EN", "phone");
+    auto search_query = scope->search(query, meta_data);
+    ASSERT_NE(nullptr, search_query);
+    search_query->run(reply_proxy);
+}
+
 } // namespace

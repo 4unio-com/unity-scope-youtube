@@ -1,0 +1,256 @@
+{
+ "kind": "youtube#playlistItemListResponse",
+ "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/MB8ymn_4uEC4GRWKva2QMty6570\"",
+ "nextPageToken": "CAUQAA",
+ "pageInfo": {
+  "totalResults": 6,
+  "resultsPerPage": 5
+ },
+ "items": [
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/1CdWp6gSVeZ7VHnYSoiuO9cOYNs\"",
+   "id": "PLjjEWOIKNNrTlt2Uj64YM3itjBCLjXRri-sMM3MOMHP0",
+   "snippet": {
+    "publishedAt": "2013-10-28T16:37:29.000Z",
+    "channelId": "UCdI8evszfZvyAl2UVCypkTA",
+    "title": "#VEVOCertified, Pt 1:  Miley Talks About Her Fans",
+    "description": "Download  the album \"Bangerz\" on iTunes: http://smarturl.it/bangerz?Iqid=yt\n\nMusic video by Miley Cyrus performing #VEVOCertified, Pt 1:  Miley Talks About Her Fans. (C) 2013 RCA Records, a division of Sony Music Entertainment",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/0EdAYgjthWQ/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/0EdAYgjthWQ/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/0EdAYgjthWQ/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/0EdAYgjthWQ/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/0EdAYgjthWQ/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "MileyCyrusVEVO",
+    "playlistId": "PLR4XuJ-iybKv7PCHYgblXmMA73lOH1_Uw",
+    "position": 0,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "0EdAYgjthWQ"
+    }
+   },
+   "contentDetails": {
+    "videoId": "0EdAYgjthWQ"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/s3U6bhF6YISj1RCKKFQq7MM7xw4\"",
+   "id": "PLjjEWOIKNNrTlt2Uj64YM3rl-Dn-0Rc6TDMiGS0IZyXw",
+   "snippet": {
+    "publishedAt": "2013-10-28T16:37:38.000Z",
+    "channelId": "UCdI8evszfZvyAl2UVCypkTA",
+    "title": "Miley Cyrus - #VEVOCertified, Pt 2:  Award Presentation",
+    "description": "Download  the album \"Bangerz\" on iTunes: http://smarturl.it/bangerz?Iqid=yt\n\nMusic video by Miley Cyrus performing #VEVOCertified, Pt 2:  Award Presentation . (C) 2013 RCA Records, a division of Sony Music Entertainment",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/ukF1t-PeZWE/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/ukF1t-PeZWE/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/ukF1t-PeZWE/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/ukF1t-PeZWE/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/ukF1t-PeZWE/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "MileyCyrusVEVO",
+    "playlistId": "PLR4XuJ-iybKv7PCHYgblXmMA73lOH1_Uw",
+    "position": 1,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "ukF1t-PeZWE"
+    }
+   },
+   "contentDetails": {
+    "videoId": "ukF1t-PeZWE"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/WoEVSeK51onrGxILNuWmsmIJcvs\"",
+   "id": "PLjjEWOIKNNrTlt2Uj64YM3s1vEXwMUERNTXIDwD32Gm8",
+   "snippet": {
+    "publishedAt": "2013-10-28T16:37:50.000Z",
+    "channelId": "UCdI8evszfZvyAl2UVCypkTA",
+    "title": "#VEVOCertified, Pt 3: Miley On Making Music Videos",
+    "description": "Download  the album \"Bangerz\" on iTunes: http://smarturl.it/bangerz?Iqid=yt\n\nMusic video by Miley Cyrus performing #VEVOCertified, Pt 3: Miley On Making Music Videos . (C) 2013 RCA Records, a division of Sony Music Entertainment",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/NThkyod_A0A/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/NThkyod_A0A/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/NThkyod_A0A/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/NThkyod_A0A/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/NThkyod_A0A/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "MileyCyrusVEVO",
+    "playlistId": "PLR4XuJ-iybKv7PCHYgblXmMA73lOH1_Uw",
+    "position": 2,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "NThkyod_A0A"
+    }
+   },
+   "contentDetails": {
+    "videoId": "NThkyod_A0A"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/QopTzlIQ3aJillNIYuoO9VRlbsI\"",
+   "id": "PLjjEWOIKNNrTlt2Uj64YM3l1RiRbRFh27JTGyWvDssDg",
+   "snippet": {
+    "publishedAt": "2013-10-28T16:37:56.000Z",
+    "channelId": "UCdI8evszfZvyAl2UVCypkTA",
+    "title": "#VEVOCertified, Pt 4: Wrecking Ball (Miley Commentary)",
+    "description": "Download  the album \"Bangerz\" on iTunes: http://smarturl.it/bangerz?Iqid=yt\n\nMusic video by Miley Cyrus performing #VEVOCertified, Pt 4: Wrecking Ball (Miley Commentary) . (C) 2013 RCA Records, a division of Sony Music Entertainment",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/gf4p-nJ4BmM/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/gf4p-nJ4BmM/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/gf4p-nJ4BmM/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/gf4p-nJ4BmM/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/gf4p-nJ4BmM/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "MileyCyrusVEVO",
+    "playlistId": "PLR4XuJ-iybKv7PCHYgblXmMA73lOH1_Uw",
+    "position": 3,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "gf4p-nJ4BmM"
+    }
+   },
+   "contentDetails": {
+    "videoId": "gf4p-nJ4BmM"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/nNLGC8rwpvxdWDswcqKEgQw57dg\"",
+   "id": "PLjjEWOIKNNrTlt2Uj64YM3lpEQe-Oy7sOHn2a3qkIeQM",
+   "snippet": {
+    "publishedAt": "2013-10-28T16:38:03.000Z",
+    "channelId": "UCdI8evszfZvyAl2UVCypkTA",
+    "title": "#VEVOCertified, Pt 5: We Can't Stop (Miley Commentary)",
+    "description": "Download  the album \"Bangerz\" on iTunes: http://smarturl.it/bangerz?Iqid=yt\n\nMusic video by Miley Cyrus performing #VEVOCertified, Pt 5: We Can't Stop (Miley Commentary)  . (C) 2013 RCA Records, a division of Sony Music Entertainment",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/OLxsBS-tI5k/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/OLxsBS-tI5k/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/OLxsBS-tI5k/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/OLxsBS-tI5k/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/OLxsBS-tI5k/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "MileyCyrusVEVO",
+    "playlistId": "PLR4XuJ-iybKv7PCHYgblXmMA73lOH1_Uw",
+    "position": 4,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "OLxsBS-tI5k"
+    }
+   },
+   "contentDetails": {
+    "videoId": "OLxsBS-tI5k"
+   }
+  }
+ ]
+}

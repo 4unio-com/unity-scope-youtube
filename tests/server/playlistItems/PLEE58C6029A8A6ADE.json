@@ -1,0 +1,236 @@
+{
+ "kind": "youtube#playlistItemListResponse",
+ "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/_1bkp2plGpfQPC3eafItRXJsAso\"",
+ "nextPageToken": "CAUQAA",
+ "pageInfo": {
+  "totalResults": 152,
+  "resultsPerPage": 5
+ },
+ "items": [
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/SG4yEU_AvHGzIpIFFyhGGQ3ybF4\"",
+   "id": "PLKmt8g8mHNZOStHqrBQbPVRKlAgEeDg1L",
+   "snippet": {
+    "publishedAt": "2014-07-10T14:30:15.000Z",
+    "channelId": "UCpDJl2EmP7Oh90Vylx0dZtA",
+    "title": "Spinnin' Sessions 061 - Guest: Sander Kleinenberg",
+    "description": "Spinnin' Sessions 061 features a guest mix by the great Sander Kleinenberg. His new single We-R-Superstars will be out on Beatport July 11th.\n\nSubscribe to Spinnin' TV HERE : http://bit.ly/SPINNINTV\n\nListen on Soundcloud: http://bit.ly/W094rs\nDownload Spinnin' Sessions on iTunes: http://smarturl.it/spinnin_sessions\nJoin the Spinnin' Sessions playlist on Spotify: http://spoti.fi/12o2PJk\n\nTracklist:\n1. Mike Mago - Man Hands (Kraak & Smaak Remix) [Spinnin' Deep]\n2. Tocadisco & Koen Groeneveld - My Man [Abzolut]\n3. Cleavage - Need Someone [Spinnin' Deep]\n4. MOTI & Quintino - Crash [Spinnin']\n5. Porter Robinson ft. Urban Cone - Lionhearted (Arty Remix)\n6. Afrojack - Polkadots 2010 (Oliver Twizt Remix) [Spinnin']\n7. DubVision - Backlash [Martin Garrix Edit] [Spinnin']\n8. Mike Hawkins - Revolt [DOORN]\n9. Bassjackers & Kenneth G - Rampage [Revealed]\n\nGuest Mix By Sander Kleinenberg.",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/zrEucH0E8Ic/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/zrEucH0E8Ic/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/zrEucH0E8Ic/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/zrEucH0E8Ic/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/zrEucH0E8Ic/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "Spinnin' Records",
+    "playlistId": "PLEE58C6029A8A6ADE",
+    "position": 0,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "zrEucH0E8Ic"
+    }
+   },
+   "contentDetails": {
+    "videoId": "zrEucH0E8Ic"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/kZ6ynXwPwGVO1MVSXiywD3CWvfo\"",
+   "id": "PLKmt8g8mHNZOMQ6D1zx3CfZ7taex65hqp",
+   "snippet": {
+    "publishedAt": "2014-07-09T15:08:39.000Z",
+    "channelId": "UCpDJl2EmP7Oh90Vylx0dZtA",
+    "title": "Ferreck Dawn & Redondo - Love Too Deep (Official Music Video)",
+    "description": "Ferreck Dawn & Redondo proudly present Love Too Deep (Official Music Video). Grab your copy on iTunes NOW : http://smarturl.it/lovetoodeep\n\nShazam for more!\n\nSubscribe to Spinnin' TV HERE : http://bit.ly/SPINNINTV\n\nJoin Ferreck Dawn:\nhttp://on.fb.me/1piqPdN \nhttp://twitter.com/FerreckDawn \n\nJoin Redondo:\nhttp://www.facebook.com/RedondoMusicNL \nhttp://twitter.com/RedondoMusicNL",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/YuWfQPJoLw0/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/YuWfQPJoLw0/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/YuWfQPJoLw0/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/YuWfQPJoLw0/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     }
+    },
+    "channelTitle": "Spinnin' Records",
+    "playlistId": "PLEE58C6029A8A6ADE",
+    "position": 1,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "YuWfQPJoLw0"
+    }
+   },
+   "contentDetails": {
+    "videoId": "YuWfQPJoLw0"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/oS6sqjVUcfuJxyyyrpvLlNI58UQ\"",
+   "id": "PLKmt8g8mHNZN1_9uuPtUozYbj3L9u1mqV",
+   "snippet": {
+    "publishedAt": "2014-07-07T15:43:54.000Z",
+    "channelId": "UCpDJl2EmP7Oh90Vylx0dZtA",
+    "title": "DubVision - Backlash (Martin Garrix Edit) [Official Music Video]",
+    "description": "Spinnin' Records proudly presents DubVision - Backlash in the Martin Garrix Edit. Download your copy on Beatport NOW : http://btprt.dj/TY8IzW\n\nSubscribe to Spinnin' TV HERE : http://bit.ly/SPINNINTV\n\nMartin Garrix drops his take on DubVision's Backlash right here on Spinnin'. Those famously huge DubVision chord progressions are mixed seamlessly with Garrix's powerhouse production qualities. Resulting in a larger than life, progressive title of incredible magnitude!  \n\nDJ Feedback:\nHardwell: Phat!\nAvicii: Supported in my monthly podcast!\nTiesto: Supported in my radioshow\nDimitri Vegas & Like Mike: Playing!\nNicky Romero: Support\nAfrojack: Support\nSteve Aoki: Banger\nW&W: We're really liking this! We're going to play this A LOT!\nPorter Robinson: Can't lie, i really love this melody!\nDada Life: Cool\nDyro : Supporting!\nChuckie: nice!\nSander van Doorn: Full support\nBingo Players: SUPPORT!\nARTY: Supported in my set at EDC!\nR3hab: Supersmash! AMAZING!\nAN21: Cool!\nBlasterjaxx: Nice!\nDanny Howard / BBCR1: Amazing! Played in my covering show for Pete Tong!\nBobina: Supporting!\nSunnery James & Ryan Marciano: NICE ONE!\nBassjackers: Hugeeee\nDeniz Koyu: Very good\nTritonal: Large\nAudien: Dope!\nMAKJ: Supporting\nSwanky Tunes: Support\nCedric Gervais: big one!\nDanny Avila: cool\nDon Diablo: Big!\nTommie Sunshine: This is huge!\nHenry Fong: One of the best melodic tracks ive heard in a while!\nQuintino: BIG! sick stuff really\n\nJoin DubVision:\nhttp://facebook.com/dubvisionmusic\nhttp://twitter.com/dubvisionmusic\n\nJoin Martin Garrix:\nhttp://facebook.com/martingarrix\nhttp://twitter.com/martingarrix",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/fMP8xZdKs4Y/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/fMP8xZdKs4Y/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/fMP8xZdKs4Y/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/fMP8xZdKs4Y/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     }
+    },
+    "channelTitle": "Spinnin' Records",
+    "playlistId": "PLEE58C6029A8A6ADE",
+    "position": 2,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "fMP8xZdKs4Y"
+    }
+   },
+   "contentDetails": {
+    "videoId": "fMP8xZdKs4Y"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/wbod7Aa9s7dzMnq0sS2tm1xa4L4\"",
+   "id": "PLKmt8g8mHNZMJ5MKHrASwxihbn2L7CVfi",
+   "snippet": {
+    "publishedAt": "2014-07-04T11:48:01.000Z",
+    "channelId": "UCpDJl2EmP7Oh90Vylx0dZtA",
+    "title": "Nick Double & Sam O Neall - Live Life (Official Lyric Video)",
+    "description": "Spinnin' Records proudly presents Nick Double & Sam O Neall - Live Life (Official Lyric Video). Available July 25. Subscribe to Spinnin' TV HERE : http://bit.ly/SPINNINTV",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/e15Qwu5Z390/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/e15Qwu5Z390/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/e15Qwu5Z390/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/e15Qwu5Z390/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     }
+    },
+    "channelTitle": "Spinnin' Records",
+    "playlistId": "PLEE58C6029A8A6ADE",
+    "position": 3,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "e15Qwu5Z390"
+    }
+   },
+   "contentDetails": {
+    "videoId": "e15Qwu5Z390"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/cUKFxqYEL_qu7ioEYgnTg-c-wzs\"",
+   "id": "PLKmt8g8mHNZN6d1zUOIBCVwICpPJZ4oy7",
+   "snippet": {
+    "publishedAt": "2014-07-02T21:49:36.000Z",
+    "channelId": "UCpDJl2EmP7Oh90Vylx0dZtA",
+    "title": "Ummet Ozcan - SMASH! (Official Music Video)",
+    "description": "Ummet Ozcan proudly presents the official video for his new hit SMASH! Download your copy here : http://btprt.dj/1sQMDTM\n\nSubscribe to Spinnin' TV HERE : http://bit.ly/SPINNINTV\n\nDropped as an ID teaser on YouTube, it was clear this is a hit bound to happen! DJ's loved it straight away and as soon it was clear this was the brand new Ummet Ozcan, fan support exploded as well. So what's SMASH! all about? As you've come to expect from Mr. Ozcan production is unparallelled, melodies are ultra sticky and the drop is HUGE! Amazing work!!! \n\nDJ Feedback:\nPete Tong: big\nDavid Guetta: Played in my radioshow\nDimitri Vegas & Like: Playing!\nNicky Romero: In my radioshow!\nAfrojack: Support in my show\nSteve Aoki: Full support\nCalvin Harris: LARGE! Supporting in my sets!\nW&W: Support\nNERVO: Supporting!\nShowtek: Radio show support\nSander van Doorn: Supporting\nMartin Garrix: Supported in my BBCR1 Residency mix!\nDada Life: Best! \nLaidback Luke: cOOl\nChuckie: And another one!!\nR3hab: Supersmash!\nBlasterjaxx: Support\nTritonal: Another biggy from the lad!\nThomas Gold: Fat!\nTommie Sunshine: MASSIVE! FULL SUPPORT!\nBassjackers: Banger\nSwanky Tunes: Support in our radioshow\nDanny Avila: big one!\nMAKJ: Support\nTJR: Huuuuge\nBorgeous: Sounds great!\nKutski / BBCR1: Simply awesome\n\nJoin Ummet:\nhttps://www.facebook.com/UmmetOzcanOfficial \nhttps://twitter.com/UmmetOzcan",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/Ykj_wJKkaAg/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/Ykj_wJKkaAg/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/Ykj_wJKkaAg/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/Ykj_wJKkaAg/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     }
+    },
+    "channelTitle": "Spinnin' Records",
+    "playlistId": "PLEE58C6029A8A6ADE",
+    "position": 4,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "Ykj_wJKkaAg"
+    }
+   },
+   "contentDetails": {
+    "videoId": "Ykj_wJKkaAg"
+   }
+  }
+ ]
+}

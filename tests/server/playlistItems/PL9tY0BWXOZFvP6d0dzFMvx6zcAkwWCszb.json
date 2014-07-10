@@ -1,0 +1,241 @@
+{
+ "kind": "youtube#playlistItemListResponse",
+ "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/IPnYjqm8cvsmT5r5dld1w0Ze8Dw\"",
+ "nextPageToken": "CAUQAA",
+ "pageInfo": {
+  "totalResults": 9,
+  "resultsPerPage": 5
+ },
+ "items": [
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/XUo9kQVO3oepp7AipcrwnySygII\"",
+   "id": "PLzjXDh9PVSrU4FYaRqxxJkod8_pQg3eWBKKhKNsd7GTs",
+   "snippet": {
+    "publishedAt": "2014-03-11T15:48:45.000Z",
+    "channelId": "UC2pmfLm7iq6Ov1UwYrWYkZA",
+    "title": "Iggy Azalea - Fancy (Explicit) ft. Charli XCX",
+    "description": "Fancy is out on iTunes here: http://po.st/FancyiT \nMy album 'The New Classic' is out worldwide! http://smarturl.it/iTNC \n\nhttps://www.facebook.com/iggyazalea  \nhttps://twitter.com/iggyazalea  \nInstagram @thenewclassic \nhttp://www.iggyazalea.com  \n\nwww.facebook.com/charlixcxmusic \nwww.twitter.com/charli_xcx  \u200e  \nwww.charlixcxmusic.com \n\nDirected by Director X\n\nMusic video by Iggy Azalea performing Fancy. (C) 2014 Virgin EMI Records, a division of Universal Music Operations Limited",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/O-zpOMYRi0w/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/O-zpOMYRi0w/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/O-zpOMYRi0w/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/O-zpOMYRi0w/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/O-zpOMYRi0w/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "Vevo",
+    "playlistId": "PL9tY0BWXOZFvP6d0dzFMvx6zcAkwWCszb",
+    "position": 0,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "O-zpOMYRi0w"
+    }
+   },
+   "contentDetails": {
+    "videoId": "O-zpOMYRi0w"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/IkL8zrmXbtKC4xoT0D1etuBU2W0\"",
+   "id": "PLzjXDh9PVSrU4FYaRqxxJkgrTgAaiWjTTTfrs59x4M08",
+   "snippet": {
+    "publishedAt": "2014-03-03T20:53:37.000Z",
+    "channelId": "UC2pmfLm7iq6Ov1UwYrWYkZA",
+    "title": "Phife - Dear Dilla",
+    "description": "Music video by Phife performing Dear Dilla. © 2014 Smokin' Needles Records",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/2iZonnn1nIs/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/2iZonnn1nIs/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/2iZonnn1nIs/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/2iZonnn1nIs/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     }
+    },
+    "channelTitle": "Vevo",
+    "playlistId": "PL9tY0BWXOZFvP6d0dzFMvx6zcAkwWCszb",
+    "position": 1,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "2iZonnn1nIs"
+    }
+   },
+   "contentDetails": {
+    "videoId": "2iZonnn1nIs"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/na5H8ykxqftM8_yJqnmBpXpaawE\"",
+   "id": "PLzjXDh9PVSrU4FYaRqxxJkrHq0a1wd6a-gYCOZlCoE_U",
+   "snippet": {
+    "publishedAt": "2014-03-03T20:53:42.000Z",
+    "channelId": "UC2pmfLm7iq6Ov1UwYrWYkZA",
+    "title": "ScHoolboy Q - Man Of The Year",
+    "description": "Download ScHoolboy Q's \"Man of the Year\" on iTunes: http://smarturl.it/ManOfTheYearQ\nGet ScHoolboy Q's \"Oxymoron\": http://smarturl.it/OxymoronQ\n\nDirectors: Dave Free, Scott Fleishman, Fredo Tovar\nProducer: Michael Mihail \nProduction Company: TDE \nMusic video by SchoolBoy Q performing Man Of The Year. (C) 2014 Interscope",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/rEMsjeq43_U/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/rEMsjeq43_U/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/rEMsjeq43_U/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/rEMsjeq43_U/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     }
+    },
+    "channelTitle": "Vevo",
+    "playlistId": "PL9tY0BWXOZFvP6d0dzFMvx6zcAkwWCszb",
+    "position": 2,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "rEMsjeq43_U"
+    }
+   },
+   "contentDetails": {
+    "videoId": "rEMsjeq43_U"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/zXGOPOQd-qbvjVWJwBEfWRNj1rA\"",
+   "id": "PLzjXDh9PVSrU4FYaRqxxJkg586bAJUrsaTalCU_CSrGk",
+   "snippet": {
+    "publishedAt": "2014-03-03T20:53:45.000Z",
+    "channelId": "UC2pmfLm7iq6Ov1UwYrWYkZA",
+    "title": "Rick Ross - Nobody (Explicit) ft. French Montana, Puff Daddy",
+    "description": "Music video by Rick Ross performing Nobody (Explicit). ©:  Def Jam Recordings, a division of UMG Recordings, Inc.",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/cI9ifCMk0Dg/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/cI9ifCMk0Dg/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/cI9ifCMk0Dg/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/cI9ifCMk0Dg/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     }
+    },
+    "channelTitle": "Vevo",
+    "playlistId": "PL9tY0BWXOZFvP6d0dzFMvx6zcAkwWCszb",
+    "position": 3,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "cI9ifCMk0Dg"
+    }
+   },
+   "contentDetails": {
+    "videoId": "cI9ifCMk0Dg"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/fmZgCg8DR5aijBizH23M3OFMoTY\"",
+   "id": "PLzjXDh9PVSrU4FYaRqxxJkhuTEC1HWoFwbrmZh2GV7eo",
+   "snippet": {
+    "publishedAt": "2014-03-03T20:53:48.000Z",
+    "channelId": "UC2pmfLm7iq6Ov1UwYrWYkZA",
+    "title": "YG - My Nigga (Remix) (Explicit) ft. Lil Wayne, Rich Homie Quan, Meek Mill, Nicki Minaj",
+    "description": "#MYKRAZYLIFE - Available Now! \niTunes Deluxe: http://smarturl.it/iMyKrazyLifeD \niTunes Standard: http://smarturl.it/iMyKrazyLife \nAmazon Deluxe: http://smarturl.it/aMyKrazyLifeD \nAmazon Standard: http://smarturl.it/aMyKrazyLife \nGoogle Play Deluxe: http://goo.gl/XNT73b \nIncludes The Mega Anthem \"My Ni**a (Remix)\" \nAlso The Hit \"Who Do You Love?\" f. Drake \nAppearances By Kendrick Lamar, ScHoolboy Q, DJ Mustard, Jeezy, Rich Homie Quan, Ty Dolla $ign, and more! \n\nYG performing \"My Nigga (Remix)\" featuring Lil Wayne, Rich Homie Quan, Meek Mill & Nicki Minaj © 2014 Def Jam Recordings, a division of UMG Recordings, Inc.",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/6l7J1i1OkKs/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/6l7J1i1OkKs/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/6l7J1i1OkKs/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/6l7J1i1OkKs/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/6l7J1i1OkKs/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "Vevo",
+    "playlistId": "PL9tY0BWXOZFvP6d0dzFMvx6zcAkwWCszb",
+    "position": 4,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "6l7J1i1OkKs"
+    }
+   },
+   "contentDetails": {
+    "videoId": "6l7J1i1OkKs"
+   }
+  }
+ ]
+}

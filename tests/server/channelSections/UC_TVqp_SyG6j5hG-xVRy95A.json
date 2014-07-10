@@ -1,0 +1,111 @@
+{
+ "kind": "youtube#channelSectionListResponse",
+ "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/LrnRGssTjo64RZTMqVIkAsvdARc\"",
+ "items": [
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/E-HOoXJ0I8-I5iLeN95BfEfAu1w\"",
+   "id": "UC_TVqp_SyG6j5hG-xVRy95A.jNQXAC9IVRw"
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/L2hAj9NOfGLmiFgAVWVzicQnRso\"",
+   "id": "UC_TVqp_SyG6j5hG-xVRy95A.aqsRo9JYx5M",
+   "contentDetails": {
+    "playlists": [
+     "PL9Z0stL3aRykWNoVQW96JFIkelka_93Sc"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/gOLks-iOQ-dVebxkZAMErvqa7zU\"",
+   "id": "UC_TVqp_SyG6j5hG-xVRy95A.LeAltgu_pbM",
+   "contentDetails": {
+    "playlists": [
+     "PL9Z0stL3aRylHuDbVpSYJufB1VKc5RdWh"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/wPQjNPzFJUL8UlZmp52Z4A5UxlU\"",
+   "id": "UC_TVqp_SyG6j5hG-xVRy95A.nGzAI5pLbMY",
+   "contentDetails": {
+    "playlists": [
+     "PL9Z0stL3aRyk6yI9R2ja0oZKjOlqwQ-Ov"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/NrsYcEFrpkPAGBncQpHUHk-IGro\"",
+   "id": "UC_TVqp_SyG6j5hG-xVRy95A.__WLXNpu6u8",
+   "contentDetails": {
+    "playlists": [
+     "PLBE5D6DC483A4073C"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/ew_jFYVioLamI7kEjauSq-uUD30\"",
+   "id": "UC_TVqp_SyG6j5hG-xVRy95A.Zx4DA4xg9IM",
+   "contentDetails": {
+    "playlists": [
+     "PLB30EE183F1B36C1E"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/AgL8h28B33hoahwZ-930JWlzaRc\"",
+   "id": "UC_TVqp_SyG6j5hG-xVRy95A.MykmTeTiooA",
+   "contentDetails": {
+    "playlists": [
+     "PL1B5CF096FA99B653"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/uSIq3OyHWxPhv_4xx1M1czWG0-U\"",
+   "id": "UC_TVqp_SyG6j5hG-xVRy95A.iJLXf_7B368",
+   "contentDetails": {
+    "playlists": [
+     "PL80A243D9C542F276"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/sVx__vt0elEQVOUBSBLCntFZ2Kg\"",
+   "id": "UC_TVqp_SyG6j5hG-xVRy95A.UgY69lf0UCE",
+   "contentDetails": {
+    "playlists": [
+     "PLEFAB1B50F4E8E78D"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/1DYfjmw6tOIl0rm1VMDNUBjD9d4\"",
+   "id": "UC_TVqp_SyG6j5hG-xVRy95A.XgM4c0oGu94",
+   "contentDetails": {
+    "playlists": [
+     "PLakoz4isJL_le7pX5BvGF665D7HjsVoMd"
+    ]
+   }
+  }
+ ]
+}

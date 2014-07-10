@@ -1,0 +1,100 @@
+{
+ "kind": "youtube#channelSectionListResponse",
+ "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/WxcIQntVKAMQdpVOn6Qwg-WFf1Y\"",
+ "items": [
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/ltvWGBwgKz_IqyQJa_RPz3o3LWM\"",
+   "id": "UCpDJl2EmP7Oh90Vylx0dZtA.jNQXAC9IVRw",
+   "contentDetails": {
+    "playlists": [
+     "PLEE58C6029A8A6ADE"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/D2OG-ku_4ILZU8fRzaXJhFM7ao0\"",
+   "id": "UCpDJl2EmP7Oh90Vylx0dZtA.LeAltgu_pbM",
+   "contentDetails": {
+    "playlists": [
+     "PLx_tr69QV8CAll6JVEFJW94v4aE9pCtIf"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/FZJNIeesoDBq5MQw4YQEZVIquK0\"",
+   "id": "UCpDJl2EmP7Oh90Vylx0dZtA.nGzAI5pLbMY",
+   "contentDetails": {
+    "playlists": [
+     "PLA6DC52121CDE580A"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/FUHn1G-j-60ytCz5bKkKGiMlj7o\"",
+   "id": "UCpDJl2EmP7Oh90Vylx0dZtA.Zx4DA4xg9IM",
+   "contentDetails": {
+    "playlists": [
+     "PL88166FF2D35573B8"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/x9BhbGdmALqSoQBHvHWIY3NrweU\"",
+   "id": "UCpDJl2EmP7Oh90Vylx0dZtA.__WLXNpu6u8",
+   "contentDetails": {
+    "playlists": [
+     "PL53244BC75ACF40D0"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/0-pJvDCaT99X-68V24ke86_w5NA\"",
+   "id": "UCpDJl2EmP7Oh90Vylx0dZtA.MykmTeTiooA",
+   "contentDetails": {
+    "playlists": [
+     "PL74C68E56C6626B0E"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/m2v6sx1mi2a34hnQWcVbQqzTsP0\"",
+   "id": "UCpDJl2EmP7Oh90Vylx0dZtA.ebKlgRwnpFY",
+   "contentDetails": {
+    "playlists": [
+     "PL8B6095F581EAF713"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/MMdjo3MbhYgZuekVF3O0-Mp74lM\"",
+   "id": "UCpDJl2EmP7Oh90Vylx0dZtA.aqsRo9JYx5M",
+   "contentDetails": {
+    "playlists": [
+     "PLx_tr69QV8CCyUSdcd9xqYwW_n-M6n6za"
+    ]
+   }
+  },
+  {
+
+   "kind": "youtube#channelSection",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/ea2WIqTDoaa9BGBiLmHqPOqcO98\"",
+   "id": "UCpDJl2EmP7Oh90Vylx0dZtA.iJLXf_7B368"
+  }
+ ]
+}
