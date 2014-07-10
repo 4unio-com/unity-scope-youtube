@@ -159,15 +159,17 @@ public:
                 {
                     string decompressed;
 
-                    try {
-                        io::filtering_ostream os;
-                        os.push(io::gzip_decompressor());
-                        os.push(io::back_inserter(decompressed));
-                        os << response.body;
-                        boost::iostreams::close(os);
-                    } catch(io::gzip_error &e) {
-                        prom->set_exception(make_exception_ptr(e));
-                        return;
+                    if(!response.body.empty()) {
+                        try {
+                            io::filtering_ostream os;
+                            os.push(io::gzip_decompressor());
+                            os.push(io::back_inserter(decompressed));
+                            os << response.body;
+                            boost::iostreams::close(os);
+                        } catch(io::gzip_error &e) {
+                            prom->set_exception(make_exception_ptr(e));
+                            return;
+                        }
                     }
 
                     json::Value root;

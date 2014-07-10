@@ -1,0 +1,156 @@
+{
+ "kind": "youtube#channelListResponse",
+ "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/qEjr4L45ZivrngGL7B_Kn7XBXZY\"",
+ "nextPageToken": "CAUQAA",
+ "pageInfo": {
+  "totalResults": 9,
+  "resultsPerPage": 5
+ },
+ "items": [
+  {
+
+   "kind": "youtube#channel",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/yjZxLnJAb_-2xj_O3wN3bhjXRP4\"",
+   "id": "UCF0pVplsI8R5kcAqgtoRqoA",
+   "snippet": {
+    "title": "Popular on YouTube",
+    "description": "",
+    "publishedAt": "2013-12-04T14:21:17.000Z",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/i/F0pVplsI8R5kcAqgtoRqoA/1.jpg"
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/i/F0pVplsI8R5kcAqgtoRqoA/mq1.jpg"
+     },
+     "high": {
+      "url": "https://i.ytimg.com/i/F0pVplsI8R5kcAqgtoRqoA/hq1.jpg"
+     }
+    }
+   },
+   "statistics": {
+    "viewCount": "0",
+    "commentCount": "0",
+    "subscriberCount": "28497668",
+    "hiddenSubscriberCount": false,
+    "videoCount": "0"
+   }
+  },
+  {
+
+   "kind": "youtube#channel",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/dHGRH42cEGAYCmkZe-WRp4rnWCs\"",
+   "id": "UC3yA8nDwraeOfnYfBWun83g",
+   "snippet": {
+    "title": "Education",
+    "description": "Whether you're doing research for a project, need help with homework, or just want to learn something new, YouTube EDU features some of our most popular educational videos across YouTube.\nThis channel was generated automatically by YouTube's video discovery system.",
+    "publishedAt": "2014-01-23T16:38:52.000Z",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/i/3yA8nDwraeOfnYfBWun83g/1.jpg"
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/i/3yA8nDwraeOfnYfBWun83g/mq1.jpg"
+     },
+     "high": {
+      "url": "https://i.ytimg.com/i/3yA8nDwraeOfnYfBWun83g/hq1.jpg"
+     }
+    }
+   },
+   "statistics": {
+    "viewCount": "0",
+    "commentCount": "0",
+    "subscriberCount": "10420192",
+    "hiddenSubscriberCount": false,
+    "videoCount": "0"
+   }
+  },
+  {
+
+   "kind": "youtube#channel",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/1hXq6wMXEro2HtCFVLmF0qGjEXo\"",
+   "id": "UC-9-kyTW8ZkZNDHQJ6FgpwQ",
+   "snippet": {
+    "title": "Music",
+    "description": "YouTube's music destination featuring top tracks and popular hits from a variety of genres.\nThis channel was generated automatically by YouTube's video discovery system.",
+    "publishedAt": "2013-09-24T12:58:02.000Z",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/i/-9-kyTW8ZkZNDHQJ6FgpwQ/1.jpg"
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/i/-9-kyTW8ZkZNDHQJ6FgpwQ/mq1.jpg"
+     },
+     "high": {
+      "url": "https://i.ytimg.com/i/-9-kyTW8ZkZNDHQJ6FgpwQ/hq1.jpg"
+     }
+    }
+   },
+   "statistics": {
+    "viewCount": "0",
+    "commentCount": "0",
+    "subscriberCount": "86076939",
+    "hiddenSubscriberCount": false,
+    "videoCount": "0"
+   }
+  },
+  {
+
+   "kind": "youtube#channel",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/-gAfXWexVXsYwtLqd-OKn3VW83c\"",
+   "id": "UCEgdi0XIXXZ-qJOFPf4JSKw",
+   "snippet": {
+    "title": "Sports",
+    "description": "Sport is all forms of usually competitive physical activity which, through casual or organised participation, aim to use, maintain or improve physical ability and skills while providing entertainment to participants, and in some cases, spectators. Hundreds of sports exist, from those requiring only two participants, through to those with hundreds of simultaneous participants, either in teams or competing as individuals. Sport is generally recognised as activities which are based in physical athleticism or physical dexterity, with the largest major competitions such as the Olympic Games admitting only sports meeting this definition, and other organisations such as the Council of Europe using definitions precluding activities without a physical element from classification as sports. However, a number of competitive, but non-physical, activities claim recognition as mind sports.\nThis channel was generated automatically by YouTube's video discovery system.",
+    "publishedAt": "2013-12-15T20:39:04.000Z",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/i/Egdi0XIXXZ-qJOFPf4JSKw/1.jpg"
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/i/Egdi0XIXXZ-qJOFPf4JSKw/mq1.jpg"
+     },
+     "high": {
+      "url": "https://i.ytimg.com/i/Egdi0XIXXZ-qJOFPf4JSKw/hq1.jpg"
+     }
+    }
+   },
+   "statistics": {
+    "viewCount": "0",
+    "commentCount": "0",
+    "subscriberCount": "77462831",
+    "hiddenSubscriberCount": false,
+    "videoCount": "0"
+   }
+  },
+  {
+
+   "kind": "youtube#channel",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/NMccCH-grqcIjmNarlP0_oNQq2w\"",
+   "id": "UCOpNcN46UbXVtpKMrmU4Abg",
+   "snippet": {
+    "title": "Gaming",
+    "description": "YouTube's top gaming destination, featuring news, reviews, playthroughs, and more.\nThis channel was generated automatically by YouTube's video discovery system.",
+    "publishedAt": "2013-12-15T20:44:04.000Z",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/i/OpNcN46UbXVtpKMrmU4Abg/1.jpg"
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/i/OpNcN46UbXVtpKMrmU4Abg/mq1.jpg"
+     },
+     "high": {
+      "url": "https://i.ytimg.com/i/OpNcN46UbXVtpKMrmU4Abg/hq1.jpg"
+     }
+    }
+   },
+   "statistics": {
+    "viewCount": "0",
+    "commentCount": "0",
+    "subscriberCount": "78589688",
+    "hiddenSubscriberCount": false,
+    "videoCount": "0"
+   }
+  }
+ ]
+}

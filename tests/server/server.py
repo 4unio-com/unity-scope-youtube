@@ -30,11 +30,56 @@ ACCESS_TOKEN = 'the_access_token'
 
 AUTHORIZATION_BEARER = 'Bearer %s' % ACCESS_TOKEN
 
-QUERY_SEARCH = open(os.path.join(os.path.dirname(__file__), 'search.json')).read()
+def read_file(path):
+    file = os.path.join(os.path.dirname(__file__), path)
+    if os.path.isfile(file):
+        with open(file, 'r') as fp:
+            content = fp.read()
+    else:
+        sys.stderr.write("File '%s' not found\n" % file)
+        content = ""
+    return content
+
+GUIDE_CATEGORIES = read_file('guide-categories.json')
 
 class ErrorHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
         self.write(json.dumps({'error': '%s: %d' % (kwargs["exc_info"][1], status_code)}))
+
+class Channels(ErrorHandler):
+    def get(self):
+        validate_header(self, 'Accept-Encoding', 'gzip')
+        validate_argument(self, 'part', 'snippet,statistics')
+
+        file = 'channels/%s.json' % self.get_argument('categoryId', '')
+        self.write(read_file(file))
+        self.finish()
+        
+class ChannelSections(ErrorHandler):
+    def get(self):
+        validate_header(self, 'Accept-Encoding', 'gzip')
+        validate_argument(self, 'part', 'contentDetails')
+
+        file = 'channelSections/%s.json' % self.get_argument('channelId', '')
+        self.write(read_file(file))
+        self.finish()
+
+class GuideCategories(ErrorHandler):
+    def get(self):
+        validate_header(self, 'Accept-Encoding', 'gzip')
+        validate_argument(self, 'part', 'snippet')
+
+        self.write(GUIDE_CATEGORIES)
+        self.finish()
+
+class PlaylistItems(ErrorHandler):
+    def get(self):
+        validate_header(self, 'Accept-Encoding', 'gzip')
+        validate_argument(self, 'part', 'snippet,contentDetails')
+
+        file = 'playlistItems/%s.json' % self.get_argument('playlistId', '')
+        self.write(read_file(file))
+        self.finish()
 
 class Search(ErrorHandler):
     def get(self):
@@ -44,11 +89,7 @@ class Search(ErrorHandler):
         validate_argument(self, 'maxResults', '10')
 
         query = self.get_argument('q', '')
-    
-        if query == 'banana':
-            self.write(QUERY_SEARCH)
-        else:
-            raise Exception("Unknown query '%s'" % query)
+        self.write(read_file('search/%s.json' % query))
         self.finish()
 
 def validate_argument(self, name, expected):
@@ -63,6 +104,10 @@ def validate_header(self, name, expected):
 
 def new_app():
     application = tornado.web.Application([
+        (r"/youtube/v3/channels", Channels),
+        (r"/youtube/v3/channelSections", ChannelSections),
+        (r"/youtube/v3/guideCategories", GuideCategories),
+        (r"/youtube/v3/playlistItems", PlaylistItems),
         (r"/youtube/v3/search", Search),
     ], gzip=True)
     sockets = tornado.netutil.bind_sockets(0, '127.0.0.1')

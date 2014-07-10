@@ -1,0 +1,51 @@
+{
+ "kind": "youtube#guideCategoryListResponse",
+ "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/jUz8nXoHtRKpTeR08dq3a9pg9cI\"",
+ "items": [
+  {
+   "kind": "youtube#guideCategory",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/fnL4T7wf3HKS8VCeb2Mui5q9zeM\"",
+   "id": "GCQmVzdCBvZiBZb3VUdWJl",
+   "snippet": {
+    "channelId": "UCBR8-60-B28hp2BmDPdntcQ",
+    "title": "Best of YouTube"
+   }
+  },
+  {
+   "kind": "youtube#guideCategory",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/XgnvmhOxTrWYWSe2x_6WPkBaKl4\"",
+   "id": "GCRmVhdHVyZWQ",
+   "snippet": {
+    "channelId": "UCBR8-60-B28hp2BmDPdntcQ",
+    "title": "Featured"
+   }
+  },
+  {
+   "kind": "youtube#guideCategory",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/6R4heMGy5-94_1aYCHia66FCycQ\"",
+   "id": "GCUGFpZCBDaGFubmVscw",
+   "snippet": {
+    "channelId": "UCBR8-60-B28hp2BmDPdntcQ",
+    "title": "Paid Channels"
+   }
+  },
+  {
+   "kind": "youtube#guideCategory",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/mbUaBJAZzQQXrUy_F02c8idvkek\"",
+   "id": "GCTXVzaWM",
+   "snippet": {
+    "channelId": "UCBR8-60-B28hp2BmDPdntcQ",
+    "title": "Music"
+   }
+  },
+  {
+   "kind": "youtube#guideCategory",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/dhUpBnIOaCoCDniv0ZybQIGWa8k\"",
+   "id": "GCQ29tZWR5",
+   "snippet": {
+    "channelId": "UCBR8-60-B28hp2BmDPdntcQ",
+    "title": "Comedy"
+   }
+  }
+ ]
+}

@@ -1,0 +1,244 @@
+{
+ "kind": "youtube#playlistItemListResponse",
+ "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/7FZwTmm-lsuhefVoy82x60Etyjg\"",
+ "nextPageToken": "CAUQAA",
+ "pageInfo": {
+  "totalResults": 100,
+  "resultsPerPage": 5
+ },
+ "items": [
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/0gUNBc3ZWa-HiB8yU67cT4ReUbU\"",
+   "id": "PLwxl5NB3QjVDCUQkxqqbskuZPU7cD0r1fmc-YWuArdlE",
+   "snippet": {
+    "publishedAt": "2014-07-10T12:02:29.000Z",
+    "channelId": "UC-9-kyTW8ZkZNDHQJ6FgpwQ",
+    "title": "Shakira - La La La (Brazil 2014) ft. Carlinhos Brown",
+    "description": "La La La is featured on Shakira's new self-titled album. Shakira & Activia partner to support World Food Programme and its School Meals initiative, Find out more on activia.com - wfp.org/shakira -shakira.com. \n\n\"La La La\" is featured on the new album Shakira, out now / El nuevo álbum ya disponible en iTunes http://smarturl.it/ShakiraiTunes?IQid=yt / CD http://smarturl.it/ShakiraAlbumCD?Iqid=yt \nAlso, featured on One Love, One Rhythm: The Official 2014 FIFA World Cup™ Album. Available Now: http://smarturl.it/FWCalbum?Iqid=Shak \n\nMusic video by Shakira performing La La La. (C) 2014 Ace Entertainment S.ar.l.",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/7-7knsP2n5w/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/7-7knsP2n5w/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/7-7knsP2n5w/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/7-7knsP2n5w/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/7-7knsP2n5w/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "Music",
+    "playlistId": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+    "position": 0,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "7-7knsP2n5w"
+    }
+   },
+   "contentDetails": {
+    "videoId": "7-7knsP2n5w"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/VA8f1EcW1FW45yLiIbeWJl6fpZo\"",
+   "id": "PLwxl5NB3QjVDCUQkxqqbski3g16WZDywohSD8E00ZFv0",
+   "snippet": {
+    "publishedAt": "2014-07-10T12:02:29.000Z",
+    "channelId": "UC-9-kyTW8ZkZNDHQJ6FgpwQ",
+    "title": "We Are One (Ole Ola) [The Official 2014 FIFA World Cup Song] (Olodum Mix)",
+    "description": "Download \"We Are One (Ole Ola)\" on iTunes: http://smarturl.it/WeAreOne?Iqid=yt\n\nMusic video by Pitbull feat. Jennifer Lopez & Claudia Leitte performing We Are One (Ole Ola) [The Official 2014 FIFA World Cup Song] { Olodum Mix}. (C) 2014 RCA Records, a division of Sony Music Entertainment",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/TGtWWb9emYI/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/TGtWWb9emYI/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/TGtWWb9emYI/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/TGtWWb9emYI/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     }
+    },
+    "channelTitle": "Music",
+    "playlistId": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+    "position": 1,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "TGtWWb9emYI"
+    }
+   },
+   "contentDetails": {
+    "videoId": "TGtWWb9emYI"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/xJsNGSxz9pb2hd238p5tYnHVtfo\"",
+   "id": "PLwxl5NB3QjVDCUQkxqqbskn1tMVYuSrN8uBxqaoaIbUA",
+   "snippet": {
+    "publishedAt": "2014-07-10T12:02:29.000Z",
+    "channelId": "UC-9-kyTW8ZkZNDHQJ6FgpwQ",
+    "title": "PSY - HANGOVER feat. Snoop Dogg M/V",
+    "description": "[PSY - HANGOVER feat. Snoop Dogg M/V]\n#PSY #HANGOVER\n\nAvailable on iTunes @ http://smarturl.it/PsyHangoveriT\n\nMore about PSY@\nhttp://www.psypark.com\nhttp://www.youtube.com/officialpsy\nhttp://www.facebook.com/officialpsy\nhttp://twitter.com/psy_oppa\nhttp://twitter.com/ygent_official\n\nOfficial PSY Online Store US & International : http://psy.shop.bravadousa.com/\nApp Store: http://goo.gl/l9TU6\nGoogle Play: http://goo.gl/UiEn1",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/HkMNOlYcpHg/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/HkMNOlYcpHg/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/HkMNOlYcpHg/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/HkMNOlYcpHg/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/HkMNOlYcpHg/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "Music",
+    "playlistId": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+    "position": 2,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "HkMNOlYcpHg"
+    }
+   },
+   "contentDetails": {
+    "videoId": "HkMNOlYcpHg"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/0vAI74NMUZmhpf-S7MurUfEH0ZA\"",
+   "id": "PLwxl5NB3QjVDCUQkxqqbskj12EmT-tmvKrzQHz_0nAY8",
+   "snippet": {
+    "publishedAt": "2014-07-10T12:02:29.000Z",
+    "channelId": "UC-9-kyTW8ZkZNDHQJ6FgpwQ",
+    "title": "Katy Perry - Dark Horse (Official) ft. Juicy J",
+    "description": "Get \"Dark Horse\" feat. Juicy J from Katy Perry's PRISM: http://smarturl.it/PRISM\nDo you want to play with magic?  Insert yourself into the video using #DarkHorseCam: http://andCam.com/DarkHorse  \n\nTHE PRISMATIC WORLD TOUR coming to you soon: http://www.katyperry.com/events\n \nFollow Katy Perry:\nhttp://www.katyperry.com\nhttp://youtube.com/katyperry\nhttp://twitter.com/katyperry\nhttp://facebook.com/katyperry\nhttp://instagram.com/katyperry",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/0KSOMA3QBU0/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/0KSOMA3QBU0/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/0KSOMA3QBU0/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/0KSOMA3QBU0/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     }
+    },
+    "channelTitle": "Music",
+    "playlistId": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+    "position": 3,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "0KSOMA3QBU0"
+    }
+   },
+   "contentDetails": {
+    "videoId": "0KSOMA3QBU0"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/vf0mErTI-JoRClfbQZOP030ukbM\"",
+   "id": "PLwxl5NB3QjVDCUQkxqqbskvU6mGmM4R1bUS4RXhBdZHc",
+   "snippet": {
+    "publishedAt": "2014-07-10T12:02:29.000Z",
+    "channelId": "UC-9-kyTW8ZkZNDHQJ6FgpwQ",
+    "title": "Enrique Iglesias - Bailando (Español) ft. Descemer Bueno, Gente De Zona",
+    "description": "Enrique Iglesias wants to see you dance!  Make a video inspired by his song \"Bailando\" (the English OR Spanish) versions and you could win tickets and get the VIP treatment on his SEX AND LOVE TOUR, including meeting Enrique! Video ideas &  details here:  http://bit.ly/1lu7OFM\n\n\"Bailando\" (English Version) - http://youtu.be/b8I-7Wk_Vbc\n\nDownload SEX AND LOVE Now!\niTunes - http://smarturl.it/EnriqueSEXANDLOVEDiT\nAmazon - http://smarturl.it/EnriqueSEXANDLOVEDAZ\nGoogle Play - http://goo.gl/bTPJhB\n\nMusic video by Enrique Iglesias performing Bailando. (C) 2014 Universal International Music B.V.",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/NUsoVlDFqZg/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/NUsoVlDFqZg/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/NUsoVlDFqZg/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/NUsoVlDFqZg/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/NUsoVlDFqZg/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "Music",
+    "playlistId": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+    "position": 4,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "NUsoVlDFqZg"
+    }
+   },
+   "contentDetails": {
+    "videoId": "NUsoVlDFqZg"
+   }
+  }

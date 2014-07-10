@@ -1,0 +1,251 @@
+{
+ "kind": "youtube#playlistItemListResponse",
+ "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/PC4fRPQND2_mb_o71G532g4gE9k\"",
+ "nextPageToken": "CAUQAA",
+ "pageInfo": {
+  "totalResults": 10,
+  "resultsPerPage": 5
+ },
+ "items": [
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/5R10GpyNOoAktjaUjm4DLKpWhac\"",
+   "id": "PLm7AE3EhrYW-u7FbHNfLPk7brpuKdGPIlAQhS8f47QUI",
+   "snippet": {
+    "publishedAt": "2014-06-17T20:05:21.000Z",
+    "channelId": "UC3yA8nDwraeOfnYfBWun83g",
+    "title": "Magnesium Disorders",
+    "description": "A summary of normal magnesium homeostasis, and an overview of the manifestations, etiologies, diagnostic evaluation, and treatment of both hypomagnesemia and hypermagnesemia.",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/L932sS20Tek/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/L932sS20Tek/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/L932sS20Tek/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/L932sS20Tek/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/L932sS20Tek/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "Education",
+    "playlistId": "PLN_VEYjh8gCByLq9iBB_yP4Qyhh95DMyH",
+    "position": 0,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "L932sS20Tek"
+    }
+   },
+   "contentDetails": {
+    "videoId": "L932sS20Tek"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/8vpnh70dHOHUiOc8RS2cE1j1Sgw\"",
+   "id": "PLm7AE3EhrYW-u7FbHNfLPk0YXt0rUJPiUa0VIKYK6znI",
+   "snippet": {
+    "publishedAt": "2014-06-17T20:05:21.000Z",
+    "channelId": "UC3yA8nDwraeOfnYfBWun83g",
+    "title": "Is Evil Rational?",
+    "description": "Is evil rational? If it is, then how can we depend on reason alone to make a better world? Best-selling author Dennis Prager has a challenging answer.",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/ryA8PafooQ4/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/ryA8PafooQ4/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/ryA8PafooQ4/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/ryA8PafooQ4/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     }
+    },
+    "channelTitle": "Education",
+    "playlistId": "PLN_VEYjh8gCByLq9iBB_yP4Qyhh95DMyH",
+    "position": 1,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "ryA8PafooQ4"
+    }
+   },
+   "contentDetails": {
+    "videoId": "ryA8PafooQ4"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/3QXnhALlqCOZCDVRCf-uTiW8Lr8\"",
+   "id": "PLm7AE3EhrYW-u7FbHNfLPk46v0n1Fdz-cUdB6v8ya1tQ",
+   "snippet": {
+    "publishedAt": "2014-06-17T20:05:21.000Z",
+    "channelId": "UC3yA8nDwraeOfnYfBWun83g",
+    "title": "Political Parties Rap (Epic Remix) - Smart Songs",
+    "description": "NOW ON DVD!! (INCLUDES VIDEOS, LYRICS, QUIZZES, & AUDIO)! http://www.socialstudies.com/c/product.html?nocache@2+s@WmOwlWIpyFFec+record@TF45568\nPolitical Parties Rap\nEpic Remix\n\nWEBSITE: http://smartsongs.org  iTUNES: http://itunes.apple.com/us/artist/smart-songs/id448968411 \nLIKE US ON FACEBOOK: http://www.facebook.com/#!/smartsongsmusic\n\nLYRICS:\n \nHey Hey, Whoa, Whoa Start the Party, Get Down, Everybody Now \n(Listen Up Now, Party Means Dance, Time to Get in Your Political Stance) \nHey Hey, Democrats, Republicans It's Time to Party, Everybody Now \n\nIn our country, we are called Americans \nAnd we can agree with each other on many things \nBut not on everything, there's lots of issues \nParties challenge each other with different views \nJoin with a party where your values are respected \nPower in numbers to get your candidates elected \nOne of the two largest groups, the Democratic Party \nTraditional symbol is the patriotic donkey \nGenerally, viewed to be those who think liberally \nFiguratively, said to be on the left politically \nParty believes government should be large in size \nAnd nationally protect the well-being of our lives \nWhy how about the Republican Party? \nThe Grand Old Party, it's the GOP \nMany from this party want the country more conservative \nBelieving government should remain small and be reserved a bit \nAnd do things only that citizens on their own cannot \nThe elephant is the party symbol and mascot \nDo you who you support yet? \"Hardly\" \nWell maybe consider voting for a third party \nUsually the underdog, and it's evident N\no third party candidate has ever been president \nSome voters won't let that change what they decide \nStart up the campaign; you're in for a ride \n\nCHORUS \n\nVERSE 2: \nWell, the very first party in this country to exist \nWas the party that was known as the Federalists \nIt was started by the man Alexander Hamilton \nWanted strong central government, that was his plan \nThomas Jefferson and James Madison did begin \nA group called Democratic-Republicans \nThey cut spending and made state powers strong \nAppealed to farmers who labored all year long \nBut in the 1800's, those parties fell apart \nAnd the Democrats that we know today had their start \nAt their heart was Andrew Jackson who wanted social action \nThe vote of farmers and workers is what he was attracting \nThe faction that opposed them were Democratic foes and \nWere known as the Whigs, a British name chosen \nNo, not those that you wear on your head \nBut those that said the government is limited \nBut then the Whigs began bickering before the Civil War \nSome formed the Republicans in 1854 \nAnd the one to represent them: Abraham Lincoln \nThe first president to be a Republican \nAnd though they've been changing, still change along the way \nRepublicans and Democrats are what we have today \nThey each hold primaries, party elections \nAnd nominate the winners at the party conventions \n\nJoin rappers Shoeless Jeff & Scott Free as they throw a party to celebrate the political parties of the United States - as well as learn about their history.  Start it up!\n\nWritten and Produced By: Shoeless Jeff & Scott Free\nBeat: John Della Morte\nMixing and Mastering: Marc Antonio Pritchett\nCamera: James Mills & Tim McCombe\nSpecial Effects Supervisor: Steven Aguilera\nGreen Screen Tracking Coordinator: Chris Jay\nGreen Screen Pickup Shots: Christopher Marino\n\nDennis King..................Organ Player\nCiara McGovern............Balloon Girl\nJay David.....................Drummer, Andrew Jackson\nLuis Rivera...................Breakdancer\nAlfred Thomas..............Trumpet Player\nTanissia Sprull..............Argument Girl\nAaron Smith.................Argument Guy\nNatasha Pearl Hansen...Agreement Girl\nRocky Myers................Agreement Guy\nJesse Dujardin..............Bickering Whig\nGarryt Poirier................Elephant\nLisa D'Alessandro.........Goldfish Dancer\nAshley Korbey..............1980's Party Girl\nCarly Toth.....................Hillary Clinton\nAmber Barnett...............Push-Up Girl\nJustin Schwan..............Party Mingler\nMarvin Hernandez.........Party Mingler\nCaitlin Mulligen.............Party Mingler\nCarol David..................Party Mingler\nChris Marino................Party Hype-Man\n\nRollerskating Gang:\nChuli Joy\nSteven Neumeier\nSarah Levin\nBaron Jay Littleton Jr.\nEvan Hembacher\nMiss Ashley\n\nSpecial Thanks:\nNorthridge Skateland\nSherman Oaks Little League",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/HtGgreHgvfo/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/HtGgreHgvfo/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/HtGgreHgvfo/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/HtGgreHgvfo/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/HtGgreHgvfo/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "Education",
+    "playlistId": "PLN_VEYjh8gCByLq9iBB_yP4Qyhh95DMyH",
+    "position": 2,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "HtGgreHgvfo"
+    }
+   },
+   "contentDetails": {
+    "videoId": "HtGgreHgvfo"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/nDhkavX-ek3NHcznpdDPc_OnO1o\"",
+   "id": "PLm7AE3EhrYW-u7FbHNfLPk74XKsuQAFuZZR7FB2AFqWo",
+   "snippet": {
+    "publishedAt": "2014-06-17T20:05:21.000Z",
+    "channelId": "UC3yA8nDwraeOfnYfBWun83g",
+    "title": "3D Scanning at the Smithsonian",
+    "description": "What can you do to bring some of the Smithsonian's 137 million objects to life? Put them in 3D!\n\nThis is a full-time job for two of the Smithsonian's very own \"laser cowboys,\" Vince Rossi and Adam Metallo, who work in the Smithsonian's 3D Digitization Program Office. They work hard to document, in very high three-dimensional detail, many of our priceless and important collections so that the objects are available for research, education and general interest.\n\nSmithsonian 3D Digitization on Facebook:\nhttp://www.facebook.com/3d.si.edu\n\nGunboat Philadelphia:\nhttp://s.si.edu/kYedb\n\nCornell Imaging:\nhttp://ct.biotech.cornell.edu\n\nSmithsonian Gardens' orchid collections:\nhttp://s.si.edu/kYhim\n\nEuglossa ignita bee:\nhttp://s.si.edu/kYigP",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/AWoqTGEw7WA/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/AWoqTGEw7WA/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/AWoqTGEw7WA/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/AWoqTGEw7WA/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/AWoqTGEw7WA/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "Education",
+    "playlistId": "PLN_VEYjh8gCByLq9iBB_yP4Qyhh95DMyH",
+    "position": 3,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "AWoqTGEw7WA"
+    }
+   },
+   "contentDetails": {
+    "videoId": "AWoqTGEw7WA"
+   }
+  },
+  {
+
+   "kind": "youtube#playlistItem",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/faircUkrueS-HgLvVichDo5HMvk\"",
+   "id": "PLm7AE3EhrYW-u7FbHNfLPkwht8q1G0-6xznXZGveUM6Y",
+   "snippet": {
+    "publishedAt": "2014-06-17T20:05:21.000Z",
+    "channelId": "UC3yA8nDwraeOfnYfBWun83g",
+    "title": "Age of star clusters & Red Giants",
+    "description": "Dr Holger Baumgardt explains to us how Colour-Magntitude diagrams are used to estimate the age of star clusters, as well as the identification of red giant stars.\n\nFor more information, visit my website at: http://www.anglesandacid.com/physics.html",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/YHdOiTUwdKg/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/YHdOiTUwdKg/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/YHdOiTUwdKg/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/YHdOiTUwdKg/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/YHdOiTUwdKg/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "Education",
+    "playlistId": "PLN_VEYjh8gCByLq9iBB_yP4Qyhh95DMyH",
+    "position": 4,
+    "resourceId": {
+     "kind": "youtube#video",
+     "videoId": "YHdOiTUwdKg"
+    }
+   },
+   "contentDetails": {
+    "videoId": "YHdOiTUwdKg"
+   }
+  }
+ ]
+}
