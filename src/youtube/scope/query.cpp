@@ -220,6 +220,7 @@ void push_resource(const sc::SearchReplyProxy &reply,
         new_query.set_department_id(path.to_string());
         res.set_uri(new_query.to_uri());
         res["subtitle"] = channel->subscriber_count() + " subscribers";
+        res["description"] = channel->description();
         break;
     }
     case Resource::Kind::channelSection: {
@@ -240,6 +241,7 @@ void push_resource(const sc::SearchReplyProxy &reply,
         new_query.set_department_id(path.to_string());
         res.set_uri(new_query.to_uri());
         res["subtitle"] = to_string(playlist->item_count()) + " videos";
+        res["description"] = playlist->description();
         break;
     }
     case Resource::Kind::playlistItem: {
@@ -434,8 +436,22 @@ void Query::playlist(const sc::SearchReplyProxy &reply,
     }
 }
 
-Client::GuideCategoryList Query::load_departments(
-        const sc::SearchReplyProxy& reply) {
+void Query::channel(const sc::SearchReplyProxy &reply,
+        const string &channel_id) {
+    cerr << "Channel: " << channel_id << endl;
+
+    auto cat = reply->register_category("youtube", "Channel contents", "",
+            sc::CategoryRenderer(SEARCH_TEMPLATE));
+
+    auto channels_future = client_->channel_videos(channel_id);
+    Client::VideoList videos = get_or_throw(channels_future);
+
+    for (auto &video : videos) {
+        push_resource(reply, cat, video);
+    }
+}
+
+void Query::surfacing(const sc::SearchReplyProxy &reply) {
     const sc::CannedQuery &query(sc::SearchQueryBase::query());
 
     sc::Department::SPtr all_depts;
@@ -472,17 +488,12 @@ Client::GuideCategoryList Query::load_departments(
             dept->add_subdepartment(channels);
         }
     }
-    reply->register_departments(all_depts);
-    return departments;
-}
-
-void Query::surfacing(const sc::SearchReplyProxy &reply) {
-    const sc::CannedQuery &query(sc::SearchQueryBase::query());
-
-    auto departments = load_departments(reply);
 
     string raw_department_id = query.department_id();
     if (!raw_department_id.empty()) {
+        // FIXME Working around the UI bug (have to register departments before results)
+        reply->register_departments(all_depts);
+
         DepartmentPath path(raw_department_id);
         switch (path.department_type) {
         case DepartmentType::guide_category: {
@@ -512,16 +523,36 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
         }
         case DepartmentType::playlist: {
             // If we click on a playlist in the search results
-            client_->playlist_items(path.department);
+
+            // Need to add a dummy department to pass the validation check
+            sc::Department::SPtr dummy = sc::Department::create(
+                    raw_department_id, query, " ");
+            all_depts->add_subdepartment(dummy);
+            reply->register_departments(all_depts);
+
+            playlist(reply, path.department);
             break;
         }
         case DepartmentType::channel: {
             // If we click on a channel in the search results
+
+            // Need to add a dummy department to pass the validation check
+            sc::Department::SPtr dummy = sc::Department::create(
+                    raw_department_id, query, " ");
+            all_depts->add_subdepartment(dummy);
+            reply->register_departments(all_depts);
+
+            channel(reply, path.department);
+
             break;
         }
         }
     } else {
         // This is the initial surfacing screen
+
+        // FIXME Working around the UI bug (have to register departments before results)
+        reply->register_departments(all_depts);
+
         guide_category(reply, departments.at(0)->id());
     }
 }

@@ -38,7 +38,8 @@ Channel::Channel(const json::Value &data) {
     }
 
     json::Value snippet = data["snippet"];
-    name_ = snippet["title"].asString();
+    title_ = snippet["title"].asString();
+    description_ = snippet["description"].asString();
     json::Value thumbnails = snippet["thumbnails"];
     json::Value picture = thumbnails["default"];
     picture_ = picture["url"].asString();
@@ -48,7 +49,11 @@ Channel::Channel(const json::Value &data) {
 }
 
 const string & Channel::title() const {
-    return name_;
+    return title_;
+}
+
+const string & Channel::description() const {
+    return description_;
 }
 
 const string & Channel::picture() const {

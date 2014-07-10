@@ -31,7 +31,8 @@ Playlist::Playlist(const json::Value &data) {
 
     json::Value snippet = data["snippet"];
 
-    name_ = snippet["title"].asString();
+    title_ = snippet["title"].asString();
+    description_ = snippet["description"].asString();
 
     json::Value id = data["id"];
     if (kind == kind_str()) {
@@ -49,7 +50,11 @@ Playlist::Playlist(const json::Value &data) {
 }
 
 const std::string & Playlist::title() const {
-    return name_;
+    return title_;
+}
+
+const std::string & Playlist::description() const {
+    return description_;
 }
 
 const std::string & Playlist::picture() const {

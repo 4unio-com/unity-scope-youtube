@@ -98,7 +98,7 @@ void Preview::playlist(const sc::PreviewReplyProxy& reply) {
     header.add_attribute_mapping("subtitle", "subtitle");
 
     sc::PreviewWidget image("image", "image");
-    image.add_attribute_mapping("source", "link");
+    image.add_attribute_mapping("source", "art");
 
     sc::PreviewWidget description("summary", "text");
     description.add_attribute_mapping("text", "description");

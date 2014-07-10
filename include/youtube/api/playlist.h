@@ -40,6 +40,8 @@ public:
 
     const std::string & title() const override;
 
+    const std::string & description() const;
+
     const std::string & picture() const override;
 
     const std::string & id() const override;
@@ -51,7 +53,9 @@ public:
     std::string kind_str() const override;
 
 protected:
-    std::string name_;
+    std::string title_;
+
+    std::string description_;
 
     std::string picture_;
 
