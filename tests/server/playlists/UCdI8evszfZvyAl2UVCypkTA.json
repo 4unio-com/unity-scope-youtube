@@ -1,0 +1,221 @@
+{
+ "kind": "youtube#playlistListResponse",
+ "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/v4mSTRD_nts6DGGFHz0B_AdTu-o\"",
+ "nextPageToken": "CAUQAA",
+ "pageInfo": {
+  "totalResults": 198,
+  "resultsPerPage": 5
+ },
+ "items": [
+  {
+
+   "kind": "youtube#playlist",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/UqIL9aEKcQaFGMwfnhAQ8xx3hpo\"",
+   "id": "PLR4XuJ-iybKvZWIlSwxp7KdBCjdBO5SDY",
+   "snippet": {
+    "publishedAt": "2014-07-04T14:05:56.000Z",
+    "channelId": "UCdI8evszfZvyAl2UVCypkTA",
+    "title": "VEVO HQ Pop Mix",
+    "description": "",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/9u3y5fmoAvA/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/9u3y5fmoAvA/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/9u3y5fmoAvA/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/9u3y5fmoAvA/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/9u3y5fmoAvA/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "MileyCyrusVEVO"
+   },
+   "contentDetails": {
+    "itemCount": 10
+   }
+  },
+  {
+
+   "kind": "youtube#playlist",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/G-AUYTZbTxTEiP_CClQM7DHugRQ\"",
+   "id": "PLR4XuJ-iybKupktnWDLBQfJjdo7cHjOe4",
+   "snippet": {
+    "publishedAt": "2014-06-27T09:59:53.000Z",
+    "channelId": "UCdI8evszfZvyAl2UVCypkTA",
+    "title": "VEVO HQ Pop Mix",
+    "description": "",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/OJGUbwVMBeA/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/OJGUbwVMBeA/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/OJGUbwVMBeA/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/OJGUbwVMBeA/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/OJGUbwVMBeA/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "MileyCyrusVEVO"
+   },
+   "contentDetails": {
+    "itemCount": 10
+   }
+  },
+  {
+
+   "kind": "youtube#playlist",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/STRt8VoKpOxWoHwtDrGDqKYD7MA\"",
+   "id": "PLR4XuJ-iybKvPSwG_cY6zaUoYmkgfIUw7",
+   "snippet": {
+    "publishedAt": "2014-06-20T11:00:09.000Z",
+    "channelId": "UCdI8evszfZvyAl2UVCypkTA",
+    "title": "VEVO HQ Pop Mix",
+    "description": "",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/IXpxe9xL-sk/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/IXpxe9xL-sk/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/IXpxe9xL-sk/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/IXpxe9xL-sk/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     }
+    },
+    "channelTitle": "MileyCyrusVEVO"
+   },
+   "contentDetails": {
+    "itemCount": 10
+   }
+  },
+  {
+
+   "kind": "youtube#playlist",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/Yi_gdwUmaPTfm9U0rXE8Tku4ACE\"",
+   "id": "PLR4XuJ-iybKsKVOfO4p_di3Tg6Img_EgD",
+   "snippet": {
+    "publishedAt": "2014-06-10T10:59:03.000Z",
+    "channelId": "UCdI8evszfZvyAl2UVCypkTA",
+    "title": "VEVO HQ Pop Mix",
+    "description": "",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/H8tS5UQmNQM/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/H8tS5UQmNQM/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/H8tS5UQmNQM/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/H8tS5UQmNQM/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/H8tS5UQmNQM/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "MileyCyrusVEVO"
+   },
+   "contentDetails": {
+    "itemCount": 10
+   }
+  },
+  {
+
+   "kind": "youtube#playlist",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/k6TBZqn7wQbd1q6neF2_VhTzmSg\"",
+   "id": "PLR4XuJ-iybKs9KYUKKvFSn-LLhCOp5qzO",
+   "snippet": {
+    "publishedAt": "2014-05-30T16:40:58.000Z",
+    "channelId": "UCdI8evszfZvyAl2UVCypkTA",
+    "title": "VEVO HQ Pop Mix",
+    "description": "",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/JJr80jXCepc/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/JJr80jXCepc/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/JJr80jXCepc/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/JJr80jXCepc/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/JJr80jXCepc/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "MileyCyrusVEVO"
+   },
+   "contentDetails": {
+    "itemCount": 10
+   }
+  }
+ ]
+}

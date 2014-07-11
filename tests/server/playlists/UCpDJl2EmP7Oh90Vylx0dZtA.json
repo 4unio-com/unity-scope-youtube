@@ -1,0 +1,211 @@
+{
+ "kind": "youtube#playlistListResponse",
+ "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/PuaM73HXNoSLMra2wsw3MBqrCpg\"",
+ "nextPageToken": "CAUQAA",
+ "pageInfo": {
+  "totalResults": 49,
+  "resultsPerPage": 5
+ },
+ "items": [
+  {
+
+   "kind": "youtube#playlist",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/UYDtYdB6jL-sWWaUt-uQFh6uu-k\"",
+   "id": "PLx_tr69QV8CA2m08FmWj0jrPWQ1T3Buul",
+   "snippet": {
+    "publishedAt": "2014-06-03T07:04:06.000Z",
+    "channelId": "UCpDJl2EmP7Oh90Vylx0dZtA",
+    "title": "Barong Family",
+    "description": "The home of Yellow Claw's own imprint Barong Family.",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/bSZFMOO-U0o/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/bSZFMOO-U0o/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/bSZFMOO-U0o/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/bSZFMOO-U0o/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     }
+    },
+    "channelTitle": "Spinnin' Records"
+   },
+   "contentDetails": {
+    "itemCount": 1
+   }
+  },
+  {
+
+   "kind": "youtube#playlist",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/3QRehgI1km3a8BzgScdjCkyQ6jU\"",
+   "id": "PLx_tr69QV8CB5nZduKd8SCs_ttLWqN27N",
+   "snippet": {
+    "publishedAt": "2014-05-27T14:12:18.000Z",
+    "channelId": "UCpDJl2EmP7Oh90Vylx0dZtA",
+    "title": "Flye Eye Records",
+    "description": "Calvin Harris' imprint: Flye Eye Records.",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/sjmswPj372w/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/sjmswPj372w/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/sjmswPj372w/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/sjmswPj372w/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/sjmswPj372w/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "Spinnin' Records"
+   },
+   "contentDetails": {
+    "itemCount": 3
+   }
+  },
+  {
+
+   "kind": "youtube#playlist",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/vIiYR09f_V-mVBXA-7uh6Bp8Tqk\"",
+   "id": "PLx_tr69QV8CD3sTHkAaYlzNQPdjxr8g62",
+   "snippet": {
+    "publishedAt": "2014-04-03T06:57:27.000Z",
+    "channelId": "UCpDJl2EmP7Oh90Vylx0dZtA",
+    "title": "Ultra Music Festival 2014 Live Sets",
+    "description": "This playlist contains recorded live sets from Ultra Music Festival 2014.",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/mDLcj6y9eko/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/mDLcj6y9eko/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/mDLcj6y9eko/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/mDLcj6y9eko/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/mDLcj6y9eko/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "Spinnin' Records"
+   },
+   "contentDetails": {
+    "itemCount": 9
+   }
+  },
+  {
+
+   "kind": "youtube#playlist",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/krkO-fHOUxhqk3C_sb-2ME7a374\"",
+   "id": "PLx_tr69QV8CAbkVXzP7fjz0fmalAlhAN2",
+   "snippet": {
+    "publishedAt": "2013-12-30T12:34:44.000Z",
+    "channelId": "UCpDJl2EmP7Oh90Vylx0dZtA",
+    "title": "Skink",
+    "description": "The official playlist for releases on Showtek's Skink imprint.",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/eTN9dPAmZFQ/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/eTN9dPAmZFQ/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/eTN9dPAmZFQ/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/eTN9dPAmZFQ/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     }
+    },
+    "channelTitle": "Spinnin' Records"
+   },
+   "contentDetails": {
+    "itemCount": 3
+   }
+  },
+  {
+
+   "kind": "youtube#playlist",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/avi2pmn12AGgqndjsxnnGV9CkSg\"",
+   "id": "PLx_tr69QV8CCyUSdcd9xqYwW_n-M6n6za",
+   "snippet": {
+    "publishedAt": "2013-12-09T13:36:23.000Z",
+    "channelId": "UCpDJl2EmP7Oh90Vylx0dZtA",
+    "title": "SPRS",
+    "description": "The official playlist dedicated to releases on our sub-label SPRS.",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/03DabSVmHVs/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/03DabSVmHVs/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/03DabSVmHVs/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/03DabSVmHVs/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     }
+    },
+    "channelTitle": "Spinnin' Records"
+   },
+   "contentDetails": {
+    "itemCount": 34
+   }
+  }
+ ]
+}

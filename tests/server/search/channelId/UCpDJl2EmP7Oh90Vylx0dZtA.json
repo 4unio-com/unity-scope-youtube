@@ -1,0 +1,146 @@
+{
+ "kind": "youtube#searchListResponse",
+ "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/R7k4sF6QfbWe-6MBD_AVmSI0EK8\"",
+ "nextPageToken": "CAUQAA",
+ "pageInfo": {
+  "totalResults": 5826,
+  "resultsPerPage": 5
+ },
+ "items": [
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/QbRFzH5OqMZ7sizeznXHh5FxnLo\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "gCYcHz2k5x0"
+   },
+   "snippet": {
+    "publishedAt": "2013-06-17T14:30:09.000Z",
+    "channelId": "UCpDJl2EmP7Oh90Vylx0dZtA",
+    "title": "Martin Garrix - Animals (Official Video)",
+    "description": "BRAND NEW: DubVision - Backlash (Martin Garrix Edit) OUT NOW! Grab it here : http://btprt.dj/TY8IzW Watch Martin Garrix' Live Set at Ultra Music Festival 2014 ...",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/gCYcHz2k5x0/default.jpg"
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/gCYcHz2k5x0/mqdefault.jpg"
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/gCYcHz2k5x0/hqdefault.jpg"
+     }
+    },
+    "channelTitle": "SpinninRec",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/wPARHtG7JX4Ls1qLJtUvH6hLOtU\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "p-Z3YrHJ1sU"
+   },
+   "snippet": {
+    "publishedAt": "2009-08-31T16:08:43.000Z",
+    "channelId": "UCpDJl2EmP7Oh90Vylx0dZtA",
+    "title": "Edward Maya & Vika Jigulina - Stereo Love (Official Music Video)",
+    "description": "Subscribe to Spinnin TV now: http://bit.ly/SPINNINTV The official video for Edward Maya & Vika Jigulina's 'Stereo Love'! Subscribe to Spinnin' TV. The World'...",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/p-Z3YrHJ1sU/default.jpg"
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/p-Z3YrHJ1sU/mqdefault.jpg"
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/p-Z3YrHJ1sU/hqdefault.jpg"
+     }
+    },
+    "channelTitle": "SpinninRec",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/BpI96MliJQU8BBpe3JwLfopU_bw\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "0EWbonj7f18"
+   },
+   "snippet": {
+    "publishedAt": "2013-08-19T14:00:39.000Z",
+    "channelId": "UCpDJl2EmP7Oh90Vylx0dZtA",
+    "title": "DVBBS & Borgeous - TSUNAMI (Original Mix)",
+    "description": "The highly anticipated TSUNAMI by DVBBS & Borgeous is out now. Grab your copy on iTunes: http://smarturl.it/Tsunami_itunes Subscribe to Spinnin' TV NOW: ...",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/0EWbonj7f18/default.jpg"
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/0EWbonj7f18/mqdefault.jpg"
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/0EWbonj7f18/hqdefault.jpg"
+     }
+    },
+    "channelTitle": "SpinninRec",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/KzRiA_wbWK_RDTm1WsH22EgUtlk\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "uu_zwdmz0hE"
+   },
+   "snippet": {
+    "publishedAt": "2010-10-05T16:36:02.000Z",
+    "channelId": "UCpDJl2EmP7Oh90Vylx0dZtA",
+    "title": "Duck Sauce - Barbra Streisand (Official Music Video)",
+    "description": "The official video for the massive hit by Duck Sauce 'Barbra Streisand'! Subscribe to Spinnin' TV : http://bit.ly/SPINNINTV http://youtube.com/spinninTV pres...",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/uu_zwdmz0hE/default.jpg"
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/uu_zwdmz0hE/mqdefault.jpg"
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/uu_zwdmz0hE/hqdefault.jpg"
+     }
+    },
+    "channelTitle": "SpinninRec",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/AgUxadmxU8s5rq10NOa-1QkE8d0\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "KnL2RJZTdA4"
+   },
+   "snippet": {
+    "publishedAt": "2013-11-19T15:13:10.000Z",
+    "channelId": "UCpDJl2EmP7Oh90Vylx0dZtA",
+    "title": "Martin Garrix & Jay Hardway - Wizard (Official Music Video) [OUT NOW]",
+    "description": "BRAND NEW: DubVision - Backlash (Martin Garrix Edit) OUT NOW! Grab it here : http://btprt.dj/TY8IzW Download 'Wizard' by Martin Garrix & Jay Hardway' ...",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/KnL2RJZTdA4/default.jpg"
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/KnL2RJZTdA4/mqdefault.jpg"
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/KnL2RJZTdA4/hqdefault.jpg"
+     }
+    },
+    "channelTitle": "SpinninRec",
+    "liveBroadcastContent": "none"
+   }
+  }
+ ]
+}

@@ -36,8 +36,7 @@ def read_file(path):
         with open(file, 'r') as fp:
             content = fp.read()
     else:
-        sys.stderr.write("File '%s' not found\n" % file)
-        content = ""
+        raise Exception("File '%s' not found\n" % file)
     return content
 
 GUIDE_CATEGORIES = read_file('guide-categories.json')
@@ -51,7 +50,7 @@ class Channels(ErrorHandler):
         validate_header(self, 'Accept-Encoding', 'gzip')
         validate_argument(self, 'part', 'snippet,statistics')
 
-        file = 'channels/%s.json' % self.get_argument('categoryId', '')
+        file = 'channels/%s.json' % self.get_argument('categoryId', None)
         self.write(read_file(file))
         self.finish()
         
@@ -60,7 +59,7 @@ class ChannelSections(ErrorHandler):
         validate_header(self, 'Accept-Encoding', 'gzip')
         validate_argument(self, 'part', 'contentDetails')
 
-        file = 'channelSections/%s.json' % self.get_argument('channelId', '')
+        file = 'channelSections/%s.json' % self.get_argument('channelId', None)
         self.write(read_file(file))
         self.finish()
 
@@ -72,12 +71,21 @@ class GuideCategories(ErrorHandler):
         self.write(GUIDE_CATEGORIES)
         self.finish()
 
+class Playlists(ErrorHandler):
+    def get(self):
+        validate_header(self, 'Accept-Encoding', 'gzip')
+        validate_argument(self, 'part', 'snippet,contentDetails')
+
+        file = 'playlists/%s.json' % self.get_argument('channelId', None)
+        self.write(read_file(file))
+        self.finish()
+
 class PlaylistItems(ErrorHandler):
     def get(self):
         validate_header(self, 'Accept-Encoding', 'gzip')
         validate_argument(self, 'part', 'snippet,contentDetails')
 
-        file = 'playlistItems/%s.json' % self.get_argument('playlistId', '')
+        file = 'playlistItems/%s.json' % self.get_argument('playlistId', None)
         self.write(read_file(file))
         self.finish()
 
@@ -86,10 +94,14 @@ class Search(ErrorHandler):
         validate_header(self, 'Accept-Encoding', 'gzip')
         validate_argument(self, 'part', 'snippet')
         validate_argument(self, 'type', 'video')
-        validate_argument(self, 'maxResults', '10')
 
-        query = self.get_argument('q', '')
-        self.write(read_file('search/%s.json' % query))
+        q = self.get_argument('q', None)
+        channelId = self.get_argument('channelId', None)
+        if q:
+            self.write(read_file('search/q/%s.json' % q))
+        elif channelId:
+            self.write(read_file('search/channelId/%s.json' % channelId))
+            
         self.finish()
 
 def validate_argument(self, name, expected):
@@ -107,6 +119,7 @@ def new_app():
         (r"/youtube/v3/channels", Channels),
         (r"/youtube/v3/channelSections", ChannelSections),
         (r"/youtube/v3/guideCategories", GuideCategories),
+        (r"/youtube/v3/playlists", Playlists),
         (r"/youtube/v3/playlistItems", PlaylistItems),
         (r"/youtube/v3/search", Search),
     ], gzip=True)

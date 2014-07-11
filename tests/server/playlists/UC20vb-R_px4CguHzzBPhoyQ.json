@@ -1,0 +1,221 @@
+{
+ "kind": "youtube#playlistListResponse",
+ "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/nfW-1X3KhNfWZGFtmWOf3Bnx74c\"",
+ "nextPageToken": "CAUQAA",
+ "pageInfo": {
+  "totalResults": 179,
+  "resultsPerPage": 5
+ },
+ "items": [
+  {
+
+   "kind": "youtube#playlist",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/pi92ez3dJmYvXFjVG-anMD6DUPA\"",
+   "id": "PLRgSHCeagEV6Ptvt3E5gYNIZ6uqZvZ-tA",
+   "snippet": {
+    "publishedAt": "2014-02-28T14:55:46.000Z",
+    "channelId": "UC20vb-R_px4CguHzzBPhoyQ",
+    "title": "VEVO HQ Urban Mix",
+    "description": "",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/9g91GUt2dVA/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/9g91GUt2dVA/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/9g91GUt2dVA/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/9g91GUt2dVA/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/9g91GUt2dVA/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "EminemVEVO"
+   },
+   "contentDetails": {
+    "itemCount": 6
+   }
+  },
+  {
+
+   "kind": "youtube#playlist",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/gZtek1p57akZmBK3yGEFjxseY70\"",
+   "id": "PLRgSHCeagEV6OTbI31Zmdu0y6Tv4AM7m2",
+   "snippet": {
+    "publishedAt": "2014-02-20T17:20:36.000Z",
+    "channelId": "UC20vb-R_px4CguHzzBPhoyQ",
+    "title": "VEVO HQ Urban Mix",
+    "description": "",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/XtlY1Da0jt4/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/XtlY1Da0jt4/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/XtlY1Da0jt4/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/XtlY1Da0jt4/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/XtlY1Da0jt4/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "EminemVEVO"
+   },
+   "contentDetails": {
+    "itemCount": 5
+   }
+  },
+  {
+
+   "kind": "youtube#playlist",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/MnP6wZC9rwC7Lby1FMuAFN6TA6I\"",
+   "id": "PLRgSHCeagEV782tXRkS5yRXBRIWena3Sc",
+   "snippet": {
+    "publishedAt": "2014-02-14T16:18:03.000Z",
+    "channelId": "UC20vb-R_px4CguHzzBPhoyQ",
+    "title": "VEVO HQ Urban Mix",
+    "description": "",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/qL2DzPMFmdo/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/qL2DzPMFmdo/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/qL2DzPMFmdo/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/qL2DzPMFmdo/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     }
+    },
+    "channelTitle": "EminemVEVO"
+   },
+   "contentDetails": {
+    "itemCount": 6
+   }
+  },
+  {
+
+   "kind": "youtube#playlist",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/MG9aGd49vW4UldwtGCAxXUmEku4\"",
+   "id": "PLRgSHCeagEV66rCmR8M4Sd7ytuJcsnXma",
+   "snippet": {
+    "publishedAt": "2014-02-05T11:57:16.000Z",
+    "channelId": "UC20vb-R_px4CguHzzBPhoyQ",
+    "title": "VEVO Urban Mix",
+    "description": "",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/uh2DXqRRyXQ/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/uh2DXqRRyXQ/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/uh2DXqRRyXQ/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/uh2DXqRRyXQ/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/uh2DXqRRyXQ/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "EminemVEVO"
+   },
+   "contentDetails": {
+    "itemCount": 5
+   }
+  },
+  {
+
+   "kind": "youtube#playlist",
+   "etag": "\"FOuwADrXJjsTKgUIQJoQC6nKNFY/vj9tL_Dty0iUzrxtSRYBa9rus9s\"",
+   "id": "PLRgSHCeagEV5Gx6_PbU2nL41-Uwiz7eja",
+   "snippet": {
+    "publishedAt": "2014-01-24T17:04:59.000Z",
+    "channelId": "UC20vb-R_px4CguHzzBPhoyQ",
+    "title": "VEVO Urban Mix",
+    "description": "",
+    "thumbnails": {
+     "default": {
+      "url": "https://i1.ytimg.com/vi/USJZMrY4XqI/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i1.ytimg.com/vi/USJZMrY4XqI/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i1.ytimg.com/vi/USJZMrY4XqI/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     },
+     "standard": {
+      "url": "https://i1.ytimg.com/vi/USJZMrY4XqI/sddefault.jpg",
+      "width": 640,
+      "height": 480
+     },
+     "maxres": {
+      "url": "https://i1.ytimg.com/vi/USJZMrY4XqI/maxresdefault.jpg",
+      "width": 1280,
+      "height": 720
+     }
+    },
+    "channelTitle": "EminemVEVO"
+   },
+   "contentDetails": {
+    "itemCount": 5
+   }
+  }
+ ]
+}
