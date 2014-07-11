@@ -6,6 +6,7 @@ Author = Canonical Ltd.
 Icon = @SCOPE_INSTALL_DIR@/icon.png
 
 [Appearance]
-#PageHeader.Logo = @SCOPE_INSTALL_DIR@/logo.jpg
-#ForegroundColor = default text color
-#BackgroundColor = #ffffff
+PageHeader.Logo = @SCOPE_INSTALL_DIR@/logo.png
+#PageHeader.ForegroundColor = color://black
+#PageHeader.Background = color://white
+#ShapeImages = false
