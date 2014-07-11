@@ -114,7 +114,6 @@ public:
     void get(const deque<string> &path,
             const vector<pair<string, string>> &parameters,
             http::Request::Handler &handler) {
-        cancelled_ = false;
 
         http::Request::Configuration configuration;
         vector<pair<string, string>> complete_parameters(parameters);
