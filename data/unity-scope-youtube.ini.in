@@ -7,6 +7,4 @@ Icon = @SCOPE_INSTALL_DIR@/icon.png
 
 [Appearance]
 PageHeader.Logo = @SCOPE_INSTALL_DIR@/logo.png
-#PageHeader.ForegroundColor = color://black
-#PageHeader.Background = color://white
-#ShapeImages = false
+PageHeader.DividerColor = #b31217
