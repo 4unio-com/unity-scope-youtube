@@ -46,7 +46,7 @@ const static string BROWSE_TEMPLATE =
   "schema-version": 1,
   "template": {
     "category-layout": "grid",
-    "card-size": "small",
+    "card-size": "medium",
     "overlay": false,
     "collapsed-rows": 1
   },
