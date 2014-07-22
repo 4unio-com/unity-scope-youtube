@@ -3,7 +3,7 @@
 # .so file so test tools can find both easily.
 configure_file(
   "${CMAKE_SOURCE_DIR}/data/${SCOPE_NAME}.ini.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/${SCOPE_NAME}.ini"
+  "${CMAKE_CURRENT_BINARY_DIR}/${SCOPE_INSTALL_NAME}.ini"
   @ONLY
 )
 
@@ -46,6 +46,14 @@ set_target_properties(
     LINK_FLAGS "-Wl,--no-undefined -Wl,--version-script,${SYMBOL_MAP}"
     LINK_DEPENDS "${SYMBOL_MAP}"
 )
+
+if(CLICK_MODE)
+  set_target_properties(
+    ${SCOPE_NAME}
+    PROPERTIES
+      OUTPUT_NAME ${SCOPE_INSTALL_NAME}
+  )
+endif()
 
 install(
   TARGETS ${SCOPE_NAME}

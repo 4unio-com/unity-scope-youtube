@@ -43,17 +43,25 @@ include_directories(
 )
 
 set(SCOPE_NAME unity-scope-youtube)
-_pkgconfig_invoke(libunity-scopes "SCOPE" "DIR" "" --variable=scopesdir)
-set(SCOPE_INSTALL_DIR "${SCOPE_DIR}/${SCOPE_NAME}")
+if(CLICK_MODE)
+  add_subdirectory(click)
+  set(SCOPE_INSTALL_NAME "com.pete-woods.youtube_youtube")
+  set(SCOPE_INSTALL_DIR "click/youtube")
+else()
+  set(SCOPE_INSTALL_NAME ${SCOPE_NAME})
+  _pkgconfig_invoke(libunity-scopes "SCOPE" "DIR" "" --variable=scopesdir)
+  set(SCOPE_INSTALL_DIR "${SCOPE_DIR}/${SCOPE_NAME}")
+endif()
 set(SYMBOL_MAP "${CMAKE_SOURCE_DIR}/data/${SCOPE_NAME}.map")
 
 add_subdirectory(src)
 add_subdirectory(data)
-enable_testing()
-add_subdirectory(tests)
 
-add_custom_target(
+if(NOT CLICK_MODE)
+  enable_testing()
+  add_subdirectory(tests)
+  add_custom_target(
         check
         ${CMAKE_CTEST_COMMAND} --force-new-ctest-process --output-on-failure
-)
-
+  )
+endif()
