@@ -1,10 +1,10 @@
 [ScopeConfig]
 DisplayName = Youtube
 Description = Search Youtube for videos and browse channels
-Art = @SCOPE_INSTALL_DIR@/screenshot.jpg
+Art = screenshot.jpg
 Author = Canonical Ltd.
-Icon = @SCOPE_INSTALL_DIR@/icon.png
+Icon = icon.png
 
 [Appearance]
-PageHeader.Logo = @SCOPE_INSTALL_DIR@/logo.png
+PageHeader.Logo = logo.png
 PageHeader.DividerColor = #b31217
