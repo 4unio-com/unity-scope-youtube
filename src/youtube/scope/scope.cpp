@@ -20,16 +20,12 @@
 #include <youtube/scope/query.h>
 #include <youtube/scope/preview.h>
 
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
-
 #include <iostream>
 #include <sstream>
 #include <fstream>
 
 namespace sc = unity::scopes;
 using namespace std;
-using namespace boost;
 using namespace youtube::scope;
 using namespace youtube::api;
 

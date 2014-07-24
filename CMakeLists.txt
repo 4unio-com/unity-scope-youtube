@@ -24,9 +24,7 @@ find_package(PkgConfig)
 find_package(
   Boost
   COMPONENTS
-    filesystem
     iostreams
-    system
   REQUIRED
 )
 
