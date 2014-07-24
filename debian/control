@@ -4,6 +4,7 @@ Priority: optional
 Build-Depends: cmake (>= 2.8.10),
                debhelper (>= 9),
                dh-translations,
+               g++-4.9,
                google-mock,
                intltool,
                libaccounts-glib-dev,

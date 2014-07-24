@@ -7,6 +7,10 @@ SOURCEDIR="$PWD"
 BRANCHNAME=`basename $SOURCEDIR`
 BUILDDIR="$SOURCEDIR/../$BRANCHNAME-build"
 
+# We require a specific gcc version to avoid ABI breakage.
+export CC=gcc-4.9
+export CXX=g++-4.9
+
 usage() {
     echo "usage: $0 [OPTIONS] [BUILD_TYPE]\n" >&2
     echo "Script to build hud. If BUILD_TYPE is not specified, it defaults to \"Debug\".\n" >&2

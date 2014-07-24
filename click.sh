@@ -26,6 +26,11 @@ fi
 CLICK_ARCH="$1"
 BUILDDIR="$PWD/builddir"
 
+# We require a specific gcc version to avoid ABI breakage.
+export CC=gcc-4.9
+export CXX=g++-4.9
+
+
 rm -rf "${BUILDDIR}"
 mkdir -p "${BUILDDIR}/build"
 
