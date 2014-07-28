@@ -7,4 +7,5 @@ Icon = icon.png
 
 [Appearance]
 PageHeader.Logo = logo.png
-PageHeader.DividerColor = #b31217
+PageHeader.DividerColor = color:///#b31217
+PageHeader.Background = color:///#ffffff
