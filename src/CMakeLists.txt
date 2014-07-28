@@ -6,6 +6,12 @@ configure_file(
   "${CMAKE_CURRENT_BINARY_DIR}/${SCOPE_INSTALL_NAME}.ini"
   @ONLY
 )
+configure_file(
+  "${CMAKE_SOURCE_DIR}/data/logo.png"
+  "${CMAKE_CURRENT_BINARY_DIR}/logo.png"
+  @ONLY
+)
+
 
 add_library(
   ${SCOPE_NAME}-static OBJECT
