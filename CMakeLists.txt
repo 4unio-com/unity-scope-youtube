@@ -40,18 +40,17 @@ include_directories(
   ${SCOPE_INCLUDE_DIRS}
 )
 
-set(SCOPE_NAME unity-scope-youtube)
+set(SCOPE_NAME "com.ubuntu.youtube")
+set(SCOPE_INSTALL_NAME "${SCOPE_NAME}_youtube")
+ 
 if(CLICK_MODE)
-  set(SCOPE_PACKAGE "com.ubuntu.youtube")
-  set(SCOPE_INSTALL_NAME "${SCOPE_PACKAGE}_youtube")
   set(SCOPE_INSTALL_DIR "click/youtube")
   add_subdirectory(click)
 else()
-  set(SCOPE_PACKAGE ${SCOPE_NAME})
-  set(SCOPE_INSTALL_NAME ${SCOPE_NAME})
   _pkgconfig_invoke(libunity-scopes "SCOPE" "DIR" "" --variable=scopesdir)
   set(SCOPE_INSTALL_DIR "${SCOPE_DIR}/${SCOPE_NAME}")
 endif()
+
 set(SYMBOL_MAP "${CMAKE_SOURCE_DIR}/data/${SCOPE_NAME}.map")
 
 add_subdirectory(src)

@@ -54,13 +54,11 @@ set_target_properties(
     LINK_DEPENDS "${SYMBOL_MAP}"
 )
 
-if(CLICK_MODE)
-  set_target_properties(
-    ${SCOPE_NAME}
-    PROPERTIES
-      OUTPUT_NAME ${SCOPE_INSTALL_NAME}
-  )
-endif()
+set_target_properties(
+  ${SCOPE_NAME}
+  PROPERTIES
+    OUTPUT_NAME ${SCOPE_INSTALL_NAME}
+)
 
 install(
   TARGETS ${SCOPE_NAME}
