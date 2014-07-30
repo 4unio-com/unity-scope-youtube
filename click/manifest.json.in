@@ -10,7 +10,7 @@
     },
     "icon": "icon",
     "maintainer": "Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>",
-    "name": "com.pete-woods.youtube",
+    "name": "@SCOPE_PACKAGE@",
     "title": "Youtube scope",
     "version": "1.0.0"
 }

@@ -12,6 +12,7 @@ configure_file(
   @ONLY
 )
 
+add_definitions(-DSCOPE_NAME="${SCOPE_INSTALL_NAME}")
 
 add_library(
   ${SCOPE_NAME}-static OBJECT
