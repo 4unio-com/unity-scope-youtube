@@ -12,7 +12,8 @@ configure_file(
   @ONLY
 )
 
-add_definitions(-DSCOPE_NAME="${SCOPE_INSTALL_NAME}")
+add_definitions(-DSCOPE_NAME="${SCOPE_NAME}")
+add_definitions(-DSCOPE_INSTALL_NAME="${SCOPE_INSTALL_NAME}")
 
 add_library(
   ${SCOPE_NAME}-static OBJECT
@@ -52,11 +53,6 @@ set_target_properties(
   PROPERTIES
     LINK_FLAGS "-Wl,--no-undefined -Wl,--version-script,${SYMBOL_MAP}"
     LINK_DEPENDS "${SYMBOL_MAP}"
-)
-
-set_target_properties(
-  ${SCOPE_NAME}
-  PROPERTIES
     OUTPUT_NAME ${SCOPE_INSTALL_NAME}
 )
 

@@ -42,7 +42,8 @@ include_directories(
 
 set(SCOPE_NAME "com.ubuntu.youtube")
 set(SCOPE_INSTALL_NAME "${SCOPE_NAME}_youtube")
- 
+set(SYMBOL_MAP "${CMAKE_SOURCE_DIR}/data/${SCOPE_NAME}.map")
+
 if(CLICK_MODE)
   set(SCOPE_INSTALL_DIR "click/youtube")
   add_subdirectory(click)
@@ -50,8 +51,6 @@ else()
   _pkgconfig_invoke(libunity-scopes "SCOPE" "DIR" "" --variable=scopesdir)
   set(SCOPE_INSTALL_DIR "${SCOPE_DIR}/${SCOPE_NAME}")
 endif()
-
-set(SYMBOL_MAP "${CMAKE_SOURCE_DIR}/data/${SCOPE_NAME}.map")
 
 add_subdirectory(src)
 add_subdirectory(data)

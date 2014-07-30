@@ -211,7 +211,7 @@ void push_resource(const sc::SearchReplyProxy &reply,
     res.set_art(resource->picture());
     res["kind"] = resource->kind_str();
 
-    sc::CannedQuery new_query(SCOPE_NAME);
+    sc::CannedQuery new_query(SCOPE_INSTALL_NAME);
 
     switch (resource->kind()) {
     case Resource::Kind::channel: {
