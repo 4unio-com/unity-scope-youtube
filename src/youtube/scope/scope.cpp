@@ -42,9 +42,9 @@ void Scope::start(string const&, sc::RegistryProxy const&) {
         auth_data = oauth.auth_data();
     }
     if (auth_data.access_token.empty()) {
-        cerr << "Youtube scope is unauthenticated" << endl;
+        cerr << "YouTube scope is unauthenticated" << endl;
     } else {
-        cerr << "Youtube scope is authenticated" << endl;
+        cerr << "YouTube scope is authenticated" << endl;
         config_->authenticated = true;
     }
 

@@ -1,11 +1,12 @@
 [ScopeConfig]
-DisplayName = Youtube
-Description = Search Youtube for videos and browse channels
+DisplayName = YouTube
+Description = Search YouTube for videos and browse channels
 Art = screenshot.jpg
 Author = Canonical Ltd.
 Icon = icon.png
 
 [Appearance]
+BackgroundColor = color:///#ffffff
 PageHeader.Logo = logo.png
 PageHeader.DividerColor = color:///#b31217
 PageHeader.Background = color:///#ffffff

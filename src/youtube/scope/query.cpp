@@ -284,7 +284,7 @@ void Query::add_login_nag(const sc::SearchReplyProxy &reply) {
     auto cat = reply->register_category("youtube_login_nag", "", "", rdr);
 
     sc::CategorisedResult res(cat);
-    res.set_title("Log-in to Youtube");
+    res.set_title("Log-in to YouTube");
     res.set_uri("settings:///system/online-accounts");
     reply->push(res);
 }
@@ -563,7 +563,7 @@ void Query::search(const sc::SearchReplyProxy &reply,
     auto resources = get_or_throw(resources_future);
 
     auto cat = reply->register_category("youtube",
-            to_string(resources->total_results()) + " results from Youtube", "",
+            to_string(resources->total_results()) + " results from YouTube", "",
             sc::CategoryRenderer(SEARCH_TEMPLATE));
     for (const Resource::Ptr& resource : resources->items()) {
         push_resource(reply, cat, resource);

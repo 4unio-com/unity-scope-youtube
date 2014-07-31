@@ -110,7 +110,7 @@ TEST_F(TestYoutubeScope, non_empty_query) {
 
     sc::CannedQuery query(SCOPE_ID, "banana", ""); // searching with query text
 
-    expect_category(reply, renderer, "youtube", "1000000 results from Youtube");
+    expect_category(reply, renderer, "youtube", "1000000 results from YouTube");
 
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
         ResultProp("uri", "gLPKjkXsWM8"),
