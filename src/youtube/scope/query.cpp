@@ -129,7 +129,7 @@ static T get_or_throw(future<T> &f) {
 }
 
 enum class DepartmentType {
-    guide_category, channel, playlist
+    guide_category, channel, playlist, aggregated
 };
 
 enum class SectionType {
@@ -166,6 +166,8 @@ struct DepartmentPath {
             department_type = DepartmentType::channel;
         } else if (s.find("playlist:") == 0) {
             department_type = DepartmentType::playlist;
+        } else if (s.find("aggregated:") == 0) {
+            department_type = DepartmentType::aggregated;
         }
 
         department = s.substr(s.find(':') + 1);
@@ -196,6 +198,9 @@ struct DepartmentPath {
             break;
         case DepartmentType::channel:
             result << "channel:";
+            break;
+        case DepartmentType::aggregated:
+            result << "aggregated:";
             break;
         }
 
@@ -451,6 +456,18 @@ void Query::channel(const sc::SearchReplyProxy &reply,
     }
 }
 
+void Query::popular_videos(const sc::SearchReplyProxy &reply) {
+    auto resources_future = client_->chart_videos("mostPopular");
+    auto resources = get_or_throw(resources_future);
+
+    auto cat = reply->register_category("youtube", "YouTube", "",
+                                        sc::CategoryRenderer(SEARCH_TEMPLATE));
+    for (const Resource::Ptr& resource : resources) {
+        push_resource(reply, cat, resource);
+    }
+}
+
+
 void Query::surfacing(const sc::SearchReplyProxy &reply) {
     const sc::CannedQuery &query(sc::SearchQueryBase::query());
 
@@ -543,6 +560,19 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
             reply->register_departments(all_depts);
 
             channel(reply, path.department);
+
+            break;
+        }
+        case DepartmentType::aggregated: {
+            // If another scope has asked us to surface results
+
+            // Need to add a dummy department to pass the validation check
+            sc::Department::SPtr dummy = sc::Department::create(
+                    raw_department_id, query, " ");
+            all_depts->add_subdepartment(dummy);
+            reply->register_departments(all_depts);
+
+            popular_videos(reply);
 
             break;
         }

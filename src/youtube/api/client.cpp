@@ -239,6 +239,16 @@ future<Client::VideoList> Client::channel_videos(const string &channelId) {
     });
 }
 
+future<Client::VideoList> Client::chart_videos(const string &chart_name) {
+    // FIXME Get the real country code
+    string country_code = "US";
+    return p->async_get<VideoList>( { "youtube", "v3", "videos" },
+            { { "part", "snippet" }, { "regionCode", country_code }, { "chart",
+                    chart_name } }, [](const json::Value &root) {
+                return get_typed_list<Video>("youtube#video", root);
+            });
+}
+
 future<Client::VideoList> Client::videos(const string &video_id) {
     return p->async_get<VideoList>( { "youtube", "v3", "videos" }, { { "part",
             "snippet,statistics" }, { "id", video_id } },
