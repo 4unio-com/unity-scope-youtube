@@ -16,6 +16,7 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/trim.hpp>
 
 #include <youtube/api/channel.h>
@@ -151,22 +152,22 @@ struct DepartmentPath {
     }
 
     DepartmentPath(const string &s) {
-        if (s.find("guideCategory:") == 0) {
+        if (alg::starts_with(s, "guideCategory:")) {
             department_type = DepartmentType::guide_category;
-        } else if (s.find("guideCategory-videos:") == 0) {
+        } else if (alg::starts_with(s,"guideCategory-videos:")) {
             department_type = DepartmentType::guide_category;
             section_type = SectionType::videos;
-        } else if (s.find("guideCategory-playlists:") == 0) {
+        } else if (alg::starts_with(s, "guideCategory-playlists:")) {
             department_type = DepartmentType::guide_category;
             section_type = SectionType::playlists;
-        } else if (s.find("guideCategory-channels:") == 0) {
+        } else if (alg::starts_with(s, "guideCategory-channels:")) {
             department_type = DepartmentType::guide_category;
             section_type = SectionType::channels;
-        } else if (s.find("channel:") == 0) {
+        } else if (alg::starts_with(s, "channel:")) {
             department_type = DepartmentType::channel;
-        } else if (s.find("playlist:") == 0) {
+        } else if (alg::starts_with(s, "playlist:")) {
             department_type = DepartmentType::playlist;
-        } else if (s.find("aggregated:") == 0) {
+        } else if (alg::starts_with(s, "aggregated:")) {
             department_type = DepartmentType::aggregated;
         }
 
