@@ -507,14 +507,15 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
         }
     }
 
+
     string raw_department_id = query.department_id();
     if (!raw_department_id.empty()) {
-        // FIXME Working around the UI bug (have to register departments before results)
-        reply->register_departments(all_depts);
-
         DepartmentPath path(raw_department_id);
         switch (path.department_type) {
         case DepartmentType::guide_category: {
+            // FIXME Working around the UI bug (have to register departments before results)
+            reply->register_departments(all_depts);
+
             switch (path.section_type) {
             case SectionType::none: {
                 // If we have picked a top level department
