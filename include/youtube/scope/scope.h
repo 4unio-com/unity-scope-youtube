@@ -34,7 +34,7 @@ namespace scope {
 
 class Scope: public unity::scopes::ScopeBase {
 public:
-    void start(std::string const&, unity::scopes::RegistryProxy const&)
+    void start(std::string const&)
             override;
 
     void stop() override;

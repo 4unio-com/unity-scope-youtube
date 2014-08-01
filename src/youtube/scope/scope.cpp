@@ -29,7 +29,7 @@ using namespace std;
 using namespace youtube::scope;
 using namespace youtube::api;
 
-void Scope::start(string const&, sc::RegistryProxy const&) {
+void Scope::start(string const&) {
     config_ = make_shared<Config>();
 
     if (getenv("YOUTUBE_SCOPE_APIROOT")) {

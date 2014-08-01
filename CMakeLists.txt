@@ -27,7 +27,7 @@ pkg_check_modules(
   gio-unix-2.0
   libaccounts-glib
   libsignon-glib
-  libunity-scopes>=0.5.0
+  libunity-scopes>=0.6.0
   jsoncpp
   net-cpp
   process-cpp
