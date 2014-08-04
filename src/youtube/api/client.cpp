@@ -23,6 +23,7 @@
 #include <boost/iostreams/filtering_stream.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
 #include <core/net/error.h>
+#include <core/net/uri.h>
 #include <core/net/http/content_type.h>
 #include <core/net/http/response.h>
 #include <json/json.h>
@@ -59,28 +60,6 @@ static deque<shared_ptr<T>> get_typed_list(const string &filter,
     return results;
 }
 
-static string make_uri(const string host, const deque<string> &endpoints,
-        const vector<pair<string, string>> &querys,
-        shared_ptr<http::Client> client) {
-    string uri = host;
-    for (const string &endpoint : endpoints) {
-        uri.append("/" + endpoint);
-    }
-    bool first = true;
-    for (auto it : querys) {
-        if (first) {
-            uri.append("?");
-            first = false;
-        } else {
-            uri.append("&");
-        }
-        uri.append(client->url_escape(it.first));
-        uri.append("=");
-        uri.append(client->url_escape(it.second));
-    }
-    return uri;
-}
-
 }
 
 class Client::Priv {
@@ -111,20 +90,22 @@ public:
 
     std::atomic<bool> cancelled_;
 
-    void get(const deque<string> &path,
-            const vector<pair<string, string>> &parameters,
+    void get(const net::Uri::Path &path,
+            const net::Uri::QueryParameters &parameters,
             http::Request::Handler &handler) {
 
         http::Request::Configuration configuration;
-        vector<pair<string, string>> complete_parameters(parameters);
+        net::Uri::QueryParameters complete_parameters(parameters);
         if (config_->authenticated) {
             configuration.header.add("Authorization",
                     "Bearer " + config_->access_token);
         } else {
             complete_parameters.emplace_back("key", config_->api_key);
         }
-        configuration.uri = make_uri(config_->apiroot, path,
-                complete_parameters, client_);
+
+        net::Uri uri = net::make_uri(config_->apiroot, path,
+                                     complete_parameters);
+        configuration.uri = client_->uri_to_string(uri);
         configuration.header.add("Accept", config_->accept);
         configuration.header.add("User-Agent", config_->user_agent + " (gzip)");
         configuration.header.add("Accept-Encoding", "gzip");
@@ -141,8 +122,8 @@ public:
     }
 
     template<typename T>
-    future<T> async_get(const deque<string> &path,
-            const vector<pair<string, string>> &parameters,
+    future<T> async_get(const net::Uri::Path &path,
+            const net::Uri::QueryParameters &parameters,
             const function<T(const json::Value &root)> &func) {
         auto prom = make_shared<promise<T>>();
 

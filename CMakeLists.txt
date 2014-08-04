@@ -29,7 +29,7 @@ pkg_check_modules(
   libsignon-glib
   libunity-scopes>=0.6.0
   jsoncpp
-  net-cpp
+  net-cpp>=1.1.0
   process-cpp
   REQUIRED
 )
