@@ -50,7 +50,7 @@ Video::Video(const json::Value &data) :
         id_ = id["videoId"].asString();
     }
 
-    link_ = "https://www.youtube.com/watch?v=" + id_;
+    link_ = "http://www.youtube.com/watch?v=" + id_;
 
     username_ = snippet["channelTitle"].asString();
 
