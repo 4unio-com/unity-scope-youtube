@@ -46,7 +46,7 @@ PlaylistItem::PlaylistItem(const json::Value &data) {
 
     json::Value content_details = data["contentDetails"];
     video_id_ = content_details["videoId"].asString();
-    link_ = "https://www.youtube.com/watch?v=" + video_id_;
+    link_ = "http://www.youtube.com/watch?v=" + video_id_;
 }
 
 const string & PlaylistItem::title() const {
