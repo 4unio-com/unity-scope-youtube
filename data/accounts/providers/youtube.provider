@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<provider id="youtube">
+  <name>Youtube</name>
+  <description>Connect your Youtube account</description>
+  <icon>youtube</icon>
+  <translations>unity-scope-youtube</translations>
+  <domains>.*google\.com</domains>
+  <plugin>generic-oauth</plugin>
+
+  <template>
+    <group name="auth">
+      <setting name="method">oauth2</setting>
+      <setting name="mechanism">web_server</setting>
+      <group name="oauth2">
+        <group name="web_server">
+          <setting name="Host">accounts.google.com</setting>
+          
+          <setting name="AuthPath">o/oauth2/auth?access_type=offline</setting>
+          <setting name="TokenPath">o/oauth2/token</setting>
+          <setting name="RedirectUri">https://wiki.ubuntu.com/</setting>
+          <setting name="ResponseType">code</setting>
+          <setting type="as" name="Scope">['https://www.googleapis.com/auth/youtube.readonly']</setting>
+          <setting name="ClientId">368477111780-4tf0t65ol86nkvf6guksr8d1om0aebob.apps.googleusercontent.com</setting>
+          <setting name="ClientSecret">bNfrMJzYmesl2sm1XutVnlmv</setting>
+          <setting type="as" name="AllowedSchemes">['https','http']</setting>
+        </group>
+      </group>
+    </group>
+  </template>
+</provider>

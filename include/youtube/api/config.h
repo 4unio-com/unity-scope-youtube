@@ -46,7 +46,7 @@ struct Config {
     /*
      * API key for unauthenticated access
      */
-    std::string api_key {"AIzaSyD3XCMZDWhcx6hHF7N3asLh78DQECE6fEA"};
+    std::string api_key {"AIzaSyDNux7onp1CTDEj99OV0qrVDxe8J3D7KYU"};
 
     /*
      * The root of all API request URLs
