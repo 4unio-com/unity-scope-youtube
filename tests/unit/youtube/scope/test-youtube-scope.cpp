@@ -114,7 +114,7 @@ TEST_F(TestYoutubeScope, non_empty_query) {
 
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
         ResultProp("uri", "gLPKjkXsWM8"),
-        ResultProp("link", "https://www.youtube.com/watch?v=gLPKjkXsWM8"),
+        ResultProp("link", "http://www.youtube.com/watch?v=gLPKjkXsWM8"),
         ResultProp("title", "Harry eating a banana on stage (Düsseldorf, Germany) HD"),
         ResultProp("art", "https://i.ytimg.com/vi/gLPKjkXsWM8/hqdefault.jpg"),
         ResultProp("description", "One Direction at the Where We Are Tour in Düsseldorf, Germany on the 2nd of July 2014. HD."),
@@ -122,7 +122,7 @@ TEST_F(TestYoutubeScope, non_empty_query) {
             Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
         ResultProp("uri", "ZYXTZh8CW4E"),
-        ResultProp("link", "https://www.youtube.com/watch?v=ZYXTZh8CW4E"),
+        ResultProp("link", "http://www.youtube.com/watch?v=ZYXTZh8CW4E"),
         ResultProp("title", "Minions - Banana 14:20 mins"),
         ResultProp("art", "https://i.ytimg.com/vi/ZYXTZh8CW4E/hqdefault.jpg"),
         ResultProp("description", "Despicable me 2 Minions Banana song."),
@@ -130,7 +130,7 @@ TEST_F(TestYoutubeScope, non_empty_query) {
             Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
         ResultProp("uri", "BYBw_o_2nG0"),
-        ResultProp("link", "https://www.youtube.com/watch?v=BYBw_o_2nG0"),
+        ResultProp("link", "http://www.youtube.com/watch?v=BYBw_o_2nG0"),
         ResultProp("title", "Despicable Me - Mini-Movie 'Banana' Preview"),
         ResultProp("art", "https://i.ytimg.com/vi/BYBw_o_2nG0/hqdefault.jpg"),
         ResultProp("description", ""),
@@ -138,7 +138,7 @@ TEST_F(TestYoutubeScope, non_empty_query) {
             Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
         ResultProp("uri", "FQymDE3FaHY"),
-        ResultProp("link", "https://www.youtube.com/watch?v=FQymDE3FaHY"),
+        ResultProp("link", "http://www.youtube.com/watch?v=FQymDE3FaHY"),
         ResultProp("title", "Tutorial: Anti-rush flashbang @ de_inferno banana"),
         ResultProp("art", "https://i.ytimg.com/vi/FQymDE3FaHY/hqdefault.jpg"),
         ResultProp("description", "Made by: https://www.youtube.com/user/ThePavle995 » Liked this video? Subscribe for more: http://youtube.com/subscription_center?add_user=piccgamer ..."),
@@ -146,7 +146,7 @@ TEST_F(TestYoutubeScope, non_empty_query) {
             Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
         ResultProp("uri", "Z01ts2f-mHY"),
-        ResultProp("link", "https://www.youtube.com/watch?v=Z01ts2f-mHY"),
+        ResultProp("link", "http://www.youtube.com/watch?v=Z01ts2f-mHY"),
         ResultProp("title", "Banana (香蕉人)"),
         ResultProp("art", "https://i.ytimg.com/vi/Z01ts2f-mHY/hqdefault.jpg"),
         ResultProp("description", "When you can't understand something, don't act like you can! :) SUBSCRIBE TO US! DanKhooProductions' FB - http://fb.com/dankhooproductions ..."),
