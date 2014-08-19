@@ -64,11 +64,9 @@ static deque<shared_ptr<T>> get_typed_list(const string &filter,
 
 class Client::Priv {
 public:
-    Priv(Config::Ptr config, int cardinality, const string& locale) :
+    Priv(Config::Ptr config) :
             client_(http::make_client()), worker_ { [this]() {client_->run();} }, config_(
-                    config), cardinality_(cardinality == 0 ? 10 : cardinality_), locale_(
-                    locale), cancelled_(
-            false) {
+                    config), cancelled_(false) {
     }
 
     ~Priv() {
@@ -83,10 +81,6 @@ public:
     std::thread worker_;
 
     Config::Ptr config_;
-
-    int cardinality_;
-
-    std::string locale_;
 
     std::atomic<bool> cancelled_;
 
@@ -104,7 +98,7 @@ public:
         }
 
         net::Uri uri = net::make_uri(config_->apiroot, path,
-                                     complete_parameters);
+                complete_parameters);
         configuration.uri = client_->uri_to_string(uri);
         configuration.header.add("Accept", config_->accept);
         configuration.header.add("User-Agent", config_->user_agent + " (gzip)");
@@ -169,25 +163,25 @@ public:
     }
 };
 
-Client::Client(Config::Ptr config, int cardinality, const string& locale) :
-        p(new Priv(config, cardinality, locale)) {
+Client::Client(Config::Ptr config) :
+        p(new Priv(config)) {
 }
 
-future<SearchListResponse::Ptr> Client::search(const string &query) {
+future<SearchListResponse::Ptr> Client::search(const string &query,
+        unsigned int max_results) {
     return p->async_get<SearchListResponse::Ptr>( { "youtube", "v3", "search" },
             { { "part", "snippet" }, { "type", "video" }, { "maxResults",
-                    to_string(p->cardinality_) }, { "q", query } },
+                    to_string(max_results) }, { "q", query } },
             [](const json::Value &root) {
                 return make_shared<SearchListResponse>(root);
             });
 }
 
-future<Client::GuideCategoryList> Client::guide_categories() {
-    // FIXME Get the real country code
-    string country_code = "US";
+future<Client::GuideCategoryList> Client::guide_categories(
+        const string &region_code, const string &locale) {
     return p->async_get<GuideCategoryList>(
             { "youtube", "v3", "guideCategories" }, { { "part", "snippet" }, {
-                    "regionCode", country_code }, { "h1", p->locale_ } },
+                    "regionCode", region_code }, { "h1", locale } },
             [](const json::Value &root) {
                 return get_typed_list<GuideCategory>("youtube#guideCategory", root);
             });
@@ -220,11 +214,10 @@ future<Client::VideoList> Client::channel_videos(const string &channelId) {
     });
 }
 
-future<Client::VideoList> Client::chart_videos(const string &chart_name) {
-    // FIXME Get the real country code
-    string country_code = "US";
+future<Client::VideoList> Client::chart_videos(const string &chart_name,
+        const string &region_code) {
     return p->async_get<VideoList>( { "youtube", "v3", "videos" },
-            { { "part", "snippet" }, { "regionCode", country_code }, { "chart",
+            { { "part", "snippet" }, { "regionCode", region_code }, { "chart",
                     chart_name } }, [](const json::Value &root) {
                 return get_typed_list<Video>("youtube#video", root);
             });

@@ -61,26 +61,32 @@ public:
 
     typedef std::deque<Video::Ptr> VideoList;
 
-    Client(Config::Ptr config, int cardinality, const std::string& locale);
+    Client(Config::Ptr config);
 
     virtual ~Client() = default;
 
-    virtual std::future<GuideCategoryList> guide_categories();
+    virtual std::future<GuideCategoryList> guide_categories(
+            const std::string &region_code, const std::string &locale);
 
-    virtual std::future<SearchListResponse::Ptr> search(const std::string &query = std::string());
+    virtual std::future<SearchListResponse::Ptr> search(
+            const std::string &query, unsigned int max_results);
 
-    virtual std::future<ChannelList> category_channels(const std::string &categoryId);
+    virtual std::future<ChannelList> category_channels(
+            const std::string &categoryId);
 
-    virtual std::future<ChannelSectionList> channel_sections(const std::string &channelId,
-            int maxResults);
+    virtual std::future<ChannelSectionList> channel_sections(
+            const std::string &channelId, int maxResults);
 
     virtual std::future<VideoList> channel_videos(const std::string &channelId);
 
-    virtual std::future<VideoList> chart_videos(const std::string &chart_name);
+    virtual std::future<VideoList> chart_videos(const std::string &chart_name,
+            const std::string &region_code);
 
-    virtual std::future<PlaylistList> channel_playlists(const std::string &channelId);
+    virtual std::future<PlaylistList> channel_playlists(
+            const std::string &channelId);
 
-    virtual std::future<PlaylistItemList> playlist_items(const std::string &playlistId);
+    virtual std::future<PlaylistItemList> playlist_items(
+            const std::string &playlistId);
 
     virtual std::future<VideoList> videos(const std::string &videoId);
 

@@ -67,6 +67,8 @@ protected:
     void search(const unity::scopes::SearchReplyProxy &reply,
             const std::string &query_string);
 
+    std::string country_code() const;
+
     youtube::api::Client::Ptr client_;
 };
 

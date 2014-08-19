@@ -458,7 +458,7 @@ void Query::channel(const sc::SearchReplyProxy &reply,
 }
 
 void Query::popular_videos(const sc::SearchReplyProxy &reply) {
-    auto resources_future = client_->chart_videos("mostPopular");
+    auto resources_future = client_->chart_videos("mostPopular", country_code());
     auto resources = get_or_throw(resources_future);
 
     auto cat = reply->register_category("youtube", "YouTube", "",
@@ -468,13 +468,26 @@ void Query::popular_videos(const sc::SearchReplyProxy &reply) {
     }
 }
 
+string Query::country_code() const {
+    string country_code = "US";
+    auto metadata = search_metadata();
+    if (metadata.has_location()) {
+        auto location = metadata.location();
+        if (location.has_country_code()) {
+            country_code = location.country_code();
+        }
+    }
+    return country_code;
+}
 
 void Query::surfacing(const sc::SearchReplyProxy &reply) {
     const sc::CannedQuery &query(sc::SearchQueryBase::query());
 
     sc::Department::SPtr all_depts;
     bool first_dept = true;
-    auto departments_future = client_->guide_categories();
+
+    auto departments_future = client_->guide_categories(country_code(),
+            search_metadata().locale());
     auto departments = get_or_throw(departments_future);
     for (GuideCategory::Ptr category : departments) {
         if (first_dept) {
@@ -591,7 +604,7 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
 
 void Query::search(const sc::SearchReplyProxy &reply,
         const string &query_string) {
-    auto resources_future = client_->search(query_string);
+    auto resources_future = client_->search(query_string, search_metadata().cardinality());
     auto resources = get_or_throw(resources_future);
 
     auto cat = reply->register_category("youtube",

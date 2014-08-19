@@ -58,14 +58,13 @@ void Scope::stop() {
 
 sc::SearchQueryBase::UPtr Scope::search(const sc::CannedQuery &query,
         const sc::SearchMetadata &metadata) {
-    auto client = make_shared<Client>(config_, metadata.cardinality(),
-            metadata.locale());
+    auto client = make_shared<Client>(config_);
     return sc::SearchQueryBase::UPtr(new Query(query, metadata, client));
 }
 
 sc::PreviewQueryBase::UPtr Scope::preview(sc::Result const& result,
         sc::ActionMetadata const& metadata) {
-    auto client = make_shared<Client>(config_, 0, metadata.locale());
+    auto client = make_shared<Client>(config_);
     return sc::PreviewQueryBase::UPtr(new Preview(result, metadata, client));
 }
 
