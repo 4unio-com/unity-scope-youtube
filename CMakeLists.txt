@@ -21,6 +21,8 @@ find_package(
   REQUIRED
 )
 
+find_package (Threads)
+
 pkg_check_modules(
   SCOPE
   glib-2.0

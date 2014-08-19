@@ -46,6 +46,7 @@ target_link_libraries(
   ${SCOPE_NAME}
   ${SCOPE_LDFLAGS}
   ${Boost_LIBRARIES}
+  ${CMAKE_THREAD_LIBS_INIT}
 )
 
 set_target_properties(
