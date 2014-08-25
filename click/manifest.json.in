@@ -5,12 +5,16 @@
     "hooks": {
         "youtube": {
             "scope": "youtube",
-            "apparmor": "apparmor.json"
+            "apparmor": "apparmor.json",
+            "account-application": "youtube/accounts/youtube.application",
+            "account-service": "youtube/accounts/youtube.service",
+            "account-qml-plugin": "youtube/accounts/qml-plugin",
+            "desktop": "youtube/accounts/youtube.desktop"
         }
     },
-    "icon": "icon",
+    "icon": "youtube/icon.png",
     "maintainer": "Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>",
     "name": "@SCOPE_NAME@",
     "title": "YouTube scope",
-    "version": "1.0.8"
+    "version": "1.0.9"
 }

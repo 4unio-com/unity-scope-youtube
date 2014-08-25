@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=YouTube
+Icon=youtube/icon.png
+OnlyShowIn=OnlineAccountsSettingsPage
+Exec=

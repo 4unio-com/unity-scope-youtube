@@ -36,7 +36,7 @@ void Scope::start(string const&) {
         config_->apiroot = getenv("YOUTUBE_SCOPE_APIROOT");
     }
 
-    SimpleOAuth oauth("youtube");
+    SimpleOAuth oauth("com.ubuntu.scopes.youtube_youtube");
     SimpleOAuth::AuthData auth_data;
     if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") == nullptr) {
         auth_data = oauth.auth_data();

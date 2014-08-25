@@ -64,6 +64,8 @@ void SimpleOAuth::login(SignonAuthSession *session, GAsyncResult *result) {
     if (error) {
         cerr << "Authentication failed: " << error->message << endl;
         g_error_free(error);
+        session_data_.reset();
+        g_main_loop_quit(main_loop_.get());
         return;
     }
 
@@ -96,6 +98,7 @@ void SimpleOAuth::login_service() {
     if (error != NULL) {
         cerr << "Could not set up auth session: " << error->message << endl;
         g_error_free(error);
+        g_main_loop_quit(main_loop_.get());
         return;
     }
 

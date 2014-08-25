@@ -19,3 +19,9 @@ install(
     "${SCOPE_INSTALL_DIR}"
 )
 
+INSTALL(
+  DIRECTORY
+    "accounts"
+  DESTINATION
+    "${SCOPE_INSTALL_DIR}"
+)

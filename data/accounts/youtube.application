@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application id="com.ubuntu.scopes.youtube_youtube">
+  <description>YouTube</description>
+  <desktop-entry>com.ubuntu.scopes.youtube_youtube_1.0.9.desktop</desktop-entry>
+  <services>
+    <service id="com.ubuntu.scopes.youtube_youtube">
+      <description>Watch your favorite YouTube videos</description>
+    </service>
+  </services>
+</application>

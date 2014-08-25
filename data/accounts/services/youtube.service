@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<service id="youtube">
-  <type>sharing</type>
-  <icon>youtube</icon>
-  <name>Youtube</name>
-  <provider>youtube</provider>
-  <translations>unity-scope-youtube</translations>
-</service>
