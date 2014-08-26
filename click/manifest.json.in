@@ -8,7 +8,6 @@
             "apparmor": "apparmor.json",
             "account-application": "youtube/accounts/youtube.application",
             "account-service": "youtube/accounts/youtube.service",
-            "account-qml-plugin": "youtube/accounts/qml-plugin",
             "desktop": "youtube/accounts/youtube.desktop"
         }
     },
