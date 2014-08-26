@@ -6,9 +6,9 @@
         "youtube": {
             "scope": "youtube",
             "apparmor": "apparmor.json",
-            "account-application": "youtube/accounts/youtube.application",
-            "account-service": "youtube/accounts/youtube.service",
-            "desktop": "youtube/accounts/youtube.desktop"
+            "account-application": "youtube.application",
+            "account-service": "youtube.service",
+            "desktop": "youtube.desktop"
         }
     },
     "icon": "youtube/icon.png",
