@@ -169,9 +169,13 @@ Client::Client(Config::Ptr config) :
 
 future<SearchListResponse::Ptr> Client::search(const string &query,
         unsigned int max_results) {
+    net::Uri::QueryParameters parameters { { "part", "snippet" }, { "type", "video" }, { "q", query } };
+    if (max_results > 0)
+    {
+        parameters.emplace_back(make_pair("maxResults", to_string(max_results)));
+    }
     return p->async_get<SearchListResponse::Ptr>( { "youtube", "v3", "search" },
-            { { "part", "snippet" }, { "type", "video" }, { "maxResults",
-                    to_string(max_results) }, { "q", query } },
+            parameters,
             [](const json::Value &root) {
                 return make_shared<SearchListResponse>(root);
             });
