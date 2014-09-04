@@ -15,5 +15,5 @@
     "maintainer": "Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>",
     "name": "@SCOPE_NAME@",
     "title": "YouTube scope",
-    "version": "1.0.9"
+    "version": "1.0.11"
 }
