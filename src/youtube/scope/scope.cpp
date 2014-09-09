@@ -16,6 +16,7 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
+#include <youtube/scope/localisation.h>
 #include <youtube/scope/scope.h>
 #include <youtube/scope/query.h>
 #include <youtube/scope/preview.h>
@@ -31,6 +32,8 @@ using namespace youtube::api;
 
 void Scope::start(string const&) {
     setlocale(LC_ALL, "");
+    string translation_directory = ScopeBase::scope_directory() + "/../share/locale/";
+    bindtextdomain(GETTEXT_PACKAGE, translation_directory.c_str());
 
     config_ = make_shared<Config>();
 
