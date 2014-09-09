@@ -20,6 +20,8 @@
 #include <youtube/scope/query.h>
 #include <youtube/scope/preview.h>
 
+#include <unity/scopes/OnlineAccountClient.h>
+
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -36,21 +38,27 @@ void Scope::start(string const&) {
         config_->apiroot = getenv("YOUTUBE_SCOPE_APIROOT");
     }
 
-    SimpleOAuth oauth("com.ubuntu.scopes.youtube_youtube");
-    SimpleOAuth::AuthData auth_data;
     if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") == nullptr) {
-        auth_data = oauth.auth_data();
+        sc::OnlineAccountClient oa_client("com.ubuntu.scopes.youtube_youtube", "sharing", "google");
+        auto statuses = oa_client.get_service_statuses();
+        for (auto const& status : statuses)
+        {
+            if (status.service_enabled)
+            {
+                config_->authenticated = true;
+                config_->access_token = status.access_token;
+                config_->client_id = status.client_id;
+                config_->client_secret = status.client_secret;
+                break;
+            }
+        }
     }
-    if (auth_data.access_token.empty()) {
+
+    if (!config_->authenticated) {
         cerr << "YouTube scope is unauthenticated" << endl;
     } else {
         cerr << "YouTube scope is authenticated" << endl;
-        config_->authenticated = true;
     }
-
-    config_->access_token = auth_data.access_token;
-    config_->client_id = auth_data.client_id;
-    config_->client_secret = auth_data.client_secret;
 }
 
 void Scope::stop() {

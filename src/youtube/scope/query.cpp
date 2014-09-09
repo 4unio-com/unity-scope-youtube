@@ -27,6 +27,7 @@
 #include <unity/scopes/Annotation.h>
 #include <unity/scopes/CategorisedResult.h>
 #include <unity/scopes/CategoryRenderer.h>
+#include <unity/scopes/OnlineAccountClient.h>
 #include <unity/scopes/QueryBase.h>
 #include <unity/scopes/SearchReply.h>
 #include <unity/scopes/SearchMetadata.h>
@@ -292,6 +293,13 @@ void Query::add_login_nag(const sc::SearchReplyProxy &reply) {
     sc::CategorisedResult res(cat);
     res.set_title("Log-in to YouTube");
     res.set_uri("settings:///system/online-accounts");
+
+    sc::OnlineAccountClient oa_client("com.ubuntu.scopes.youtube_youtube", "sharing", "google");
+
+    oa_client.register_account_login_item(res,
+                                          sc::OnlineAccountClient::InvalidateResults,
+                                          sc::OnlineAccountClient::DoNothing);
+
     reply->push(res);
 }
 
@@ -626,10 +634,9 @@ void Query::run(sc::SearchReplyProxy const& reply) {
             search(reply, query_string);
         }
 
-//        FIXME Add this back when direct activation can be controlled
-//        if (!client_->config()->authenticated) {
-//            add_login_nag(reply);
-//        }
+        if (!client_->config()->authenticated) {
+            add_login_nag(reply);
+        }
     } catch (domain_error &e) {
         cerr << "ERROR: " << e.what() << endl;
     }

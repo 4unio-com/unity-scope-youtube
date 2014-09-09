@@ -20,7 +20,6 @@
 #define YOUTUBE_SCOPE_SCOPE_H_
 
 #include <youtube/api/config.h>
-#include <youtube/api/simple-oauth.h>
 
 #include <unity/scopes/ScopeBase.h>
 #include <unity/scopes/QueryBase.h>

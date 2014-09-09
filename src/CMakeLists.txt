@@ -23,7 +23,6 @@ add_library(
   youtube/api/guide-category.cpp
   youtube/api/playlist.cpp
   youtube/api/playlist-item.cpp
-  youtube/api/simple-oauth.cpp
   youtube/api/search-list-response.cpp
   youtube/api/video.cpp
   youtube/scope/preview.cpp
