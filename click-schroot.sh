@@ -35,7 +35,7 @@ mkdir -p "${BUILDDIR}/build"
     click chroot \
         -a ${CLICK_ARCH} -f ubuntu-sdk-14.10 -s utopic run \
     cmake ../.. \
-       -DCMAKE_INSTALL_PREFIX:PATH='${BUILDDIR}' \
+       -DCMAKE_INSTALL_PREFIX:PATH='${BUILDDIR}/click' \
         -DCLICK_MODE=on \
         -DCLICK_ARCH=${CLICK_ARCH}
     "

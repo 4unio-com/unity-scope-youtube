@@ -45,7 +45,7 @@ Channel::Channel(const json::Value &data) {
     picture_ = picture["url"].asString();
 
     json::Value statistics = data["statistics"];
-    subscriber_count_ = statistics["subscriberCount"].asString();
+    subscriber_count_ = stoi(statistics["subscriberCount"].asString());
 }
 
 const string & Channel::title() const {
@@ -64,7 +64,7 @@ const string & Channel::id() const {
     return id_;
 }
 
-const string & Channel::subscriber_count() const {
+unsigned int Channel::subscriber_count() const {
     return subscriber_count_;
 }
 

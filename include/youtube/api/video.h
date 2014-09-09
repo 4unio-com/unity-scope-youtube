@@ -36,11 +36,11 @@ public:
     typedef std::shared_ptr<Video> Ptr;
 
     struct Statistics {
-        std::string comment_count;
-        std::string dislike_count;
-        std::string favorite_count;
-        std::string like_count;
-        std::string view_count;
+        unsigned int comment_count;
+        unsigned int dislike_count;
+        unsigned int favorite_count;
+        unsigned int like_count;
+        unsigned int view_count;
     };
 
     Video(const Json::Value &data);

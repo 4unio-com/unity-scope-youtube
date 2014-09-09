@@ -22,6 +22,7 @@
 #include <youtube/api/channel.h>
 #include <youtube/api/playlist.h>
 
+#include <youtube/scope/localisation.h>
 #include <youtube/scope/query.h>
 
 #include <unity/scopes/Annotation.h>
@@ -40,7 +41,10 @@ using namespace std;
 using namespace youtube::api;
 using namespace youtube::scope;
 
+
 namespace {
+static constexpr bool DEBUG_MODE = false;
+
 const static string BROWSE_TEMPLATE =
         R"(
 {
@@ -225,7 +229,7 @@ void push_resource(const sc::SearchReplyProxy &reply,
         DepartmentPath path { DepartmentType::channel, channel->id() };
         new_query.set_department_id(path.to_string());
         res.set_uri(new_query.to_uri());
-        res["subtitle"] = channel->subscriber_count() + " subscribers";
+        res["subtitle"] = _("1 subscriber", "%d subscribers", channel->subscriber_count());
         res["description"] = channel->description();
         break;
     }
@@ -246,7 +250,7 @@ void push_resource(const sc::SearchReplyProxy &reply,
         DepartmentPath path { DepartmentType::playlist, playlist->id() };
         new_query.set_department_id(path.to_string());
         res.set_uri(new_query.to_uri());
-        res["subtitle"] = to_string(playlist->item_count()) + " videos";
+        res["subtitle"] = _("1 video", "%d videos", playlist->item_count());
         res["description"] = playlist->description();
         break;
     }
@@ -290,7 +294,7 @@ void Query::add_login_nag(const sc::SearchReplyProxy &reply) {
     auto cat = reply->register_category("youtube_login_nag", "", "", rdr);
 
     sc::CategorisedResult res(cat);
-    res.set_title("Log-in to YouTube");
+    res.set_title(_("Log-in to YouTube"));
     res.set_uri("settings:///system/online-accounts");
     reply->push(res);
 }
@@ -301,7 +305,9 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
             sc::CategoryRenderer(POPULAR_TEMPLATE));
 
     bool first = true;
-    cerr << "Finding channels: " << department_id << endl;
+    if (DEBUG_MODE) {
+        cerr << "Finding channels: " << department_id << endl;
+    }
 
     auto channels_future = client_->category_channels(department_id);
     auto channels = get_or_throw(channels_future);
@@ -309,8 +315,10 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
     for (Channel::Ptr channel : channels) {
         channel_section_futures.emplace_back(
                 client_->channel_sections(channel->id(), 1));
-        cerr << "  channel: " << channel->id() << " " << channel->title()
-                << endl;
+        if (DEBUG_MODE) {
+            cerr << "  channel: " << channel->id() << " " << channel->title()
+                    << endl;
+        }
     }
 
     int channel_number = 0;
@@ -329,12 +337,16 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
         }
 
         if (!section) {
-            cerr << "    empty playlist" << endl;
+            if (DEBUG_MODE) {
+                cerr << "    empty playlist" << endl;
+            }
             continue;
         }
 
-        cerr << "  section: " << section->id() << " " << section->playlist_id()
-                << endl;
+        if (DEBUG_MODE) {
+            cerr << "  section: " << section->id() << " " << section->playlist_id()
+                    << endl;
+        }
 
         auto playlist_future = client_->playlist_items(section->playlist_id());
         Client::PlaylistItemList items = get_or_throw(playlist_future);
@@ -361,25 +373,31 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
 
 void Query::guide_category_videos(const sc::SearchReplyProxy &reply,
         const string &department_id) {
-    cerr << "Finding videos: " << department_id << endl;
+    if (DEBUG_MODE) {
+        cerr << "Finding videos: " << department_id << endl;
+    }
 
-    auto cat = reply->register_category("youtube", "Videos", "",
+    auto cat = reply->register_category("youtube", _("Videos"), "",
             sc::CategoryRenderer(SEARCH_TEMPLATE));
 
     auto channels_future = client_->category_channels(department_id);
     auto channels = get_or_throw(channels_future);
     deque<future<Client::VideoList>> videos_futures;
     for (Channel::Ptr channel : channels) {
-        cerr << "  channel: " << channel->id() << " " << channel->title()
-                << endl;
+        if (DEBUG_MODE) {
+            cerr << "  channel: " << channel->id() << " " << channel->title()
+                    << endl;
+        }
         videos_futures.emplace_back(client_->channel_videos(channel->id()));
     }
 
     for (auto &it : videos_futures) {
         Client::VideoList videos = it.get();
         for (auto &video : videos) {
-            cerr << "    video: " << video->id() << " " << video->title()
-                    << endl;
+            if (DEBUG_MODE) {
+                cerr << "    video: " << video->id() << " " << video->title()
+                        << endl;
+            }
             push_resource(reply, cat, video);
         }
     }
@@ -387,32 +405,40 @@ void Query::guide_category_videos(const sc::SearchReplyProxy &reply,
 
 void Query::guide_category_channels(const sc::SearchReplyProxy &reply,
         const string &department_id) {
-    cerr << "Finding channels: " << department_id << endl;
+    if (DEBUG_MODE) {
+        cerr << "Finding channels: " << department_id << endl;
+    }
 
-    auto cat = reply->register_category("youtube", "Channels", "",
+    auto cat = reply->register_category("youtube", _("Channels"), "",
             sc::CategoryRenderer(SEARCH_TEMPLATE));
     auto channels_future = client_->category_channels(department_id);
     auto channels = get_or_throw(channels_future);
     for (Channel::Ptr channel : channels) {
         push_resource(reply, cat, channel);
-        cerr << "  channel: " << channel->id() << " " << channel->title()
-                << endl;
+        if (DEBUG_MODE) {
+            cerr << "  channel: " << channel->id() << " " << channel->title()
+                    << endl;
+        }
     }
 }
 
 void Query::guide_category_playlists(const sc::SearchReplyProxy &reply,
         const string &department_id) {
-    cerr << "Finding playlists: " << department_id << endl;
+    if (DEBUG_MODE) {
+        cerr << "Finding playlists: " << department_id << endl;
+    }
 
-    auto cat = reply->register_category("youtube", "Playlists", "",
+    auto cat = reply->register_category("youtube", _("Playlists"), "",
             sc::CategoryRenderer(SEARCH_TEMPLATE));
 
     auto channels_future = client_->category_channels(department_id);
     auto channels = get_or_throw(channels_future);
     deque<future<Client::PlaylistList>> playlists_futures;
     for (Channel::Ptr channel : channels) {
-        cerr << "  channel: " << channel->id() << " " << channel->title()
+        if (DEBUG_MODE) {
+            cerr << "  channel: " << channel->id() << " " << channel->title()
                 << endl;
+        }
         playlists_futures.emplace_back(
                 client_->channel_playlists(channel->id()));
     }
@@ -420,8 +446,10 @@ void Query::guide_category_playlists(const sc::SearchReplyProxy &reply,
     for (auto &it : playlists_futures) {
         Client::PlaylistList playlists = it.get();
         for (auto &playlist : playlists) {
-            cerr << "    playlist: " << playlist->id() << " "
-                    << playlist->title() << endl;
+            if (DEBUG_MODE) {
+                cerr << "    playlist: " << playlist->id() << " "
+                        << playlist->title() << endl;
+            }
             push_resource(reply, cat, playlist);
         }
     }
@@ -429,9 +457,11 @@ void Query::guide_category_playlists(const sc::SearchReplyProxy &reply,
 
 void Query::playlist(const sc::SearchReplyProxy &reply,
         const string &playlist_id) {
-    cerr << "Playlist: " << playlist_id << endl;
+    if (DEBUG_MODE) {
+        cerr << "Playlist: " << playlist_id << endl;
+    }
 
-    auto cat = reply->register_category("youtube", "Playlist contents", "",
+    auto cat = reply->register_category("youtube", _("Playlist contents"), "",
             sc::CategoryRenderer(SEARCH_TEMPLATE));
 
     auto playlist_future = client_->playlist_items(playlist_id);
@@ -444,9 +474,11 @@ void Query::playlist(const sc::SearchReplyProxy &reply,
 
 void Query::channel(const sc::SearchReplyProxy &reply,
         const string &channel_id) {
-    cerr << "Channel: " << channel_id << endl;
+    if (DEBUG_MODE) {
+        cerr << "Channel: " << channel_id << endl;
+    }
 
-    auto cat = reply->register_category("youtube", "Channel contents", "",
+    auto cat = reply->register_category("youtube", _("Channel contents"), "",
             sc::CategoryRenderer(SEARCH_TEMPLATE));
 
     auto channels_future = client_->channel_videos(channel_id);
@@ -461,7 +493,7 @@ void Query::popular_videos(const sc::SearchReplyProxy &reply) {
     auto resources_future = client_->chart_videos("mostPopular", country_code());
     auto resources = get_or_throw(resources_future);
 
-    auto cat = reply->register_category("youtube", "YouTube", "",
+    auto cat = reply->register_category("youtube", _("YouTube"), "",
                                         sc::CategoryRenderer(SEARCH_TEMPLATE));
     for (const Resource::Ptr& resource : resources) {
         push_resource(reply, cat, resource);
@@ -503,19 +535,19 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
             DepartmentPath videos_path { DepartmentType::guide_category,
                     category->id(), SectionType::videos };
             sc::Department::SPtr videos = sc::Department::create(
-                    videos_path.to_string(), query, "Videos");
+                    videos_path.to_string(), query, _("Videos"));
             dept->add_subdepartment(videos);
 
             DepartmentPath playlists_path { DepartmentType::guide_category,
                     category->id(), SectionType::playlists };
             sc::Department::SPtr playlists = sc::Department::create(
-                    playlists_path.to_string(), query, "Playlists");
+                    playlists_path.to_string(), query, _("Playlists"));
             dept->add_subdepartment(playlists);
 
             DepartmentPath channels_path { DepartmentType::guide_category,
                     category->id(), SectionType::channels };
             sc::Department::SPtr channels = sc::Department::create(
-                    channels_path.to_string(), query, "Channels");
+                    channels_path.to_string(), query, _("Channels"));
             dept->add_subdepartment(channels);
         }
     }
@@ -608,7 +640,8 @@ void Query::search(const sc::SearchReplyProxy &reply,
     auto resources = get_or_throw(resources_future);
 
     auto cat = reply->register_category("youtube",
-            to_string(resources->total_results()) + " results from YouTube", "",
+            _("1 result from YouTube", "%d results from YouTube",
+                    resources->total_results()), "",
             sc::CategoryRenderer(SEARCH_TEMPLATE));
     for (const Resource::Ptr& resource : resources->items()) {
         push_resource(reply, cat, resource);
@@ -621,7 +654,7 @@ void Query::run(sc::SearchReplyProxy const& reply) {
         if (meta.contains_hint("no-internet")
                 && meta["no-internet"].get_bool()) {
             sc::OperationInfo operation_info(sc::OperationInfo::NoInternet,
-                    "YouTube requires an internet connection");
+                    _("YouTube requires an internet connection"));
             reply->info(operation_info);
             return;
         }

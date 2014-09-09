@@ -9,6 +9,6 @@ install(
   FILES
     "${CMAKE_CURRENT_BINARY_DIR}/manifest.json"
     "apparmor.json"
-  DESTINATION "click"
+  DESTINATION ${CMAKE_INSTALL_PREFIX}
 )
 

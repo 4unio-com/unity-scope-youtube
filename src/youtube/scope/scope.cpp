@@ -30,6 +30,8 @@ using namespace youtube::scope;
 using namespace youtube::api;
 
 void Scope::start(string const&) {
+    setlocale(LC_ALL, "");
+
     config_ = make_shared<Config>();
 
     if (getenv("YOUTUBE_SCOPE_APIROOT")) {
