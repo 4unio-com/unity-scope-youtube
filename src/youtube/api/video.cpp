@@ -19,20 +19,10 @@
 #include <youtube/api/video.h>
 
 #include <json/json.h>
-#include <sstream>
 
 namespace json = Json;
 using namespace youtube::api;
 using namespace std;
-
-namespace {
-static string format_fixed(const string &s) {
-    std::stringstream ss;
-    ss.imbue(std::locale(""));
-    ss << std::fixed << stoi(s);
-    return ss.str();
-}
-}
 
 Video::Video(const json::Value &data) :
         has_statistics_(false) {
@@ -62,11 +52,11 @@ Video::Video(const json::Value &data) :
         json::Value statistics = data["statistics"];
         has_statistics_ = true;
 
-        statistics_.comment_count = format_fixed(statistics["commentCount"].asString());
-        statistics_.dislike_count = format_fixed(statistics["dislikeCount"].asString());
-        statistics_.favorite_count = format_fixed(statistics["favoriteCount"].asString());
-        statistics_.like_count = format_fixed(statistics["likeCount"].asString());
-        statistics_.view_count = format_fixed(statistics["viewCount"].asString());
+        statistics_.comment_count = stoi(statistics["commentCount"].asString());
+        statistics_.dislike_count = stoi(statistics["dislikeCount"].asString());
+        statistics_.favorite_count = stoi(statistics["favoriteCount"].asString());
+        statistics_.like_count = stoi(statistics["likeCount"].asString());
+        statistics_.view_count = stoi(statistics["viewCount"].asString());
     }
 }
 

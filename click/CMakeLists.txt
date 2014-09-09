@@ -12,6 +12,6 @@ install(
     "youtube.application"
     "youtube.service"
     "youtube.desktop"
-  DESTINATION "click"
+  DESTINATION ${CMAKE_INSTALL_PREFIX}
 )
 

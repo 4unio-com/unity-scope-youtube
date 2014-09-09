@@ -1,0 +1,78 @@
+# Translations for YouTube scope for Unity Dash.
+# Copyright (C) 2014 Canonical\ Ltd.
+# This file is distributed under the same license as the unity-scope-youtube package.
+# Pete Woods <pete.woods@canonical.com>, 2014.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: unity-scope-youtube\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-09-09 10:45+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Pete Woods <pete.woods@canonical.com>\n"
+"Language-Team: English (United Kingdom) <en_GB@li.org>\n"
+"Language: English (United Kingdom)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/youtube/scope/query.cpp:643
+#, c-format
+msgid "1 result from YouTube"
+msgid_plural "%d results from YouTube"
+msgstr[0] "1 result from YouTube"
+msgstr[1] "%d results from YouTube"
+
+#: src/youtube/scope/query.cpp:232
+#, c-format
+msgid "1 subscriber"
+msgid_plural "%d subscribers"
+msgstr[0] "1 subscriber"
+msgstr[1] "%d subscribers"
+
+#: src/youtube/scope/query.cpp:253
+#, c-format
+msgid "1 video"
+msgid_plural "%d videos"
+msgstr[0] "1 video"
+msgstr[1] "%d videos"
+
+#: src/youtube/scope/preview.cpp:77
+#, c-format
+msgid "1 view"
+msgid_plural "%d views"
+msgstr[0] "1 view"
+msgstr[1] "%d views"
+
+#: src/youtube/scope/query.cpp:481
+msgid "Channel contents"
+msgstr "Channel contents"
+
+#: src/youtube/scope/query.cpp:412 src/youtube/scope/query.cpp:550
+msgid "Channels"
+msgstr "Channels"
+
+#: src/youtube/scope/query.cpp:297
+msgid "Log-in to YouTube"
+msgstr "Log-in to YouTube"
+
+#: src/youtube/scope/query.cpp:464
+msgid "Playlist contents"
+msgstr "Playlist contents"
+
+#: src/youtube/scope/query.cpp:431 src/youtube/scope/query.cpp:544
+msgid "Playlists"
+msgstr "Playlists"
+
+#: src/youtube/scope/query.cpp:380 src/youtube/scope/query.cpp:538
+msgid "Videos"
+msgstr "Videos"
+
+#: src/youtube/scope/query.cpp:496
+msgid "YouTube"
+msgstr "YouTube"
+
+#: src/youtube/scope/query.cpp:657
+msgid "YouTube requires an internet connection"
+msgstr "YouTube requires an internet connection"

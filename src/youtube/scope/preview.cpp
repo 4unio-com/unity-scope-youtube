@@ -16,6 +16,7 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
+#include <youtube/scope/localisation.h>
 #include <youtube/scope/preview.h>
 
 #include <unity/scopes/ColumnLayout.h>
@@ -36,6 +37,13 @@ using namespace youtube::api;
 namespace {
 static const unordered_set<string> PLAYABLE = { "youtube#video",
         "youtube#playlistItem" };
+
+//static string format_fixed(const string &s) {
+//    std::stringstream ss;
+//    ss.imbue(std::locale(""));
+//    ss << std::fixed << stoi(s);
+//    return ss.str();
+//}
 }
 
 Preview::Preview(const sc::Result &result, const sc::ActionMetadata &metadata,
@@ -47,7 +55,6 @@ void Preview::cancelled() {
 }
 
 void Preview::playable(const sc::PreviewReplyProxy& reply) {
-    cerr << "Looking up video details: " << result().uri() << endl;
     auto videos_future = client_->videos(result().uri());
     auto videos = videos_future.get();
     auto v = videos.front();
@@ -67,7 +74,7 @@ void Preview::playable(const sc::PreviewReplyProxy& reply) {
 
     sc::PreviewWidget header("header", "header");
     header.add_attribute_mapping("title", "title");
-    header.add_attribute_value("subtitle", sc::Variant(s.view_count + " views"));
+    header.add_attribute_value("subtitle", sc::Variant(_("1 view", "%d views", s.view_count)));
 
     sc::PreviewWidget video("video", "video");
     video.add_attribute_mapping("source", "link");
@@ -77,8 +84,7 @@ void Preview::playable(const sc::PreviewReplyProxy& reply) {
     description.add_attribute_mapping("text", "description");
 
     sc::PreviewWidget statistics("statistics", "header");
-    statistics.add_attribute_value("title",
-            sc::Variant(u8"\u261d " + s.like_count + u8"   \u261f " + s.dislike_count));
+    statistics.add_attribute_value("title", sc::Variant(u8"\u261d " + to_string(s.like_count) + u8"   \u261f " + to_string(s.dislike_count)));
 
     reply->push( { video, header, description, statistics });
 }

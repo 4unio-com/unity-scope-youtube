@@ -46,8 +46,11 @@ set(SCOPE_NAME "com.ubuntu.scopes.youtube")
 set(SCOPE_INSTALL_NAME "${SCOPE_NAME}_youtube")
 set(SYMBOL_MAP "${CMAKE_SOURCE_DIR}/data/${SCOPE_NAME}.map")
 
+set(GETTEXT_PACKAGE "unity-scope-youtube")
+add_definitions(-DGETTEXT_PACKAGE="${GETTEXT_PACKAGE}")
+
 if(CLICK_MODE)
-  set(SCOPE_INSTALL_DIR "click/youtube")
+  set(SCOPE_INSTALL_DIR "youtube")
   add_subdirectory(click)
 else()
   _pkgconfig_invoke(libunity-scopes "SCOPE" "DIR" "" --variable=scopesdir)
@@ -56,6 +59,7 @@ endif()
 
 add_subdirectory(src)
 add_subdirectory(data)
+add_subdirectory(po)
 
 if(NOT CLICK_MODE)
   enable_testing()

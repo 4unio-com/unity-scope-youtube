@@ -46,7 +46,7 @@ public:
 
     const std::string & id() const override;
 
-    const std::string & subscriber_count() const;
+    unsigned int subscriber_count() const;
 
     Kind kind() const override;
 
@@ -63,7 +63,7 @@ protected:
 
     std::string content_rating_;
 
-    std::string subscriber_count_;
+    unsigned int subscriber_count_;
 };
 
 }

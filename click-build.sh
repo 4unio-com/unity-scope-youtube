@@ -37,7 +37,7 @@ mkdir -p "${BUILDDIR}/build"
 (
     cd "${BUILDDIR}/build"
     cmake ../.. \
-       -DCMAKE_INSTALL_PREFIX:PATH="${BUILDDIR}" \
+       -DCMAKE_INSTALL_PREFIX:PATH="${BUILDDIR}/click" \
         -DCLICK_MODE=on \
         -DCLICK_ARCH="$CLICK_ARCH"
     make install
