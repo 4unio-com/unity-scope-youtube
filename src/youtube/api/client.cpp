@@ -185,7 +185,7 @@ future<Client::GuideCategoryList> Client::guide_categories(
         const string &region_code, const string &locale) {
     return p->async_get<GuideCategoryList>(
             { "youtube", "v3", "guideCategories" }, { { "part", "snippet" }, {
-                    "regionCode", region_code }, { "h1", locale } },
+                    "regionCode", region_code }, { "hl", locale } },
             [](const json::Value &root) {
                 return get_typed_list<GuideCategory>("youtube#guideCategory", root);
             });
