@@ -292,11 +292,10 @@ void Query::add_login_nag(const sc::SearchReplyProxy &reply) {
 
     sc::CategorisedResult res(cat);
     res.set_title("Log-in to YouTube");
-    res.set_uri("settings:///system/online-accounts");
 
     sc::OnlineAccountClient oa_client("com.ubuntu.scopes.youtube_youtube", "sharing", "google");
-
     oa_client.register_account_login_item(res,
+                                          query(),
                                           sc::OnlineAccountClient::InvalidateResults,
                                           sc::OnlineAccountClient::DoNothing);
 
