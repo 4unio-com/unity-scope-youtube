@@ -617,6 +617,15 @@ void Query::search(const sc::SearchReplyProxy &reply,
 
 void Query::run(sc::SearchReplyProxy const& reply) {
     try {
+        const sc::SearchMetadata &meta(sc::SearchQueryBase::search_metadata());
+        if (meta.contains_hint("no-internet")
+                && meta["no-internet"].get_bool()) {
+            sc::OperationInfo operation_info(sc::OperationInfo::NoInternet,
+                    "YouTube requires an internet connection");
+            reply->info(operation_info);
+            return;
+        }
+
         const sc::CannedQuery &query(sc::SearchQueryBase::query());
         string query_string = alg::trim_copy(query.query_string());
 
