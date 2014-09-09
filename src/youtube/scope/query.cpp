@@ -295,7 +295,7 @@ void Query::add_login_nag(const sc::SearchReplyProxy &reply) {
     auto cat = reply->register_category("youtube_login_nag", "", "", rdr);
 
     sc::CategorisedResult res(cat);
-    res.set_title("Log-in to YouTube");
+    res.set_title(_("Log-in to YouTube"));
 
     sc::OnlineAccountClient oa_client("com.ubuntu.scopes.youtube_youtube", "sharing", "google");
     oa_client.register_account_login_item(res,
