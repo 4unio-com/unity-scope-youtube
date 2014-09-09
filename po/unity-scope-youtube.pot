@@ -1,4 +1,4 @@
-# Trnslations for YouTube scope for Unity Dash.
+# Translations for YouTube scope for Unity Dash.
 # Copyright (C) 2014 Canonical\ Ltd.
 # This file is distributed under the same license as the unity-scope-youtube package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
