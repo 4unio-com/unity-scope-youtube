@@ -38,8 +38,7 @@ public:
     void service_update(unity::scopes::OnlineAccountClient::ServiceStatus const& status);
     void update_config();
 
-    void start(std::string const&)
-            override;
+    void start(std::string const&) override;
 
     void stop() override;
 
