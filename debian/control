@@ -16,7 +16,7 @@ Build-Depends: cmake (>= 2.8.10),
                libnet-cpp-dev (>= 1.1.0),
                libprocess-cpp-dev,
                libsignon-glib-dev,
-               libunity-scopes-dev (>= 0.6.0),
+               libunity-scopes-dev (>= 0.6.6),
                pkg-config,
                python-tornado,
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
