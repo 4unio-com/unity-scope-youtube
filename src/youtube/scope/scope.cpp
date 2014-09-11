@@ -21,8 +21,6 @@
 #include <youtube/scope/query.h>
 #include <youtube/scope/preview.h>
 
-#include <unity/scopes/OnlineAccountClient.h>
-
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -32,11 +30,23 @@ using namespace std;
 using namespace youtube::scope;
 using namespace youtube::api;
 
-void Scope::start(string const&) {
-    setlocale(LC_ALL, "");
-    string translation_directory = ScopeBase::scope_directory() + "/../share/locale/";
-    bindtextdomain(GETTEXT_PACKAGE, translation_directory.c_str());
+Scope::Scope()
+    : oa_client_("com.ubuntu.scopes.youtube_youtube",
+                 "sharing",
+                 "google",
+                 sc::OnlineAccountClient::CreateInternalMainLoop)
+{
+    oa_client_.set_service_update_callback(std::bind(&Scope::service_update, this, std::placeholders::_1));
+}
 
+void Scope::service_update(sc::OnlineAccountClient::ServiceStatus const&)
+{
+    update_config();
+}
+
+void Scope::update_config()
+{
+    std::lock_guard<std::mutex> lock(config_mutex_);
     config_ = make_shared<Config>();
 
     if (getenv("YOUTUBE_SCOPE_APIROOT")) {
@@ -44,8 +54,7 @@ void Scope::start(string const&) {
     }
 
     if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") == nullptr) {
-        sc::OnlineAccountClient oa_client("com.ubuntu.scopes.youtube_youtube", "sharing", "google");
-        auto statuses = oa_client.get_service_statuses();
+        auto statuses = oa_client_.get_service_statuses();
         for (auto const& status : statuses)
         {
             if (status.service_enabled)
@@ -66,17 +75,26 @@ void Scope::start(string const&) {
     }
 }
 
+void Scope::start(string const&) {
+    setlocale(LC_ALL, "");
+    string translation_directory = ScopeBase::scope_directory() + "/../share/locale/";
+    bindtextdomain(GETTEXT_PACKAGE, translation_directory.c_str());
+    update_config();
+}
+
 void Scope::stop() {
 }
 
 sc::SearchQueryBase::UPtr Scope::search(const sc::CannedQuery &query,
         const sc::SearchMetadata &metadata) {
+    std::lock_guard<std::mutex> lock(config_mutex_);
     auto client = make_shared<Client>(config_);
     return sc::SearchQueryBase::UPtr(new Query(query, metadata, client));
 }
 
 sc::PreviewQueryBase::UPtr Scope::preview(sc::Result const& result,
         sc::ActionMetadata const& metadata) {
+    std::lock_guard<std::mutex> lock(config_mutex_);
     auto client = make_shared<Client>(config_);
     return sc::PreviewQueryBase::UPtr(new Preview(result, metadata, client));
 }

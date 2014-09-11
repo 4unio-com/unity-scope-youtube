@@ -21,11 +21,11 @@
 
 #include <youtube/api/config.h>
 
-#include <unity/scopes/ScopeBase.h>
+#include <unity/scopes/OnlineAccountClient.h>
+#include <unity/scopes/PreviewQueryBase.h>
 #include <unity/scopes/QueryBase.h>
 #include <unity/scopes/ReplyProxyFwd.h>
-#include <unity/scopes/QueryBase.h>
-#include <unity/scopes/PreviewQueryBase.h>
+#include <unity/scopes/ScopeBase.h>
 
 namespace youtube {
 
@@ -33,6 +33,11 @@ namespace scope {
 
 class Scope: public unity::scopes::ScopeBase {
 public:
+    Scope();
+
+    void service_update(unity::scopes::OnlineAccountClient::ServiceStatus const& status);
+    void update_config();
+
     void start(std::string const&)
             override;
 
@@ -47,6 +52,8 @@ public:
 
 protected:
     youtube::api::Config::Ptr config_;
+    std::mutex config_mutex_;
+    unity::scopes::OnlineAccountClient oa_client_;
 };
 
 }
