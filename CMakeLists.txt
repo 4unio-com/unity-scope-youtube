@@ -27,8 +27,6 @@ pkg_check_modules(
   SCOPE
   glib-2.0
   gio-unix-2.0
-  libaccounts-glib
-  libsignon-glib
   libunity-scopes>=0.6.6
   jsoncpp
   net-cpp>=1.1.0
