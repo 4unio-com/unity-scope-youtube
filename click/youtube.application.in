@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application id="com.ubuntu.scopes.youtube_youtube">
+<application id="@SCOPE_INSTALL_NAME@">
   <description>YouTube</description>
-  <desktop-entry>com.ubuntu.scopes.youtube_youtube_1.0.12.desktop</desktop-entry>
+  <desktop-entry>@SCOPE_INSTALL_NAME@_@SCOPE_VERSION@.desktop</desktop-entry>
   <services>
-    <service id="com.ubuntu.scopes.youtube_youtube">
+    <service id="@SCOPE_INSTALL_NAME@">
       <description>Watch your favorite YouTube videos</description>
     </service>
   </services>
