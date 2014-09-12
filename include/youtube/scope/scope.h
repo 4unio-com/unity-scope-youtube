@@ -33,8 +33,6 @@ namespace scope {
 
 class Scope: public unity::scopes::ScopeBase {
 public:
-    Scope();
-
     void service_update(unity::scopes::OnlineAccountClient::ServiceStatus const& status);
     void update_config();
 
@@ -52,7 +50,7 @@ public:
 protected:
     youtube::api::Config::Ptr config_;
     std::mutex config_mutex_;
-    unity::scopes::OnlineAccountClient oa_client_;
+    std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client_;
 };
 
 }

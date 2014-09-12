@@ -30,15 +30,6 @@ using namespace std;
 using namespace youtube::scope;
 using namespace youtube::api;
 
-Scope::Scope()
-    : oa_client_("com.ubuntu.scopes.youtube_youtube",
-                 "sharing",
-                 "google",
-                 sc::OnlineAccountClient::CreateInternalMainLoop)
-{
-    oa_client_.set_service_update_callback(std::bind(&Scope::service_update, this, std::placeholders::_1));
-}
-
 void Scope::service_update(sc::OnlineAccountClient::ServiceStatus const&)
 {
     update_config();
@@ -54,10 +45,9 @@ void Scope::update_config()
     }
 
     if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") == nullptr) {
-        auto statuses = oa_client_.get_service_statuses();
-        for (auto const& status : statuses)
+        for (auto const& status : oa_client_->get_service_statuses())
         {
-            if (status.service_enabled)
+            if (status.service_enabled && !status.access_token.empty())
             {
                 config_->authenticated = true;
                 config_->access_token = status.access_token;
@@ -72,13 +62,25 @@ void Scope::update_config()
         cerr << "YouTube scope is unauthenticated" << endl;
     } else {
         cerr << "YouTube scope is authenticated" << endl;
+        cerr << "client ID: " << config_->client_id << endl;
+        cerr << "client se: " << config_->client_secret << endl;
+        cerr << "access to: " << config_->access_token << endl;
     }
 }
 
 void Scope::start(string const&) {
     setlocale(LC_ALL, "");
-    string translation_directory = ScopeBase::scope_directory() + "/../share/locale/";
+    string translation_directory = ScopeBase::scope_directory()
+            + "/../share/locale/";
     bindtextdomain(GETTEXT_PACKAGE, translation_directory.c_str());
+
+    oa_client_.reset(
+            new sc::OnlineAccountClient(SCOPE_INSTALL_NAME,
+                    "sharing", "google",
+                    sc::OnlineAccountClient::CreateInternalMainLoop));
+    oa_client_->set_service_update_callback(
+            std::bind(&Scope::service_update, this, std::placeholders::_1));
+
     update_config();
 }
 
