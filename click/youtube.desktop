@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=YouTube
-Icon=youtube
+Icon=youtube/icon.png
 OnlyShowIn=X-OnlineAccountsSettingsPage;
 Exec=true
 X-Ubuntu-Touch=true
