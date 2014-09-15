@@ -62,9 +62,6 @@ void Scope::update_config()
         cerr << "YouTube scope is unauthenticated" << endl;
     } else {
         cerr << "YouTube scope is authenticated" << endl;
-        cerr << "client ID: " << config_->client_id << endl;
-        cerr << "client se: " << config_->client_secret << endl;
-        cerr << "access to: " << config_->access_token << endl;
     }
 }
 
