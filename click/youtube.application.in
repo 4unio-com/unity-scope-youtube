@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application id="@SCOPE_INSTALL_NAME@">
   <description>YouTube</description>
-  <desktop-entry>@SCOPE_INSTALL_NAME@_@SCOPE_VERSION@.desktop</desktop-entry>
+  <desktop-entry>@SCOPE_INSTALL_NAME@.desktop</desktop-entry>
   <services>
     <service id="@SCOPE_INSTALL_NAME@">
       <description>Watch your favorite YouTube videos</description>
