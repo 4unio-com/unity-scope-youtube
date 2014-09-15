@@ -21,7 +21,6 @@ install(
     "apparmor.json"
     "${CMAKE_CURRENT_BINARY_DIR}/youtube.service"
     "${CMAKE_CURRENT_BINARY_DIR}/youtube.application"
-    "youtube.desktop"
   DESTINATION ${CMAKE_INSTALL_PREFIX}
 )
 

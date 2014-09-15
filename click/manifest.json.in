@@ -7,8 +7,7 @@
             "scope": "youtube",
             "apparmor": "apparmor.json",
             "account-application": "youtube.application",
-            "account-service": "youtube.service",
-            "desktop": "youtube.desktop"
+            "account-service": "youtube.service"
         }
     },
     "icon": "youtube/icon.png",
