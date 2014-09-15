@@ -47,7 +47,7 @@ void Scope::update_config()
     if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") == nullptr) {
         for (auto const& status : oa_client_->get_service_statuses())
         {
-            if (status.service_enabled && !status.access_token.empty())
+            if (status.service_authenticated)
             {
                 config_->authenticated = true;
                 config_->access_token = status.access_token;
