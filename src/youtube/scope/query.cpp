@@ -42,7 +42,6 @@ using namespace std;
 using namespace youtube::api;
 using namespace youtube::scope;
 
-
 namespace {
 static constexpr bool DEBUG_MODE = false;
 
@@ -297,7 +296,7 @@ void Query::add_login_nag(const sc::SearchReplyProxy &reply) {
     sc::CategorisedResult res(cat);
     res.set_title(_("Log-in to YouTube"));
 
-    sc::OnlineAccountClient oa_client("com.ubuntu.scopes.youtube_youtube", "sharing", "google");
+    sc::OnlineAccountClient oa_client(SCOPE_INSTALL_NAME, "sharing", "google");
     oa_client.register_account_login_item(res,
                                           query(),
                                           sc::OnlineAccountClient::InvalidateResults,

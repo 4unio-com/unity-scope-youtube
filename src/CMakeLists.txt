@@ -12,9 +12,6 @@ configure_file(
   @ONLY
 )
 
-add_definitions(-DSCOPE_NAME="${SCOPE_NAME}")
-add_definitions(-DSCOPE_INSTALL_NAME="${SCOPE_INSTALL_NAME}")
-
 add_library(
   ${SCOPE_NAME}-static OBJECT
   youtube/api/channel.cpp
@@ -46,6 +43,7 @@ target_link_libraries(
   ${SCOPE_LDFLAGS}
   ${Boost_LIBRARIES}
   ${CMAKE_THREAD_LIBS_INIT}
+  asprintf
 )
 
 set_target_properties(

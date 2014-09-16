@@ -29,6 +29,7 @@
 #include <unity/scopes/testing/Category.h>
 #include <unity/scopes/testing/MockSearchReply.h>
 #include <unity/scopes/testing/TypedScopeFixture.h>
+#include <unity/scopes/testing/ScopeMetadataBuilder.h>
 
 using namespace std;
 using namespace testing;
@@ -38,9 +39,17 @@ namespace posix = core::posix;
 namespace sc = unity::scopes;
 namespace sct = unity::scopes::testing;
 
-namespace {
+namespace unity {
+namespace scopes {
 
-static const char* SCOPE_ID { "unity-scope-youtube" };
+void PrintTo(const CategorisedResult& res, ::std::ostream* os) {
+  *os << "CategorisedResult: " << Variant(res.serialize()).serialize_json();
+}
+
+}
+}
+
+namespace {
 
 MATCHER_P2(ResultProp, prop, value, "") {
     if (arg.contains(prop)) {
@@ -81,6 +90,7 @@ protected:
         setenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS", "true", true);
 
         // Do the parent SetUp
+        TypedScopeFixture::set_scope_directory(TEST_SCOPE_DIRECTORY);
         TypedScopeFixtureScope::SetUp();
     }
 
@@ -104,7 +114,7 @@ protected:
     void expect_category(NaggyMock<sct::MockSearchReply> &reply,
             const sc::CategoryRenderer &renderer, const string &id,
             const string &title) {
-        EXPECT_CALL(reply, register_category(_, title, "", _)).Times(1).WillOnce(
+        EXPECT_CALL(reply, register_category(id, title, "", _)).Times(1).WillOnce(
                 Return(make_shared<sct::Category>(id, title, "", renderer)));
     }
 
@@ -115,7 +125,7 @@ TEST_F(TestYoutubeScope, non_empty_query) {
     const sc::CategoryRenderer renderer;
     NaggyMock<sct::MockSearchReply> reply;
 
-    sc::CannedQuery query(SCOPE_ID, "banana", ""); // searching with query text
+    sc::CannedQuery query(SCOPE_NAME, "banana", ""); // searching with query text
 
     expect_category(reply, renderer, "youtube", "1000000 results from YouTube");
 
@@ -160,6 +170,12 @@ TEST_F(TestYoutubeScope, non_empty_query) {
         ResultProp("subtitle", "DanKhooProductions"))))).WillOnce(
     Return(true));
 
+    expect_category(reply, renderer, "youtube_login_nag", "");
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(
+        ResultProp("title", "Log-in to YouTube")
+        ))).WillOnce(
+    Return(true));
+
     sc::SearchReplyProxy reply_proxy(&reply, [](sc::SearchReply*) {}); // note: this is a std::shared_ptr with empty deleter
     sc::SearchMetadata meta_data("en_EN", "phone");
     auto search_query = scope->search(query, meta_data);
@@ -171,7 +187,7 @@ TEST_F(TestYoutubeScope, basic_surfacing) {
     const sc::CategoryRenderer renderer;
     NaggyMock<sct::MockSearchReply> reply;
 
-    sc::CannedQuery query(SCOPE_ID, "", ""); // welcome screen
+    sc::CannedQuery query(SCOPE_NAME, "", ""); // welcome screen
 
     sc::Department::SPtr departments = sc::Department::create("", query,
             "Best of YouTube");
@@ -345,6 +361,12 @@ TEST_F(TestYoutubeScope, basic_surfacing) {
             ResultProp("subtitle", "Gaming")
         )))).WillOnce(Return(true));
 
+    expect_category(reply, renderer, "youtube_login_nag", "");
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(
+        ResultProp("title", "Log-in to YouTube")
+        ))).WillOnce(
+    Return(true));
+
     sc::SearchReplyProxy reply_proxy(&reply, [](sc::SearchReply*) {}); // note: this is a std::shared_ptr with empty deleter
     sc::SearchMetadata meta_data("en_EN", "phone");
     auto search_query = scope->search(query, meta_data);
@@ -356,7 +378,7 @@ TEST_F(TestYoutubeScope, pick_department) {
     const sc::CategoryRenderer renderer;
     NaggyMock<sct::MockSearchReply> reply;
 
-    sc::CannedQuery query(SCOPE_ID, "", "guideCategory:GCTXVzaWM"); // pick the music department
+    sc::CannedQuery query(SCOPE_NAME, "", "guideCategory:GCTXVzaWM"); // pick the music department
 
     sc::Department::SPtr departments = sc::Department::create("", query,
             "Best of YouTube");
@@ -516,6 +538,12 @@ TEST_F(TestYoutubeScope, pick_department) {
             ResultProp("subtitle", "Spinnin' Records")
         )))).WillOnce(Return(true));
 
+    expect_category(reply, renderer, "youtube_login_nag", "");
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(
+        ResultProp("title", "Log-in to YouTube")
+        ))).WillOnce(
+    Return(true));
+
     sc::SearchReplyProxy reply_proxy(&reply, [](sc::SearchReply*) {}); // note: this is a std::shared_ptr with empty deleter
     sc::SearchMetadata meta_data("en_EN", "phone");
     auto search_query = scope->search(query, meta_data);
@@ -527,7 +555,7 @@ TEST_F(TestYoutubeScope, pick_department_channels) {
     const sc::CategoryRenderer renderer;
     NaggyMock<sct::MockSearchReply> reply;
 
-    sc::CannedQuery query(SCOPE_ID, "", "guideCategory-channels:GCTXVzaWM"); // pick the music channels department
+    sc::CannedQuery query(SCOPE_NAME, "", "guideCategory-channels:GCTXVzaWM"); // pick the music channels department
 
     sc::Department::SPtr departments = sc::Department::create("", query,
             "Best of YouTube");
@@ -541,40 +569,46 @@ TEST_F(TestYoutubeScope, pick_department_channels) {
     expect_category(reply, renderer, "youtube", "Channels");
 
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "channel:UCdI8evszfZvyAl2UVCypkTA")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "channel:UCdI8evszfZvyAl2UVCypkTA")),
             ResultProp("title", "MileyCyrusVEVO"),
             ResultProp("kind", "youtube#channel"),
             ResultProp("art", "https://yt3.ggpht.com/-7q31n1lfPcw/AAAAAAAAAAI/AAAAAAAAAAA/6otE9_5kJWc/s88-c-k-no/photo.jpg"),
             ResultProp("subtitle", "6590773 subscribers")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "channel:UC_TVqp_SyG6j5hG-xVRy95A")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "channel:UC_TVqp_SyG6j5hG-xVRy95A")),
             ResultProp("title", "Skrillex"),
             ResultProp("kind", "youtube#channel"),
             ResultProp("art", "https://yt3.ggpht.com/-vE_ouJCWMQk/AAAAAAAAAAI/AAAAAAAAAAA/6bkr0eMOQ7o/s88-c-k-no/photo.jpg"),
             ResultProp("subtitle", "8162024 subscribers")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "channel:UC20vb-R_px4CguHzzBPhoyQ")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "channel:UC20vb-R_px4CguHzzBPhoyQ")),
             ResultProp("title", "EminemVEVO"),
             ResultProp("kind", "youtube#channel"),
             ResultProp("art", "https://yt3.ggpht.com/-NzI5Ni67ppc/AAAAAAAAAAI/AAAAAAAAAAA/7wGQowTOWWg/s88-c-k-no/photo.jpg"),
             ResultProp("subtitle", "12765775 subscribers")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "channel:UCpDJl2EmP7Oh90Vylx0dZtA")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "channel:UCpDJl2EmP7Oh90Vylx0dZtA")),
             ResultProp("title", "Spinnin' Records"),
             ResultProp("kind", "youtube#channel"),
             ResultProp("art", "https://yt3.ggpht.com/-yZkhExtYPZg/AAAAAAAAAAI/AAAAAAAAAAA/OfongtErwyo/s88-c-k-no/photo.jpg"),
             ResultProp("subtitle", "5963201 subscribers")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "channel:UCrDkAvwZum-UTjHmzDI2iIw")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "channel:UCrDkAvwZum-UTjHmzDI2iIw")),
             ResultProp("title", "officialpsy"),
             ResultProp("kind", "youtube#channel"),
             ResultProp("art", "https://yt3.ggpht.com/-0Xgl841SU7Y/AAAAAAAAAAI/AAAAAAAAAAA/_bKTxRDm1kw/s88-c-k-no/photo.jpg"),
             ResultProp("subtitle", "7287121 subscribers")
         )))).WillOnce(Return(true));
+
+    expect_category(reply, renderer, "youtube_login_nag", "");
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(
+        ResultProp("title", "Log-in to YouTube")
+        ))).WillOnce(
+    Return(true));
 
     sc::SearchReplyProxy reply_proxy(&reply, [](sc::SearchReply*) {}); // note: this is a std::shared_ptr with empty deleter
     sc::SearchMetadata meta_data("en_EN", "phone");
@@ -587,7 +621,7 @@ TEST_F(TestYoutubeScope, pick_department_videos) {
     const sc::CategoryRenderer renderer;
     NaggyMock<sct::MockSearchReply> reply;
 
-    sc::CannedQuery query(SCOPE_ID, "", "guideCategory-videos:GCTXVzaWM"); // pick the music videos department
+    sc::CannedQuery query(SCOPE_NAME, "", "guideCategory-videos:GCTXVzaWM"); // pick the music videos department
 
     sc::Department::SPtr departments = sc::Department::create("", query,
             "Best of YouTube");
@@ -776,6 +810,12 @@ TEST_F(TestYoutubeScope, pick_department_videos) {
             ResultProp("subtitle", "officialpsy")
         )))).WillOnce(Return(true));
 
+    expect_category(reply, renderer, "youtube_login_nag", "");
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(
+        ResultProp("title", "Log-in to YouTube")
+        ))).WillOnce(
+    Return(true));
+
     sc::SearchReplyProxy reply_proxy(&reply, [](sc::SearchReply*) {}); // note: this is a std::shared_ptr with empty deleter
     sc::SearchMetadata meta_data("en_EN", "phone");
     auto search_query = scope->search(query, meta_data);
@@ -787,7 +827,7 @@ TEST_F(TestYoutubeScope, pick_department_playlists) {
     const sc::CategoryRenderer renderer;
     NaggyMock<sct::MockSearchReply> reply;
 
-    sc::CannedQuery query(SCOPE_ID, "", "guideCategory-playlists:GCTXVzaWM"); // pick the music playlists department
+    sc::CannedQuery query(SCOPE_NAME, "", "guideCategory-playlists:GCTXVzaWM"); // pick the music playlists department
 
     sc::Department::SPtr departments = sc::Department::create("", query,
             "Best of YouTube");
@@ -801,173 +841,179 @@ TEST_F(TestYoutubeScope, pick_department_playlists) {
     expect_category(reply, renderer, "youtube", "Playlists");
 
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLR4XuJ-iybKvZWIlSwxp7KdBCjdBO5SDY")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLR4XuJ-iybKvZWIlSwxp7KdBCjdBO5SDY")),
             ResultProp("title", "VEVO HQ Pop Mix"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/9u3y5fmoAvA/default.jpg"),
             ResultProp("subtitle", "10 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLR4XuJ-iybKupktnWDLBQfJjdo7cHjOe4")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLR4XuJ-iybKupktnWDLBQfJjdo7cHjOe4")),
             ResultProp("title", "VEVO HQ Pop Mix"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/OJGUbwVMBeA/default.jpg"),
             ResultProp("subtitle", "10 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLR4XuJ-iybKvPSwG_cY6zaUoYmkgfIUw7")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLR4XuJ-iybKvPSwG_cY6zaUoYmkgfIUw7")),
             ResultProp("title", "VEVO HQ Pop Mix"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/IXpxe9xL-sk/default.jpg"),
             ResultProp("subtitle", "10 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLR4XuJ-iybKsKVOfO4p_di3Tg6Img_EgD")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLR4XuJ-iybKsKVOfO4p_di3Tg6Img_EgD")),
             ResultProp("title", "VEVO HQ Pop Mix"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/H8tS5UQmNQM/default.jpg"),
             ResultProp("subtitle", "10 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLR4XuJ-iybKs9KYUKKvFSn-LLhCOp5qzO")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLR4XuJ-iybKs9KYUKKvFSn-LLhCOp5qzO")),
             ResultProp("title", "VEVO HQ Pop Mix"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/JJr80jXCepc/default.jpg"),
             ResultProp("subtitle", "10 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PL9Z0stL3aRykWNoVQW96JFIkelka_93Sc")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PL9Z0stL3aRykWNoVQW96JFIkelka_93Sc")),
             ResultProp("title", "RECESS"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/6JYIGclVQdw/default.jpg"),
             ResultProp("subtitle", "11 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PL9Z0stL3aRyk3-72RVYwMbYR3HbcK_U5r")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PL9Z0stL3aRyk3-72RVYwMbYR3HbcK_U5r")),
             ResultProp("title", "TOUR VIDEOS"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i.ytimg.com/vi/default.jpg"),
             ResultProp("subtitle", "0 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PL9Z0stL3aRylHuDbVpSYJufB1VKc5RdWh")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PL9Z0stL3aRylHuDbVpSYJufB1VKc5RdWh")),
             ResultProp("title", "MUSIC VIDEOS"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/eOofWzI3flA/default.jpg"),
             ResultProp("subtitle", "8 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PL9Z0stL3aRynyGRTskjIQyTp7GI5oGXqo")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PL9Z0stL3aRynyGRTskjIQyTp7GI5oGXqo")),
             ResultProp("title", "POTATO"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/nuy1Gg_5AA0/default.jpg"),
             ResultProp("subtitle", "12 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PL9Z0stL3aRyk6yI9R2ja0oZKjOlqwQ-Ov")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PL9Z0stL3aRyk6yI9R2ja0oZKjOlqwQ-Ov")),
             ResultProp("title", "THE LEAVING EP"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/PoTp-TaOf_0/default.jpg"),
             ResultProp("subtitle", "3 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLRgSHCeagEV6Ptvt3E5gYNIZ6uqZvZ-tA")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLRgSHCeagEV6Ptvt3E5gYNIZ6uqZvZ-tA")),
             ResultProp("title", "VEVO HQ Urban Mix"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/9g91GUt2dVA/default.jpg"),
             ResultProp("subtitle", "6 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLRgSHCeagEV6OTbI31Zmdu0y6Tv4AM7m2")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLRgSHCeagEV6OTbI31Zmdu0y6Tv4AM7m2")),
             ResultProp("title", "VEVO HQ Urban Mix"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/XtlY1Da0jt4/default.jpg"),
             ResultProp("subtitle", "5 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLRgSHCeagEV782tXRkS5yRXBRIWena3Sc")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLRgSHCeagEV782tXRkS5yRXBRIWena3Sc")),
             ResultProp("title", "VEVO HQ Urban Mix"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/qL2DzPMFmdo/default.jpg"),
             ResultProp("subtitle", "6 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLRgSHCeagEV66rCmR8M4Sd7ytuJcsnXma")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLRgSHCeagEV66rCmR8M4Sd7ytuJcsnXma")),
             ResultProp("title", "VEVO Urban Mix"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/uh2DXqRRyXQ/default.jpg"),
             ResultProp("subtitle", "5 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLRgSHCeagEV5Gx6_PbU2nL41-Uwiz7eja")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLRgSHCeagEV5Gx6_PbU2nL41-Uwiz7eja")),
             ResultProp("title", "VEVO Urban Mix"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/USJZMrY4XqI/default.jpg"),
             ResultProp("subtitle", "5 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLx_tr69QV8CA2m08FmWj0jrPWQ1T3Buul")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLx_tr69QV8CA2m08FmWj0jrPWQ1T3Buul")),
             ResultProp("title", "Barong Family"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/bSZFMOO-U0o/default.jpg"),
-            ResultProp("subtitle", "1 videos")
+            ResultProp("subtitle", "1 video")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLx_tr69QV8CB5nZduKd8SCs_ttLWqN27N")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLx_tr69QV8CB5nZduKd8SCs_ttLWqN27N")),
             ResultProp("title", "Flye Eye Records"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/sjmswPj372w/default.jpg"),
             ResultProp("subtitle", "3 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLx_tr69QV8CD3sTHkAaYlzNQPdjxr8g62")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLx_tr69QV8CD3sTHkAaYlzNQPdjxr8g62")),
             ResultProp("title", "Ultra Music Festival 2014 Live Sets"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/mDLcj6y9eko/default.jpg"),
             ResultProp("subtitle", "9 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLx_tr69QV8CAbkVXzP7fjz0fmalAlhAN2")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLx_tr69QV8CAbkVXzP7fjz0fmalAlhAN2")),
             ResultProp("title", "Skink"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/eTN9dPAmZFQ/default.jpg"),
             ResultProp("subtitle", "3 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLx_tr69QV8CCyUSdcd9xqYwW_n-M6n6za")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLx_tr69QV8CCyUSdcd9xqYwW_n-M6n6za")),
             ResultProp("title", "SPRS"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/03DabSVmHVs/default.jpg"),
             ResultProp("subtitle", "34 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLu8-5UhSJGkJRAlpnB8xlw7Mf78yFGHYG")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLu8-5UhSJGkJRAlpnB8xlw7Mf78yFGHYG")),
             ResultProp("title", "YG Family Featured Playlists"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/7LP4foN3Xs4/default.jpg"),
             ResultProp("subtitle", "55 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PLEC422D53B7588DC7")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PLEC422D53B7588DC7")),
             ResultProp("title", "PSY Featured Playlists"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/9bZkp7q19f0/default.jpg"),
             ResultProp("subtitle", "28 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:PL950C8AEC6CC3E6FE")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:PL950C8AEC6CC3E6FE")),
             ResultProp("title", "Music Videos"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/1cKc1rkZwf8/default.jpg"),
             ResultProp("subtitle", "9 videos")
         )))).WillOnce(Return(true));
     EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
-            ResultUriMatchesCannedQuery(sc::CannedQuery("com.ubuntu.scopes.youtube_youtube", "", "playlist:FLrDkAvwZum-UTjHmzDI2iIw")),
+            ResultUriMatchesCannedQuery(sc::CannedQuery(SCOPE_INSTALL_NAME, "", "playlist:FLrDkAvwZum-UTjHmzDI2iIw")),
             ResultProp("title", "Favorites"),
             ResultProp("kind", "youtube#playlist"),
             ResultProp("art", "https://i1.ytimg.com/vi/hNbi9rZaVOA/default.jpg"),
             ResultProp("subtitle", "42 videos")
         )))).WillOnce(Return(true));
+
+    expect_category(reply, renderer, "youtube_login_nag", "");
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(
+        ResultProp("title", "Log-in to YouTube")
+        ))).WillOnce(
+    Return(true));
 
     sc::SearchReplyProxy reply_proxy(&reply, [](sc::SearchReply*) {}); // note: this is a std::shared_ptr with empty deleter
     sc::SearchMetadata meta_data("en_EN", "phone");

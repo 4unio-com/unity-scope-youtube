@@ -21,7 +21,7 @@
 
 #include <libintl.h>
 
-#include <boost/format.hpp>
+#include <autosprintf.h>
 
 inline char * _(const char *__msgid) {
     return dgettext(GETTEXT_PACKAGE, __msgid);
@@ -29,8 +29,7 @@ inline char * _(const char *__msgid) {
 
 inline std::string _(const char *__msgid1, const char *__msgid2,
         unsigned long int __n) {
-    boost::format fmt(dngettext(GETTEXT_PACKAGE, __msgid1, __msgid2, __n));
-    return boost::str(fmt % __n);
+    return gnu::autosprintf(dngettext(GETTEXT_PACKAGE, __msgid1, __msgid2, __n), __n);
 }
 
 #endif // YOUTUBE_SCOPE_LOCALISATION_H_

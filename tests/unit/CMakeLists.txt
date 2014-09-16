@@ -10,6 +10,7 @@ target_link_libraries(
   ${GMOCK_LIBRARIES}
   ${SCOPE_LDFLAGS}
   ${Boost_LIBRARIES}
+  asprintf
 )
 
 add_test(

@@ -44,9 +44,11 @@ set(SCOPE_VERSION "1.0.12")
 set(SCOPE_NAME "com.ubuntu.scopes.youtube")
 set(SCOPE_INSTALL_NAME "${SCOPE_NAME}_youtube")
 set(SYMBOL_MAP "${CMAKE_SOURCE_DIR}/data/${SCOPE_NAME}.map")
-
 set(GETTEXT_PACKAGE "unity-scope-youtube")
+
 add_definitions(-DGETTEXT_PACKAGE="${GETTEXT_PACKAGE}")
+add_definitions(-DSCOPE_NAME="${SCOPE_NAME}")
+add_definitions(-DSCOPE_INSTALL_NAME="${SCOPE_INSTALL_NAME}")
 
 if(CLICK_MODE)
   set(SCOPE_INSTALL_DIR "youtube")
