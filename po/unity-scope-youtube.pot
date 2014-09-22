@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unity-scope-youtube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-15 19:33+0100\n"
+"POT-Creation-Date: 2014-09-22 09:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,56 +18,56 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: src/youtube/scope/query.cpp:233
+#: src/youtube/scope/query.cpp:232
 #, c-format
 msgid "1 subscriber"
 msgid_plural "%d subscribers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/youtube/scope/query.cpp:254
+#: src/youtube/scope/query.cpp:253
 #, c-format
 msgid "1 video"
 msgid_plural "%d videos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/youtube/scope/query.cpp:298
+#: src/youtube/scope/query.cpp:297
 msgid "Log-in to YouTube"
 msgstr ""
 
-#: src/youtube/scope/query.cpp:387 src/youtube/scope/query.cpp:545
+#: src/youtube/scope/query.cpp:386 src/youtube/scope/query.cpp:544
 msgid "Videos"
 msgstr ""
 
-#: src/youtube/scope/query.cpp:419 src/youtube/scope/query.cpp:557
+#: src/youtube/scope/query.cpp:418 src/youtube/scope/query.cpp:556
 msgid "Channels"
 msgstr ""
 
-#: src/youtube/scope/query.cpp:438 src/youtube/scope/query.cpp:551
+#: src/youtube/scope/query.cpp:437 src/youtube/scope/query.cpp:550
 msgid "Playlists"
 msgstr ""
 
-#: src/youtube/scope/query.cpp:471
+#: src/youtube/scope/query.cpp:470
 msgid "Playlist contents"
 msgstr ""
 
-#: src/youtube/scope/query.cpp:488
+#: src/youtube/scope/query.cpp:487
 msgid "Channel contents"
 msgstr ""
 
-#: src/youtube/scope/query.cpp:503
+#: src/youtube/scope/query.cpp:502
 msgid "YouTube"
 msgstr ""
 
-#: src/youtube/scope/query.cpp:650
+#: src/youtube/scope/query.cpp:649
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/youtube/scope/query.cpp:664
+#: src/youtube/scope/query.cpp:663
 msgid "YouTube requires an internet connection"
 msgstr ""
 
