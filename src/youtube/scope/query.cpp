@@ -519,6 +519,8 @@ string Query::country_code() const {
 }
 
 void Query::surfacing(const sc::SearchReplyProxy &reply) {
+    bool include_login_nag = !client_->config()->authenticated;
+
     const sc::CannedQuery &query(sc::SearchQueryBase::query());
 
     sc::Department::SPtr all_depts;
@@ -627,6 +629,9 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
 
             popular_videos(reply);
 
+            // Don't include the login nag when we are aggregated
+            include_login_nag = false;
+
             break;
         }
         }
@@ -637,6 +642,10 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
         reply->register_departments(all_depts);
 
         guide_category(reply, departments.at(0)->id());
+    }
+
+    if (include_login_nag) {
+        add_login_nag(reply);
     }
 }
 
@@ -672,10 +681,6 @@ void Query::run(sc::SearchReplyProxy const& reply) {
             surfacing(reply);
         } else {
             search(reply, query_string);
-        }
-
-        if (!client_->config()->authenticated) {
-            add_login_nag(reply);
         }
     } catch (domain_error &e) {
         cerr << "ERROR: " << e.what() << endl;

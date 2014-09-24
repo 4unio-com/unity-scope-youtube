@@ -170,12 +170,6 @@ TEST_F(TestYoutubeScope, non_empty_query) {
         ResultProp("subtitle", "DanKhooProductions"))))).WillOnce(
     Return(true));
 
-    expect_category(reply, renderer, "youtube_login_nag", "");
-    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(
-        ResultProp("title", "Log-in to YouTube")
-        ))).WillOnce(
-    Return(true));
-
     sc::SearchReplyProxy reply_proxy(&reply, [](sc::SearchReply*) {}); // note: this is a std::shared_ptr with empty deleter
     sc::SearchMetadata meta_data("en_EN", "phone");
     auto search_query = scope->search(query, meta_data);
