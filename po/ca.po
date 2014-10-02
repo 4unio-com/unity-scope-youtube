@@ -1,61 +1,60 @@
-# Translations for YouTube scope for Unity Dash.
-# Copyright (C) 2014 Canonical\ Ltd.
+# Catalan translation for unity-scope-youtube
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
 # This file is distributed under the same license as the unity-scope-youtube package.
-# Pete Woods <pete.woods@canonical.com>, 2014.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: unity-scope-youtube\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-09-22 09:52+0100\n"
-"PO-Revision-Date: 2014-09-09 14:46+0000\n"
-"Last-Translator: Pete Woods <Unknown>\n"
-"Language-Team: English (United Kingdom) <en_GB@li.org>\n"
+"PO-Revision-Date: 2014-09-30 07:28+0000\n"
+"Last-Translator: David Planella <david.planella@ubuntu.com>\n"
+"Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2014-10-02 06:41+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
-"Language: English (United Kingdom)\n"
 
 #: src/youtube/scope/query.cpp:232
 #, c-format
 msgid "1 subscriber"
 msgid_plural "%d subscribers"
-msgstr[0] "1 subscriber"
-msgstr[1] "%d subscribers"
+msgstr[0] "Un subscriptor"
+msgstr[1] "%d subscriptors"
 
 #: src/youtube/scope/query.cpp:253
 #, c-format
 msgid "1 video"
 msgid_plural "%d videos"
-msgstr[0] "1 video"
-msgstr[1] "%d videos"
+msgstr[0] "1 vídeo"
+msgstr[1] "%d vídeos"
 
 #: src/youtube/scope/query.cpp:297
 msgid "Log-in to YouTube"
-msgstr "Log-in to YouTube"
+msgstr "Entra al YouTube"
 
 #: src/youtube/scope/query.cpp:386 src/youtube/scope/query.cpp:544
 msgid "Videos"
-msgstr "Videos"
+msgstr "Vídeos"
 
 #: src/youtube/scope/query.cpp:418 src/youtube/scope/query.cpp:556
 msgid "Channels"
-msgstr "Channels"
+msgstr "Canals"
 
 #: src/youtube/scope/query.cpp:437 src/youtube/scope/query.cpp:550
 msgid "Playlists"
-msgstr "Playlists"
+msgstr "Llistes de reproducció"
 
 #: src/youtube/scope/query.cpp:470
 msgid "Playlist contents"
-msgstr "Playlist contents"
+msgstr "Continguts de la llista de reproducció"
 
 #: src/youtube/scope/query.cpp:487
 msgid "Channel contents"
-msgstr "Channel contents"
+msgstr "Continguts del canal"
 
 #: src/youtube/scope/query.cpp:502
 msgid "YouTube"
@@ -65,16 +64,16 @@ msgstr "YouTube"
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
-msgstr[0] "1 result from YouTube"
-msgstr[1] "%d results from YouTube"
+msgstr[0] "Un resultat del YouTube"
+msgstr[1] "%d resultats del YouTube"
 
 #: src/youtube/scope/query.cpp:663
 msgid "YouTube requires an internet connection"
-msgstr "YouTube requires an internet connection"
+msgstr "El YouTube requereix una connexió a Internet"
 
 #: src/youtube/scope/preview.cpp:77
 #, c-format
 msgid "1 view"
 msgid_plural "%d views"
-msgstr[0] "1 view"
-msgstr[1] "%d views"
+msgstr[0] "Una visualització"
+msgstr[1] "%d visualitzacions"
