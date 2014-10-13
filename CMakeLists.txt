@@ -40,7 +40,7 @@ include_directories(
   ${SCOPE_INCLUDE_DIRS}
 )
 
-set(SCOPE_VERSION "1.0.12")
+set(SCOPE_VERSION "1.0.13")
 set(SCOPE_NAME "com.ubuntu.scopes.youtube")
 set(SCOPE_INSTALL_NAME "${SCOPE_NAME}_youtube")
 set(SYMBOL_MAP "${CMAKE_SOURCE_DIR}/data/${SCOPE_NAME}.map")
