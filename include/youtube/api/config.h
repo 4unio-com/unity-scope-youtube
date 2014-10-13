@@ -63,7 +63,7 @@ struct Config {
      */
     std::string accept {"application/json"};
 
-    /**
+    /*
      * Have we got access to private APIs?
      */
     bool authenticated = false;
