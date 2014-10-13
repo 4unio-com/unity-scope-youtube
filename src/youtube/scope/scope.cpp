@@ -63,6 +63,8 @@ void Scope::update_config()
     } else {
         cerr << "YouTube scope is authenticated" << endl;
     }
+
+    config_cond_.notify_all();
 }
 
 void Scope::start(string const&) {
@@ -73,12 +75,18 @@ void Scope::start(string const&) {
 
     oa_client_.reset(
             new sc::OnlineAccountClient(SCOPE_INSTALL_NAME,
-                    "sharing", "google",
-                    sc::OnlineAccountClient::CreateInternalMainLoop));
+                    "sharing", "google"));
     oa_client_->set_service_update_callback(
             std::bind(&Scope::service_update, this, std::placeholders::_1));
 
-    update_config();
+    // Allow 2 seconds for the callback to initialize config_
+    std::unique_lock<std::mutex> lock(config_mutex_);
+    config_cond_.wait_for(lock, std::chrono::seconds(2), [this] { return config_ != nullptr; });
+    if (config_ == nullptr)
+    {
+        // If the callback was not invoked, default initialize config_
+        config_ = make_shared<Config>();
+    }
 }
 
 void Scope::stop() {

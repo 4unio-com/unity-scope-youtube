@@ -15,7 +15,7 @@ Build-Depends: cmake (>= 2.8.10),
                libjsoncpp-dev,
                libnet-cpp-dev (>= 1.1.0),
                libprocess-cpp-dev,
-               libunity-scopes-dev (>= 0.6.6),
+               libunity-scopes-dev (>= 0.6.7),
                pkg-config,
                python-tornado,
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>

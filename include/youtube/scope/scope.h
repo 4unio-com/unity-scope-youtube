@@ -27,6 +27,8 @@
 #include <unity/scopes/ReplyProxyFwd.h>
 #include <unity/scopes/ScopeBase.h>
 
+#include <condition_variable>
+
 namespace youtube {
 
 namespace scope {
@@ -50,6 +52,7 @@ public:
 protected:
     youtube::api::Config::Ptr config_;
     std::mutex config_mutex_;
+    std::condition_variable config_cond_;
     std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client_;
 };
 
