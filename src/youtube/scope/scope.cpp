@@ -79,9 +79,12 @@ void Scope::start(string const&) {
     oa_client_->set_service_update_callback(
             std::bind(&Scope::service_update, this, std::placeholders::_1));
 
-    // Allow 2 seconds for the callback to initialize config_
+    ///! TODO: We should only be waiting here if we know that there is at least one Google account enabled.
+    ///        OnlineAccountClient needs to expose some functionality for us to determine that.
+
+    // Allow 1 second for the callback to initialize config_
     std::unique_lock<std::mutex> lock(config_mutex_);
-    config_cond_.wait_for(lock, std::chrono::seconds(2), [this] { return config_ != nullptr; });
+    config_cond_.wait_for(lock, std::chrono::seconds(1), [this] { return config_ != nullptr; });
     if (config_ == nullptr)
     {
         // If the callback was not invoked, default initialize config_
