@@ -125,6 +125,8 @@ const static string SEARCH_CATEGORY_LOGIN_NAG =
 }
 )";
 
+const static string MUSIC_CATEGORY_ID = "10";
+
 template<typename T>
 static T get_or_throw(future<T> &f) {
     if (f.wait_for(std::chrono::seconds(10)) != future_status::ready) {
@@ -134,7 +136,7 @@ static T get_or_throw(future<T> &f) {
 }
 
 enum class DepartmentType {
-    guide_category, channel, playlist, aggregated
+    guide_category, channel, playlist, aggregated, aggregated_music
 };
 
 enum class SectionType {
@@ -173,6 +175,8 @@ struct DepartmentPath {
             department_type = DepartmentType::playlist;
         } else if (alg::starts_with(s, "aggregated:")) {
             department_type = DepartmentType::aggregated;
+        } else if (alg::starts_with(s, "aggregated_music:")) {
+            department_type = DepartmentType::aggregated_music;
         }
 
         department = s.substr(s.find(':') + 1);
@@ -206,6 +210,9 @@ struct DepartmentPath {
             break;
         case DepartmentType::aggregated:
             result << "aggregated:";
+            break;
+        case DepartmentType::aggregated_music:
+            result << "aggregated_music:";
             break;
         }
 
@@ -495,8 +502,8 @@ void Query::channel(const sc::SearchReplyProxy &reply,
     }
 }
 
-void Query::popular_videos(const sc::SearchReplyProxy &reply) {
-    auto resources_future = client_->chart_videos("mostPopular", country_code());
+void Query::popular_videos(const sc::SearchReplyProxy &reply, const std::string &category_id) {
+    auto resources_future = client_->chart_videos("mostPopular", country_code(), category_id);
     auto resources = get_or_throw(resources_future);
 
     auto cat = reply->register_category("youtube", _("YouTube"), "",
@@ -634,6 +641,22 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
 
             break;
         }
+        case DepartmentType::aggregated_music: {
+                // If another scope has asked us to surface music results
+
+                // Need to add a dummy department to pass the validation check
+                sc::Department::SPtr dummy = sc::Department::create(
+                        raw_department_id, query, " ");
+                all_depts->add_subdepartment(dummy);
+                reply->register_departments(all_depts);
+
+                popular_videos(reply, MUSIC_CATEGORY_ID);
+
+                // Don't include the login nag when we are aggregated
+                include_login_nag = false;
+
+                break;
+            }
         }
     } else {
         // This is the initial surfacing screen

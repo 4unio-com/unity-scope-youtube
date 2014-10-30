@@ -80,7 +80,7 @@ public:
     virtual std::future<VideoList> channel_videos(const std::string &channelId);
 
     virtual std::future<VideoList> chart_videos(const std::string &chart_name,
-            const std::string &region_code);
+            const std::string &region_code, const std::string &category_id);
 
     virtual std::future<PlaylistList> channel_playlists(
             const std::string &channelId);

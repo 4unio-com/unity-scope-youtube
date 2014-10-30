@@ -60,7 +60,7 @@ protected:
     void channel(const unity::scopes::SearchReplyProxy &reply,
             const std::string &channel_id);
 
-    void popular_videos(const unity::scopes::SearchReplyProxy &reply);
+    void popular_videos(const unity::scopes::SearchReplyProxy &reply, const std::string &category_id="");
 
     void surfacing(const unity::scopes::SearchReplyProxy &reply);
 
