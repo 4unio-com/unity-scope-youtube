@@ -168,11 +168,15 @@ Client::Client(Config::Ptr config) :
 }
 
 future<SearchListResponse::Ptr> Client::search(const string &query,
-        unsigned int max_results) {
+        unsigned int max_results, const std::string &category_id) {
     net::Uri::QueryParameters parameters { { "part", "snippet" }, { "type", "video" }, { "q", query } };
     if (max_results > 0)
     {
         parameters.emplace_back(make_pair("maxResults", to_string(max_results)));
+    }
+    if (!category_id.empty())
+    {
+        parameters.emplace_back(make_pair("videoCategoryId", category_id));
     }
     return p->async_get<SearchListResponse::Ptr>( { "youtube", "v3", "search" },
             parameters,
@@ -223,7 +227,7 @@ future<Client::VideoList> Client::chart_videos(const string &chart_name,
     net::Uri::QueryParameters params = { { "part", "snippet" }, { "regionCode", region_code }, { "chart", chart_name } };
 
     if (!category_id.empty()) {
-        params.push_back({ "videoCategoryId", category_id });
+        params.emplace_back(make_pair("videoCategoryId", category_id));
     }
     return p->async_get<VideoList>( { "youtube", "v3", "videos" },
             params, [](const json::Value &root) {

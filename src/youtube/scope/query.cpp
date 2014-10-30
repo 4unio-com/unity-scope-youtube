@@ -658,7 +658,26 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
 
 void Query::search(const sc::SearchReplyProxy &reply,
         const string &query_string) {
-    auto resources_future = client_->search(query_string, search_metadata().cardinality());
+    string raw_department_id = sc::SearchQueryBase::query().department_id();
+    string category_id;
+    // gets the category id if it's being used
+    if (!raw_department_id.empty()) {
+        DepartmentPath path(raw_department_id);
+        switch (path.department_type) {
+                case DepartmentType::aggregated: {
+                    // in the case we are looking for music we have to use the MUSIC category
+                    if (path.department==MUSIC_AGGREGATOR_DEPT) {
+                        category_id = MUSIC_CATEGORY_ID;
+                    }
+                    break;
+                }
+                default: {
+                    // Nothing by now
+                    break;
+                }
+        }
+    }
+    auto resources_future = client_->search(query_string, search_metadata().cardinality(), category_id);
     auto resources = get_or_throw(resources_future);
 
     auto cat = reply->register_category("youtube",
