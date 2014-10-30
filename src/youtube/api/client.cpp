@@ -220,19 +220,15 @@ future<Client::VideoList> Client::channel_videos(const string &channelId) {
 
 future<Client::VideoList> Client::chart_videos(const string &chart_name,
         const string &region_code, const std::string &category_id) {
-    if( category_id.empty() ) {
-        return p->async_get<VideoList>( { "youtube", "v3", "videos" },
-            { { "part", "snippet" }, { "regionCode", region_code }, { "chart",
-                    chart_name } }, [](const json::Value &root) {
-                return get_typed_list<Video>("youtube#video", root);
-            });
-    } else {
-        return p->async_get<VideoList>( { "youtube", "v3", "videos" },
-            { { "part", "snippet" }, { "regionCode", region_code }, { "chart",
-                    chart_name }, { "videoCategoryId", category_id } }, [](const json::Value &root) {
-                return get_typed_list<Video>("youtube#video", root);
-            });
+    net::Uri::QueryParameters params = { { "part", "snippet" }, { "regionCode", region_code }, { "chart", chart_name } };
+
+    if (!category_id.empty()) {
+        params.push_back({ "videoCategoryId", category_id });
     }
+    return p->async_get<VideoList>( { "youtube", "v3", "videos" },
+            params, [](const json::Value &root) {
+                return get_typed_list<Video>("youtube#video", root);
+            });
 }
 
 future<Client::VideoList> Client::videos(const string &video_id) {

@@ -126,6 +126,7 @@ const static string SEARCH_CATEGORY_LOGIN_NAG =
 )";
 
 const static string MUSIC_CATEGORY_ID = "10";
+const static string MUSIC_AGGREGATOR_DEPT = "musicaggregator";
 
 template<typename T>
 static T get_or_throw(future<T> &f) {
@@ -136,7 +137,7 @@ static T get_or_throw(future<T> &f) {
 }
 
 enum class DepartmentType {
-    guide_category, channel, playlist, aggregated, aggregated_music
+    guide_category, channel, playlist, aggregated
 };
 
 enum class SectionType {
@@ -175,8 +176,6 @@ struct DepartmentPath {
             department_type = DepartmentType::playlist;
         } else if (alg::starts_with(s, "aggregated:")) {
             department_type = DepartmentType::aggregated;
-        } else if (alg::starts_with(s, "aggregated_music:")) {
-            department_type = DepartmentType::aggregated_music;
         }
 
         department = s.substr(s.find(':') + 1);
@@ -210,9 +209,6 @@ struct DepartmentPath {
             break;
         case DepartmentType::aggregated:
             result << "aggregated:";
-            break;
-        case DepartmentType::aggregated_music:
-            result << "aggregated_music:";
             break;
         }
 
@@ -634,29 +630,17 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
             all_depts->add_subdepartment(dummy);
             reply->register_departments(all_depts);
 
-            popular_videos(reply);
+            if (path.department==MUSIC_AGGREGATOR_DEPT) {
+                popular_videos(reply, MUSIC_CATEGORY_ID);
+            } else {
+                popular_videos(reply);
+            }
 
             // Don't include the login nag when we are aggregated
             include_login_nag = false;
 
             break;
         }
-        case DepartmentType::aggregated_music: {
-                // If another scope has asked us to surface music results
-
-                // Need to add a dummy department to pass the validation check
-                sc::Department::SPtr dummy = sc::Department::create(
-                        raw_department_id, query, " ");
-                all_depts->add_subdepartment(dummy);
-                reply->register_departments(all_depts);
-
-                popular_videos(reply, MUSIC_CATEGORY_ID);
-
-                // Don't include the login nag when we are aggregated
-                include_login_nag = false;
-
-                break;
-            }
         }
     } else {
         // This is the initial surfacing screen
