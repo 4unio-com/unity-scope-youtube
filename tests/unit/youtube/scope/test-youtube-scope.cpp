@@ -1016,4 +1016,116 @@ TEST_F(TestYoutubeScope, pick_department_playlists) {
     search_query->run(reply_proxy);
 }
 
+TEST_F(TestYoutubeScope, surface_music) {
+    const sc::CategoryRenderer renderer;
+    NaggyMock<sct::MockSearchReply> reply;
+
+    sc::CannedQuery query(SCOPE_NAME, "", "aggregated:musicaggregator"); // pick the music department
+
+    expect_category(reply, renderer, "youtube", "YouTube");
+
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+        ResultProp("uri", "0XDhz5kanYk"),
+        ResultProp("link", "http://www.youtube.com/watch?v=0XDhz5kanYk"),
+        ResultProp("title", "Flying Lotus - Ready Err Not"),
+        ResultProp("art", "https://i.ytimg.com/vi/0XDhz5kanYk/hqdefault.jpg"),
+        ResultProp("description", "first broadcast on Adult Swim, is taken from the album 'You're Dead!' out now"),
+        ResultProp("subtitle", "FlyingLotusVEVO"))))).WillOnce(
+            Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+        ResultProp("uri", "i4qG2k4R3cA"),
+        ResultProp("link", "http://www.youtube.com/watch?v=i4qG2k4R3cA"),
+        ResultProp("title", "Leighton Meester - Heartstrings"),
+        ResultProp("art", "https://i.ytimg.com/vi/i4qG2k4R3cA/hqdefault.jpg"),
+        ResultProp("description", "The New Album 'Heartstrings' Available Now!\n\niTunes: http://smarturl.it/LMheartstrings\nAmazon: http://smarturl.it/LMheartstringsA\nSpotify: http://smarturl.it/LMSpotify"),
+        ResultProp("subtitle", "LeightonMeesterVEVO"))))).WillOnce(
+            Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+        ResultProp("uri", "dP2xOCrimgQ"),
+        ResultProp("link", "http://www.youtube.com/watch?v=dP2xOCrimgQ"),
+        ResultProp("title", "Bridge - Roll My Weed ft. ScHoolboy Q"),
+        ResultProp("art", "https://i.ytimg.com/vi/dP2xOCrimgQ/hqdefault.jpg"),
+        ResultProp("description", "For the single, \"Roll My Weed\".  Available Now!\niTunes: http://tinyurl.com/no9wn29\nAmazon Music: http://tinyurl.com/pn4nsvk\nGoogle Play: http://tinyurl.com/p4gasmh\n\nOfficial music video by Bridge performing Roll My Weed feat. ScHoolboy Q. 2014 Overthrone Entertainment"),
+        ResultProp("subtitle", "BridgeVEVO"))))).WillOnce(
+            Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+        ResultProp("uri", "2jhTiLuGezI"),
+        ResultProp("link", "http://www.youtube.com/watch?v=2jhTiLuGezI"),
+        ResultProp("title", "FKA twigs - Video Girl"),
+        ResultProp("art", "https://i.ytimg.com/vi/2jhTiLuGezI/hqdefault.jpg"),
+        ResultProp("description", "Taken from the new album, LP1. http://po.st/FKAtwigsLP1\n\nhttp://fkatwi.gs \nhttp://theyoungturks.co.uk\n\nDirected by Kahlil Joseph."),
+        ResultProp("subtitle", "FKA twigs"))))).WillOnce(
+            Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+        ResultProp("uri", "eQ_yFtOcdEQ"),
+        ResultProp("link", "http://www.youtube.com/watch?v=eQ_yFtOcdEQ"),
+        ResultProp("title", "Lady Antebellum - Freestyle"),
+        ResultProp("art", "https://i.ytimg.com/vi/eQ_yFtOcdEQ/hqdefault.jpg"),
+        ResultProp("description", "Director: Nathan Barnatt (https://www.YouTube.com/barnatt)\nProducer: Andy Anderson\nProd. Co: The 5 & FART Department, INC\nEditor: Nathan Barnatt.\nStarring Nathan Barnatt as 'Keith Apicary' \n“Freestyle” and the No. 1 hit “Bartender” are available on the brand new album, 747, available everywhere now. Find it here: http://smarturl.it/12qoks?IQid=VEVO\n\nMusic video by Lady Antebellum performing Freestyle. (C) 2014 Lady A Entertainment, LLC under exclusive license to Capitol Records Nashville"),
+        ResultProp("subtitle", "LadyAntebellumVEVO"))))).WillOnce(
+            Return(true));
+
+    sc::SearchReplyProxy reply_proxy(&reply, [](sc::SearchReply*) {}); // note: this is a std::shared_ptr with empty deleter
+    sc::SearchMetadata meta_data("en_EN", "phone");
+    auto search_query = scope->search(query, meta_data);
+    ASSERT_NE(nullptr, search_query);
+    search_query->run(reply_proxy);
+}
+
+TEST_F(TestYoutubeScope, search_music) {
+    const sc::CategoryRenderer renderer;
+    NaggyMock<sct::MockSearchReply> reply;
+
+    sc::CannedQuery query(SCOPE_NAME, "Metallica", "aggregated:musicaggregator"); // pick the music department
+
+    expect_category(reply, renderer, "youtube", "1000000 results from YouTube");
+
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+        ResultProp("uri", "UKuJAMz3Vzc"),
+        ResultProp("link", "http://www.youtube.com/watch?v=UKuJAMz3Vzc"),
+        ResultProp("title", "Metallica Playlist"),
+        ResultProp("art", "https://i.ytimg.com/vi/UKuJAMz3Vzc/hqdefault.jpg"),
+        ResultProp("description", "Pls Subscribe and Like ''HellDamage666'' ENJOY \\,,/ HERE IS NOW MY FB PAGE PLS FOLLOW AND LIKE MY METAL BROS ..."),
+        ResultProp("subtitle", "HellDamage666"))))).WillOnce(
+            Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+        ResultProp("uri", "DqDeH3hwxfw"),
+        ResultProp("link", "http://www.youtube.com/watch?v=DqDeH3hwxfw"),
+        ResultProp("title", "Metallica- Black album (Full album)"),
+        ResultProp("art", "https://i.ytimg.com/vi/DqDeH3hwxfw/hqdefault.jpg"),
+        ResultProp("description", "Metallica black album. ENJOY! I DO NOT OWN ANY OF THE RIGHTS FOR THIS ALBUM. IT BELONGS TO THE MAKERS OF THIS ALBUM There is one missing ..."),
+        ResultProp("subtitle", "DenBesteDubbenEver"))))).WillOnce(
+            Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+        ResultProp("uri", "eEgYUMWqzTQ"),
+        ResultProp("link", "http://www.youtube.com/watch?v=eEgYUMWqzTQ"),
+        ResultProp("title", "Metallica - Greatest Hits [Full Album] Vol..1"),
+        ResultProp("art", "https://i.ytimg.com/vi/eEgYUMWqzTQ/hqdefault.jpg"),
+        ResultProp("description", "THE BEST OF METALLICA 1.The Four Horsemen (00:00) 2. Seek and Destroy (07:01) 3. For Whom the Bell Tolls (13:57) 4. Fad..."),
+        ResultProp("subtitle", "TheVampiro66"))))).WillOnce(
+            Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+        ResultProp("uri", "nmAI6V6MrQE"),
+        ResultProp("link", "http://www.youtube.com/watch?v=nmAI6V6MrQE"),
+        ResultProp("title", "Metallica - Nimes 2009 [Full Concert] HD.mp4"),
+        ResultProp("art", "https://i.ytimg.com/vi/nmAI6V6MrQE/hqdefault.jpg"),
+        ResultProp("description", "A Metallica egy amerikai thrash metal és heavy metal együttes, amely 1981-ben alakult Los Angeles-ben. Az utóbbi évtizedek egyik legsikeresebb együttese, ..."),
+        ResultProp("subtitle", "vargasandor72"))))).WillOnce(
+            Return(true));
+    EXPECT_CALL(reply, push(Matcher<sc::CategorisedResult const&>(AllOf(
+        ResultProp("uri", "-BG1Ng2pU-8"),
+        ResultProp("link", "http://www.youtube.com/watch?v=-BG1Ng2pU-8"),
+        ResultProp("title", "Metallica - ...And Justice For All [Full Album]"),
+        ResultProp("art", "https://i.ytimg.com/vi/-BG1Ng2pU-8/hqdefault.jpg"),
+        ResultProp("description", "Band: Metallica Album: ...And Justice for All Released: August 25, 1988 Genre: Thrash Metal Tracks: 01.Blackened [00:00 - 06:42] 02....And Justice For All [0..."),
+        ResultProp("subtitle", "xMetallicSoul"))))).WillOnce(
+            Return(true));
+
+    sc::SearchReplyProxy reply_proxy(&reply, [](sc::SearchReply*) {}); // note: this is a std::shared_ptr with empty deleter
+    sc::SearchMetadata meta_data("en_EN", "phone");
+    auto search_query = scope->search(query, meta_data);
+    ASSERT_NE(nullptr, search_query);
+    search_query->run(reply_proxy);
+}
+
 } // namespace
