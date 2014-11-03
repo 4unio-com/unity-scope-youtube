@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unity-scope-youtube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-22 09:52+0100\n"
+"POT-Creation-Date: 2014-10-31 10:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,15 +36,15 @@ msgstr[1] ""
 msgid "Log-in to YouTube"
 msgstr ""
 
-#: src/youtube/scope/query.cpp:386 src/youtube/scope/query.cpp:544
+#: src/youtube/scope/query.cpp:386 src/youtube/scope/query.cpp:546
 msgid "Videos"
 msgstr ""
 
-#: src/youtube/scope/query.cpp:418 src/youtube/scope/query.cpp:556
+#: src/youtube/scope/query.cpp:418 src/youtube/scope/query.cpp:558
 msgid "Channels"
 msgstr ""
 
-#: src/youtube/scope/query.cpp:437 src/youtube/scope/query.cpp:550
+#: src/youtube/scope/query.cpp:437 src/youtube/scope/query.cpp:552
 msgid "Playlists"
 msgstr ""
 
@@ -60,14 +60,14 @@ msgstr ""
 msgid "YouTube"
 msgstr ""
 
-#: src/youtube/scope/query.cpp:649
+#: src/youtube/scope/query.cpp:658
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/youtube/scope/query.cpp:663
+#: src/youtube/scope/query.cpp:672
 msgid "YouTube requires an internet connection"
 msgstr ""
 

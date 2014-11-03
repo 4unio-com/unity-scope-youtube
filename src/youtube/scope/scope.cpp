@@ -38,23 +38,15 @@ void Scope::service_update(sc::OnlineAccountClient::ServiceStatus const&)
 void Scope::update_config()
 {
     std::lock_guard<std::mutex> lock(config_mutex_);
-    config_ = make_shared<Config>();
+    init_config();
 
-    if (getenv("YOUTUBE_SCOPE_APIROOT")) {
-        config_->apiroot = getenv("YOUTUBE_SCOPE_APIROOT");
-    }
-
-    if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") == nullptr) {
-        for (auto const& status : oa_client_->get_service_statuses())
-        {
-            if (status.service_authenticated)
-            {
-                config_->authenticated = true;
-                config_->access_token = status.access_token;
-                config_->client_id = status.client_id;
-                config_->client_secret = status.client_secret;
-                break;
-            }
+    for (auto const& status : oa_client_->get_service_statuses()) {
+        if (status.service_authenticated) {
+            config_->authenticated = true;
+            config_->access_token = status.access_token;
+            config_->client_id = status.client_id;
+            config_->client_secret = status.client_secret;
+            break;
         }
     }
 
@@ -67,28 +59,36 @@ void Scope::update_config()
     config_cond_.notify_all();
 }
 
+void Scope::init_config() {
+    config_ = make_shared<Config>();
+    if (getenv("YOUTUBE_SCOPE_APIROOT")) {
+        config_->apiroot = getenv("YOUTUBE_SCOPE_APIROOT");
+    }
+}
+
 void Scope::start(string const&) {
     setlocale(LC_ALL, "");
     string translation_directory = ScopeBase::scope_directory()
             + "/../share/locale/";
     bindtextdomain(GETTEXT_PACKAGE, translation_directory.c_str());
 
-    oa_client_.reset(
-            new sc::OnlineAccountClient(SCOPE_INSTALL_NAME,
-                    "sharing", "google"));
-    oa_client_->set_service_update_callback(
-            std::bind(&Scope::service_update, this, std::placeholders::_1));
+    if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") == nullptr) {
+        oa_client_.reset(
+                new sc::OnlineAccountClient(SCOPE_INSTALL_NAME,
+                        "sharing", "google"));
+        oa_client_->set_service_update_callback(
+                std::bind(&Scope::service_update, this, std::placeholders::_1));
 
-    ///! TODO: We should only be waiting here if we know that there is at least one Google account enabled.
-    ///        OnlineAccountClient needs to expose some functionality for us to determine that.
+        ///! TODO: We should only be waiting here if we know that there is at least one Google account enabled.
+        ///        OnlineAccountClient needs to expose some functionality for us to determine that.
 
-    // Allow 1 second for the callback to initialize config_
-    std::unique_lock<std::mutex> lock(config_mutex_);
-    config_cond_.wait_for(lock, std::chrono::seconds(1), [this] { return config_ != nullptr; });
-    if (config_ == nullptr)
-    {
+        // Allow 1 second for the callback to initialize config_
+        std::unique_lock<std::mutex> lock(config_mutex_);
+        config_cond_.wait_for(lock, std::chrono::seconds(1), [this] { return config_ != nullptr; });
+    }
+    if (config_ == nullptr) {
         // If the callback was not invoked, default initialize config_
-        config_ = make_shared<Config>();
+        init_config();
     }
 }
 
