@@ -35,9 +35,6 @@ namespace scope {
 
 class Scope: public unity::scopes::ScopeBase {
 public:
-    void service_update(unity::scopes::OnlineAccountClient::ServiceStatus const& status);
-    void update_config();
-
     void start(std::string const&) override;
 
     void stop() override;
@@ -50,6 +47,12 @@ public:
             unity::scopes::SearchMetadata const&) override;
 
 protected:
+    void service_update(unity::scopes::OnlineAccountClient::ServiceStatus const& status);
+
+    void update_config();
+
+    void init_config();
+
     youtube::api::Config::Ptr config_;
     std::mutex config_mutex_;
     std::condition_variable config_cond_;

@@ -25,8 +25,6 @@ find_package (Threads)
 
 pkg_check_modules(
   SCOPE
-  glib-2.0
-  gio-unix-2.0
   libunity-scopes>=0.6.7
   jsoncpp
   net-cpp>=1.1.0

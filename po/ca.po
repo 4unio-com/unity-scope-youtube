@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unity-scope-youtube\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-09-22 09:52+0100\n"
+"POT-Creation-Date: 2014-10-31 10:07+0000\n"
 "PO-Revision-Date: 2014-09-30 07:28+0000\n"
 "Last-Translator: David Planella <david.planella@ubuntu.com>\n"
 "Language-Team: Catalan <ca@li.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-10-21 07:50+0000\n"
-"X-Generator: Launchpad (build 17203)\n"
+"X-Launchpad-Export-Date: 2014-11-04 07:27+0000\n"
+"X-Generator: Launchpad (build 17211)\n"
 
 #: src/youtube/scope/query.cpp:232
 #, c-format
@@ -36,15 +36,15 @@ msgstr[1] "%d vídeos"
 msgid "Log-in to YouTube"
 msgstr "Entra al YouTube"
 
-#: src/youtube/scope/query.cpp:386 src/youtube/scope/query.cpp:544
+#: src/youtube/scope/query.cpp:386 src/youtube/scope/query.cpp:546
 msgid "Videos"
 msgstr "Vídeos"
 
-#: src/youtube/scope/query.cpp:418 src/youtube/scope/query.cpp:556
+#: src/youtube/scope/query.cpp:418 src/youtube/scope/query.cpp:558
 msgid "Channels"
 msgstr "Canals"
 
-#: src/youtube/scope/query.cpp:437 src/youtube/scope/query.cpp:550
+#: src/youtube/scope/query.cpp:437 src/youtube/scope/query.cpp:552
 msgid "Playlists"
 msgstr "Llistes de reproducció"
 
@@ -60,14 +60,14 @@ msgstr "Continguts del canal"
 msgid "YouTube"
 msgstr "YouTube"
 
-#: src/youtube/scope/query.cpp:649
+#: src/youtube/scope/query.cpp:658
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
 msgstr[0] "Un resultat del YouTube"
 msgstr[1] "%d resultats del YouTube"
 
-#: src/youtube/scope/query.cpp:663
+#: src/youtube/scope/query.cpp:672
 msgid "YouTube requires an internet connection"
 msgstr "El YouTube requereix una connexió a Internet"
 
