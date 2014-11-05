@@ -272,6 +272,9 @@ void push_resource(const sc::SearchReplyProxy &reply,
         res["description"] = video->description();
         res["subtitle"] = video->username();
         res.set_uri(video->id());
+        // add a flag that will determine if this version of the youtube scope
+        // processes the department "aggregated:musicaggregator"
+        res["musicaggregation"]=true;
         break;
     }
     }
