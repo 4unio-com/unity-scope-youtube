@@ -35,13 +35,6 @@
 #include <thread>
 #include <vector>
 
-#include <core/net/http/client.h>
-#include <core/net/http/request.h>
-
-namespace Json {
-class Value;
-}
-
 namespace youtube {
 namespace api {
 

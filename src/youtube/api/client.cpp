@@ -25,6 +25,8 @@
 #include <core/net/error.h>
 #include <core/net/uri.h>
 #include <core/net/http/content_type.h>
+#include <core/net/http/client.h>
+#include <core/net/http/request.h>
 #include <core/net/http/response.h>
 #include <json/json.h>
 

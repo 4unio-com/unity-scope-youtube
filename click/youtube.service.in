@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <service id="@SCOPE_INSTALL_NAME@">
   <type>sharing</type>
-  <icon>youtube</icon>
+  <icon>youtube/icon.png</icon>
   <name>YouTube</name>
   <provider>google</provider>
   <translations>unity-scope-youtube</translations>
