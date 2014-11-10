@@ -38,7 +38,8 @@ include_directories(
   ${SCOPE_INCLUDE_DIRS}
 )
 
-set(SCOPE_VERSION "1.0.14")
+set(SCOPE_VERSION "1.0.14-${BZR_REVNO}")
+set(CMAKE_INSTALL_PREFIX /)
 set(SCOPE_NAME "com.ubuntu.scopes.youtube")
 set(SCOPE_INSTALL_NAME "${SCOPE_NAME}_youtube")
 set(SYMBOL_MAP "${CMAKE_SOURCE_DIR}/data/${SCOPE_NAME}.map")
@@ -48,13 +49,15 @@ add_definitions(-DGETTEXT_PACKAGE="${GETTEXT_PACKAGE}")
 add_definitions(-DSCOPE_NAME="${SCOPE_NAME}")
 add_definitions(-DSCOPE_INSTALL_NAME="${SCOPE_INSTALL_NAME}")
 
-if(CLICK_MODE)
-  set(SCOPE_INSTALL_DIR "youtube")
-  add_subdirectory(click)
-else()
-  _pkgconfig_invoke(libunity-scopes "SCOPE" "DIR" "" --variable=scopesdir)
-  set(SCOPE_INSTALL_DIR "${SCOPE_DIR}/${SCOPE_NAME}")
-endif()
+# This command figures out the target architecture and puts it into the manifest file
+execute_process(
+  COMMAND dpkg-architecture -qDEB_HOST_ARCH
+  OUTPUT_VARIABLE CLICK_ARCH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+set(SCOPE_INSTALL_DIR "youtube")
+add_subdirectory(click)
 
 add_subdirectory(src)
 add_subdirectory(data)
