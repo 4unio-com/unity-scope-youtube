@@ -520,6 +520,8 @@ string Query::country_code() const {
 
 void Query::surfacing(const sc::SearchReplyProxy &reply) {
     bool include_login_nag = !client_->config()->authenticated;
+    // Disable login button for bug https://bugs.launchpad.net/unity-scope-youtube/+bug/1391595
+    include_login_nag = false;
 
     const sc::CannedQuery &query(sc::SearchQueryBase::query());
 
