@@ -40,15 +40,15 @@ void Scope::update_config()
     std::lock_guard<std::mutex> lock(config_mutex_);
     init_config();
 
-    for (auto const& status : oa_client_->get_service_statuses()) {
-        if (status.service_authenticated) {
-            config_->authenticated = true;
-            config_->access_token = status.access_token;
-            config_->client_id = status.client_id;
-            config_->client_secret = status.client_secret;
-            break;
-        }
-    }
+//    for (auto const& status : oa_client_->get_service_statuses()) {
+//        if (status.service_authenticated) {
+//            config_->authenticated = true;
+//            config_->access_token = status.access_token;
+//            config_->client_id = status.client_id;
+//            config_->client_secret = status.client_secret;
+//            break;
+//        }
+//    }
 
     if (!config_->authenticated) {
         cerr << "YouTube scope is unauthenticated" << endl;
@@ -72,20 +72,20 @@ void Scope::start(string const&) {
             + "/../share/locale/";
     bindtextdomain(GETTEXT_PACKAGE, translation_directory.c_str());
 
-    if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") == nullptr) {
-        oa_client_.reset(
-                new sc::OnlineAccountClient(SCOPE_INSTALL_NAME,
-                        "sharing", "google"));
-        oa_client_->set_service_update_callback(
-                std::bind(&Scope::service_update, this, std::placeholders::_1));
-
-        ///! TODO: We should only be waiting here if we know that there is at least one Google account enabled.
-        ///        OnlineAccountClient needs to expose some functionality for us to determine that.
-
-        // Allow 1 second for the callback to initialize config_
-        std::unique_lock<std::mutex> lock(config_mutex_);
-        config_cond_.wait_for(lock, std::chrono::seconds(1), [this] { return config_ != nullptr; });
-    }
+//    if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") == nullptr) {
+//        oa_client_.reset(
+//                new sc::OnlineAccountClient(SCOPE_INSTALL_NAME,
+//                        "sharing", "google"));
+//        oa_client_->set_service_update_callback(
+//                std::bind(&Scope::service_update, this, std::placeholders::_1));
+//
+//        ///! TODO: We should only be waiting here if we know that there is at least one Google account enabled.
+//        ///        OnlineAccountClient needs to expose some functionality for us to determine that.
+//
+//        // Allow 1 second for the callback to initialize config_
+//        std::unique_lock<std::mutex> lock(config_mutex_);
+//        config_cond_.wait_for(lock, std::chrono::seconds(1), [this] { return config_ != nullptr; });
+//    }
     if (config_ == nullptr) {
         // If the callback was not invoked, default initialize config_
         init_config();
