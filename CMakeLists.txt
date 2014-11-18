@@ -12,9 +12,9 @@ add_definitions(
 )
 
 include(GNUInstallDirs)
-find_package(PkgConfig)
-find_package(Intltool)
-find_package(Threads)
+find_package(PkgConfig REQUIRED)
+find_package(Intltool REQUIRED)
+find_package(Threads REQUIRED)
 
 find_package(
   Boost
