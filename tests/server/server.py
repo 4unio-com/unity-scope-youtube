@@ -98,13 +98,12 @@ class Search(ErrorHandler):
         q = self.get_argument('q', None)
         channelId = self.get_argument('channelId', None)
         videoCategoryId = self.get_argument('videoCategoryId', None)
-        if videoCategoryId:
+        if videoCategoryId and q:
             self.write(read_file('search/q/%s%s.json' % ( q, videoCategoryId)))
-        else:
-            if q:
-                self.write(read_file('search/q/%s.json' % q))
-            elif channelId:
-                self.write(read_file('search/channelId/%s.json' % channelId))
+        elif q:
+            self.write(read_file('search/q/%s.json' % q))
+        elif channelId:
+            self.write(read_file('search/channelId/%s.json' % channelId))
 
         self.finish()
 
