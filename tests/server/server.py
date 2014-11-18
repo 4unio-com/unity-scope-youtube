@@ -53,7 +53,7 @@ class Channels(ErrorHandler):
         file = 'channels/%s.json' % self.get_argument('categoryId', None)
         self.write(read_file(file))
         self.finish()
-        
+
 class ChannelSections(ErrorHandler):
     def get(self):
         validate_header(self, 'Accept-Encoding', 'gzip')
@@ -97,11 +97,26 @@ class Search(ErrorHandler):
 
         q = self.get_argument('q', None)
         channelId = self.get_argument('channelId', None)
-        if q:
-            self.write(read_file('search/q/%s.json' % q))
-        elif channelId:
-            self.write(read_file('search/channelId/%s.json' % channelId))
-            
+        videoCategoryId = self.get_argument('videoCategoryId', None)
+        if videoCategoryId:
+            self.write(read_file('search/q/%s%s.json' % ( q, videoCategoryId)))
+        else:
+            if q:
+                self.write(read_file('search/q/%s.json' % q))
+            elif channelId:
+                self.write(read_file('search/channelId/%s.json' % channelId))
+
+        self.finish()
+
+class Videos(ErrorHandler):
+    def get(self):
+        validate_header(self, 'Accept-Encoding', 'gzip')
+        validate_argument(self, 'part', 'snippet')
+
+        videoCategoryId = self.get_argument('videoCategoryId', None)
+        if videoCategoryId:
+            self.write(read_file('videos/videoCategoryId/%s.json' % videoCategoryId))
+
         self.finish()
 
 def validate_argument(self, name, expected):
@@ -122,6 +137,7 @@ def new_app():
         (r"/youtube/v3/playlists", Playlists),
         (r"/youtube/v3/playlistItems", PlaylistItems),
         (r"/youtube/v3/search", Search),
+    (r"/youtube/v3/videos", Videos),
     ], gzip=True)
     sockets = tornado.netutil.bind_sockets(0, '127.0.0.1')
     server = tornado.httpserver.HTTPServer(application)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unity-scope-youtube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-31 10:07+0000\n"
+"POT-Creation-Date: 2014-11-18 16:31+0000\n"
 "PO-Revision-Date: 2014-11-09 16:45+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -19,62 +19,67 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-11-10 06:30+0000\n"
 "X-Generator: Launchpad (build 17231)\n"
 
-#: src/youtube/scope/query.cpp:232
-#, c-format
-msgid "1 subscriber"
-msgid_plural "%d subscribers"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/youtube/scope/query.cpp:253
-#, c-format
-msgid "1 video"
-msgid_plural "%d videos"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/youtube/scope/query.cpp:297
-msgid "Log-in to YouTube"
-msgstr ""
-
-#: src/youtube/scope/query.cpp:386 src/youtube/scope/query.cpp:546
-msgid "Videos"
-msgstr ""
-
-#: src/youtube/scope/query.cpp:418 src/youtube/scope/query.cpp:558
-msgid "Channels"
-msgstr ""
-
-#: src/youtube/scope/query.cpp:437 src/youtube/scope/query.cpp:552
-msgid "Playlists"
-msgstr ""
-
-#: src/youtube/scope/query.cpp:470
-msgid "Playlist contents"
-msgstr ""
-
-#: src/youtube/scope/query.cpp:487
-msgid "Channel contents"
-msgstr ""
-
-#: src/youtube/scope/query.cpp:502
-msgid "YouTube"
-msgstr ""
-
-#: src/youtube/scope/query.cpp:658
+#: ../src/youtube/scope/query.cpp:658
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/youtube/scope/query.cpp:672
-msgid "YouTube requires an internet connection"
-msgstr ""
+#: ../src/youtube/scope/query.cpp:232
+#, c-format
+msgid "1 subscriber"
+msgid_plural "%d subscribers"
+msgstr[0] ""
+msgstr[1] ""
 
-#: src/youtube/scope/preview.cpp:77
+#: ../src/youtube/scope/query.cpp:253
+#, c-format
+msgid "1 video"
+msgid_plural "%d videos"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/youtube/scope/preview.cpp:77
 #, c-format
 msgid "1 view"
 msgid_plural "%d views"
 msgstr[0] ""
 msgstr[1] ""
+
+#: ../src/youtube/scope/query.cpp:487
+msgid "Channel contents"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:418 ../src/youtube/scope/query.cpp:558
+msgid "Channels"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:297
+msgid "Log-in to YouTube"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:470
+msgid "Playlist contents"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:437 ../src/youtube/scope/query.cpp:552
+msgid "Playlists"
+msgstr ""
+
+#: ../data/com.ubuntu.scopes.youtube.ini.in.h:2
+msgid "Search YouTube for videos and browse channels"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:386 ../src/youtube/scope/query.cpp:546
+msgid "Videos"
+msgstr ""
+
+#: ../data/com.ubuntu.scopes.youtube.ini.in.h:1
+#: ../src/youtube/scope/query.cpp:502
+msgid "YouTube"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:672
+msgid "YouTube requires an internet connection"
+msgstr ""

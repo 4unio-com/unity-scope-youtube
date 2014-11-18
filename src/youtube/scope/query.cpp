@@ -125,6 +125,9 @@ const static string SEARCH_CATEGORY_LOGIN_NAG =
 }
 )";
 
+const static string MUSIC_CATEGORY_ID = "10";
+const static string MUSIC_AGGREGATOR_DEPT = "musicaggregator";
+
 template<typename T>
 static T get_or_throw(future<T> &f) {
     if (f.wait_for(std::chrono::seconds(10)) != future_status::ready) {
@@ -269,6 +272,9 @@ void push_resource(const sc::SearchReplyProxy &reply,
         res["description"] = video->description();
         res["subtitle"] = video->username();
         res.set_uri(video->id());
+        // add a flag that will determine if this version of the youtube scope
+        // processes the department "aggregated:musicaggregator"
+        res["musicaggregation"]=true;
         break;
     }
     }
@@ -495,8 +501,8 @@ void Query::channel(const sc::SearchReplyProxy &reply,
     }
 }
 
-void Query::popular_videos(const sc::SearchReplyProxy &reply) {
-    auto resources_future = client_->chart_videos("mostPopular", country_code());
+void Query::popular_videos(const sc::SearchReplyProxy &reply, const std::string &category_id) {
+    auto resources_future = client_->chart_videos("mostPopular", country_code(), category_id);
     auto resources = get_or_throw(resources_future);
 
     auto cat = reply->register_category("youtube", _("YouTube"), "",
@@ -627,7 +633,11 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
             all_depts->add_subdepartment(dummy);
             reply->register_departments(all_depts);
 
-            popular_videos(reply);
+            if (path.department==MUSIC_AGGREGATOR_DEPT) {
+                popular_videos(reply, MUSIC_CATEGORY_ID);
+            } else {
+                popular_videos(reply);
+            }
 
             // Don't include the login nag when we are aggregated
             include_login_nag = false;
@@ -651,7 +661,26 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
 
 void Query::search(const sc::SearchReplyProxy &reply,
         const string &query_string) {
-    auto resources_future = client_->search(query_string, search_metadata().cardinality());
+    string raw_department_id = sc::SearchQueryBase::query().department_id();
+    string category_id;
+    // gets the category id if it's being used
+    if (!raw_department_id.empty()) {
+        DepartmentPath path(raw_department_id);
+        switch (path.department_type) {
+                case DepartmentType::aggregated: {
+                    // in the case we are looking for music we have to use the MUSIC category
+                    if (path.department==MUSIC_AGGREGATOR_DEPT) {
+                        category_id = MUSIC_CATEGORY_ID;
+                    }
+                    break;
+                }
+                default: {
+                    // Nothing by now
+                    break;
+                }
+        }
+    }
+    auto resources_future = client_->search(query_string, search_metadata().cardinality(), category_id);
     auto resources = get_or_throw(resources_future);
 
     auto cat = reply->register_category("youtube",
