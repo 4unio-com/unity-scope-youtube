@@ -13,6 +13,8 @@ add_definitions(
 
 include(GNUInstallDirs)
 find_package(PkgConfig)
+find_package(Intltool)
+find_package(Threads)
 
 find_package(
   Boost
@@ -20,8 +22,6 @@ find_package(
     iostreams
   REQUIRED
 )
-
-find_package (Threads)
 
 pkg_check_modules(
   SCOPE

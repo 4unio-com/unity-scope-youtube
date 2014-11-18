@@ -1,9 +1,9 @@
 [ScopeConfig]
-DisplayName = YouTube
-Description = Search YouTube for videos and browse channels
-Art = screenshot.jpg
-Author = Canonical Ltd.
-Icon = icon.png
+_DisplayName=YouTube
+_Description=Search YouTube for videos and browse channels
+Art=screenshot.jpg
+Author=Canonical Ltd.
+Icon=icon.png
 LocationDataNeeded=true
 
 [Appearance]

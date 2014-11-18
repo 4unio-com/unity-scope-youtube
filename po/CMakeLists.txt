@@ -1,9 +1,10 @@
-include(UseXGettext)
 
-add_translations_directory(${GETTEXT_PACKAGE})
-
-add_translations_catalog(
+intltool_update_potfile(
+    ALL
     GETTEXT_PACKAGE ${GETTEXT_PACKAGE}
-    COPYRIGHT_HOLDER "Canonical Ltd."
-    SOURCE_DIRECTORIES "${CMAKE_SOURCE_DIR}/src"
+)
+
+intltool_install_translations(
+    ALL
+    GETTEXT_PACKAGE ${GETTEXT_PACKAGE}
 )

@@ -1,10 +1,11 @@
 
 # Put the ini file in the build directory next to the scope
 # .so file so test tools can find both easily.
-configure_file(
+intltool_merge_translations(
   "${CMAKE_SOURCE_DIR}/data/${SCOPE_NAME}.ini.in"
   "${CMAKE_CURRENT_BINARY_DIR}/${SCOPE_INSTALL_NAME}.ini"
-  @ONLY
+  ALL
+  UTF8
 )
 
 configure_file(

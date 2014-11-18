@@ -1,0 +1,26 @@
+[type: gettext/ini] data/com.ubuntu.scopes.youtube.ini.in
+include/youtube/api/video.h
+include/youtube/api/channel-section.h
+include/youtube/api/resource.h
+include/youtube/api/channel.h
+include/youtube/api/config.h
+include/youtube/api/guide-category.h
+include/youtube/api/search-list-response.h
+include/youtube/api/playlist-item.h
+include/youtube/api/playlist.h
+include/youtube/api/client.h
+include/youtube/scope/preview.h
+include/youtube/scope/localisation.h
+include/youtube/scope/query.h
+include/youtube/scope/scope.h
+src/youtube/api/playlist-item.cpp
+src/youtube/api/client.cpp
+src/youtube/api/search-list-response.cpp
+src/youtube/api/channel.cpp
+src/youtube/api/guide-category.cpp
+src/youtube/api/video.cpp
+src/youtube/api/playlist.cpp
+src/youtube/api/channel-section.cpp
+src/youtube/scope/query.cpp
+src/youtube/scope/scope.cpp
+src/youtube/scope/preview.cpp

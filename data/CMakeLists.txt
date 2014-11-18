@@ -1,8 +1,9 @@
 
-configure_file(
-  "${SCOPE_NAME}.ini.in"
+intltool_merge_translations(
+  "${CMAKE_CURRENT_SOURCE_DIR}/${SCOPE_NAME}.ini.in"
   "${CMAKE_CURRENT_BINARY_DIR}/${SCOPE_INSTALL_NAME}.ini"
-  @ONLY
+  ALL
+  UTF8
 )
 
 install(
