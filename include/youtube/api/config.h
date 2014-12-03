@@ -87,7 +87,7 @@ struct Config {
             return;
         }
 
-        /// TODO: The code commented out below should be removed as soon as
+        /// TODO: The code commented out below should be uncommented as soon as
         /// OnlineAccountClient::refresh_service_statuses() is fixed (Bug #1398813).
         /// For now we have to re-instantiate a new OnlineAccountClient each time.
 
