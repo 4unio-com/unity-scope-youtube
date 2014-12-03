@@ -87,13 +87,17 @@ struct Config {
             return;
         }
 
-        if (oa_client_ == nullptr) {
+        /// TODO: The code commented out below should be removed as soon as
+        /// OnlineAccountClient::refresh_service_statuses() is fixed. For
+        /// now we have to re-instantiate a new OnlineAccountClient each time.
+
+        ///if (oa_client_ == nullptr) {
             oa_client_.reset(
                     new unity::scopes::OnlineAccountClient(SCOPE_INSTALL_NAME,
                             "sharing", "google"));
-        } else {
-            oa_client_->refresh_service_statuses();
-        }
+        ///} else {
+        ///    oa_client_->refresh_service_statuses();
+        ///}
 
         for (auto const& status : oa_client_->get_service_statuses()) {
             if (status.service_authenticated) {
