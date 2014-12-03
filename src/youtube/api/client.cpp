@@ -66,9 +66,10 @@ static deque<shared_ptr<T>> get_typed_list(const string &filter,
 
 class Client::Priv {
 public:
-    Priv(Config::Ptr config) :
-            client_(http::make_client()), worker_ { [this]() {client_->run();} }, config_(
-                    config), cancelled_(false) {
+    Priv() :
+            client_(http::make_client()), worker_ { [this]() {client_->run();} },
+            cancelled_(false) {
+        config_ = make_shared<Config>();
     }
 
     ~Priv() {
@@ -165,8 +166,8 @@ public:
     }
 };
 
-Client::Client(Config::Ptr config) :
-        p(new Priv(config)) {
+Client::Client() :
+        p(new Priv()) {
 }
 
 future<SearchListResponse::Ptr> Client::search(const string &query,
@@ -269,4 +270,8 @@ void Client::cancel() {
 
 Config::Ptr Client::config() {
     return p->config_;
+}
+
+void Client::update_config() {
+    return p->config_->update();
 }

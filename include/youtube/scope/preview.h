@@ -35,8 +35,7 @@ namespace scope {
 class Preview: public unity::scopes::PreviewQueryBase {
 public:
     Preview(const unity::scopes::Result &result,
-            const unity::scopes::ActionMetadata &metadata,
-            youtube::api::Client::Ptr client);
+            const unity::scopes::ActionMetadata &metadata);
 
     ~Preview() = default;
 
@@ -49,7 +48,7 @@ protected:
 
     void playlist(const unity::scopes::PreviewReplyProxy& reply);
 
-    youtube::api::Client::Ptr client_;
+    youtube::api::Client client_;
 };
 
 }

@@ -54,7 +54,7 @@ public:
 
     typedef std::deque<Video::Ptr> VideoList;
 
-    Client(Config::Ptr config);
+    Client();
 
     virtual ~Client() = default;
 
@@ -86,6 +86,8 @@ public:
     virtual void cancel();
 
     virtual Config::Ptr config();
+
+    virtual void update_config();
 
 protected:
     class Priv;

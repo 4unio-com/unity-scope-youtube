@@ -21,75 +21,16 @@
 #include <youtube/scope/query.h>
 #include <youtube/scope/preview.h>
 
-#include <iostream>
-#include <sstream>
-#include <fstream>
-
 namespace sc = unity::scopes;
 using namespace std;
 using namespace youtube::scope;
 using namespace youtube::api;
-
-void Scope::service_update(sc::OnlineAccountClient::ServiceStatus const&)
-{
-    update_config();
-}
-
-void Scope::update_config()
-{
-    std::lock_guard<std::mutex> lock(config_mutex_);
-    init_config();
-
-    for (auto const& status : oa_client_->get_service_statuses()) {
-        if (status.service_authenticated) {
-            config_->authenticated = true;
-            config_->access_token = status.access_token;
-            config_->client_id = status.client_id;
-            config_->client_secret = status.client_secret;
-            break;
-        }
-    }
-
-    if (!config_->authenticated) {
-        cerr << "YouTube scope is unauthenticated" << endl;
-    } else {
-        cerr << "YouTube scope is authenticated" << endl;
-    }
-
-    config_cond_.notify_all();
-}
-
-void Scope::init_config() {
-    config_ = make_shared<Config>();
-    if (getenv("YOUTUBE_SCOPE_APIROOT")) {
-        config_->apiroot = getenv("YOUTUBE_SCOPE_APIROOT");
-    }
-}
 
 void Scope::start(string const&) {
     setlocale(LC_ALL, "");
     string translation_directory = ScopeBase::scope_directory()
             + "/../share/locale/";
     bindtextdomain(GETTEXT_PACKAGE, translation_directory.c_str());
-
-    if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") == nullptr) {
-        oa_client_.reset(
-                new sc::OnlineAccountClient(SCOPE_INSTALL_NAME,
-                        "sharing", "google"));
-        oa_client_->set_service_update_callback(
-                std::bind(&Scope::service_update, this, std::placeholders::_1));
-
-        ///! TODO: We should only be waiting here if we know that there is at least one Google account enabled.
-        ///        OnlineAccountClient needs to expose some functionality for us to determine that.
-
-        // Allow 1 second for the callback to initialize config_
-        std::unique_lock<std::mutex> lock(config_mutex_);
-        config_cond_.wait_for(lock, std::chrono::seconds(1), [this] { return config_ != nullptr; });
-    }
-    if (config_ == nullptr) {
-        // If the callback was not invoked, default initialize config_
-        init_config();
-    }
 }
 
 void Scope::stop() {
@@ -97,16 +38,12 @@ void Scope::stop() {
 
 sc::SearchQueryBase::UPtr Scope::search(const sc::CannedQuery &query,
         const sc::SearchMetadata &metadata) {
-    std::lock_guard<std::mutex> lock(config_mutex_);
-    auto client = make_shared<Client>(config_);
-    return sc::SearchQueryBase::UPtr(new Query(query, metadata, client));
+    return sc::SearchQueryBase::UPtr(new Query(query, metadata));
 }
 
 sc::PreviewQueryBase::UPtr Scope::preview(sc::Result const& result,
         sc::ActionMetadata const& metadata) {
-    std::lock_guard<std::mutex> lock(config_mutex_);
-    auto client = make_shared<Client>(config_);
-    return sc::PreviewQueryBase::UPtr(new Preview(result, metadata, client));
+    return sc::PreviewQueryBase::UPtr(new Preview(result, metadata));
 }
 
 #define EXPORT __attribute__ ((visibility ("default")))

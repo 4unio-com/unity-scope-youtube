@@ -46,16 +46,15 @@ static const unordered_set<string> PLAYABLE = { "youtube#video",
 //}
 }
 
-Preview::Preview(const sc::Result &result, const sc::ActionMetadata &metadata,
-        Client::Ptr client) :
-        sc::PreviewQueryBase(result, metadata), client_(client) {
+Preview::Preview(const sc::Result &result, const sc::ActionMetadata &metadata) :
+        sc::PreviewQueryBase(result, metadata) {
 }
 
 void Preview::cancelled() {
 }
 
 void Preview::playable(const sc::PreviewReplyProxy& reply) {
-    auto videos_future = client_->videos(result().uri());
+    auto videos_future = client_.videos(result().uri());
     auto videos = videos_future.get();
     auto v = videos.front();
     auto s = v->statistics();
@@ -122,6 +121,8 @@ void Preview::playlist(const sc::PreviewReplyProxy& reply) {
 }
 
 void Preview::run(sc::PreviewReplyProxy const& reply) {
+    client_.update_config();
+
     string kind = result()["kind"].get_string();
 
     if (PLAYABLE.find(kind) == PLAYABLE.cend()) {
