@@ -88,8 +88,8 @@ struct Config {
         }
 
         /// TODO: The code commented out below should be removed as soon as
-        /// OnlineAccountClient::refresh_service_statuses() is fixed. For
-        /// now we have to re-instantiate a new OnlineAccountClient each time.
+        /// OnlineAccountClient::refresh_service_statuses() is fixed (Bug #1398813).
+        /// For now we have to re-instantiate a new OnlineAccountClient each time.
 
         ///if (oa_client_ == nullptr) {
             oa_client_.reset(
