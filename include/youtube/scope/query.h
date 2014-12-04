@@ -30,8 +30,8 @@ namespace scope {
 class Query: public unity::scopes::SearchQueryBase {
 public:
     Query(const unity::scopes::CannedQuery &query,
-            const unity::scopes::SearchMetadata &metadata,
-            youtube::api::Client::Ptr client);
+          const unity::scopes::SearchMetadata &metadata,
+          std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client);
 
     ~Query() = default;
 
@@ -69,7 +69,7 @@ protected:
 
     std::string country_code() const;
 
-    youtube::api::Client::Ptr client_;
+    youtube::api::Client client_;
 };
 
 }

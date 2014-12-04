@@ -28,6 +28,8 @@
 #include <youtube/api/search-list-response.h>
 #include <youtube/api/video.h>
 
+#include <unity/scopes/OnlineAccountClient.h>
+
 #include <atomic>
 #include <deque>
 #include <future>
@@ -54,7 +56,7 @@ public:
 
     typedef std::deque<Video::Ptr> VideoList;
 
-    Client(Config::Ptr config);
+    Client(std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client);
 
     virtual ~Client() = default;
 
@@ -85,7 +87,7 @@ public:
 
     virtual void cancel();
 
-    virtual Config::Ptr config();
+    virtual bool authenticated();
 
 protected:
     class Priv;
