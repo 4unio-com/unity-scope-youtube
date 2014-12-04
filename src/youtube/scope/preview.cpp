@@ -46,8 +46,10 @@ static const unordered_set<string> PLAYABLE = { "youtube#video",
 //}
 }
 
-Preview::Preview(const sc::Result &result, const sc::ActionMetadata &metadata) :
-        sc::PreviewQueryBase(result, metadata) {
+Preview::Preview(const sc::Result &result, const sc::ActionMetadata &metadata,
+                 std::shared_ptr<sc::OnlineAccountClient> oa_client) :
+        sc::PreviewQueryBase(result, metadata),
+        client_(oa_client) {
 }
 
 void Preview::cancelled() {

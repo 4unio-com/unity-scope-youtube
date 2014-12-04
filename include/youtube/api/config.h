@@ -19,8 +19,6 @@
 #ifndef YOUTUBE_API_CONFIG_H_
 #define YOUTUBE_API_CONFIG_H_
 
-#include <unity/scopes/OnlineAccountClient.h>
-
 #include <iostream>
 #include <memory>
 #include <string>
@@ -30,8 +28,6 @@ namespace youtube {
 namespace api {
 
 struct Config {
-    typedef std::shared_ptr<Config> Ptr;
-
     /*
      * The access token provided at instantiation
      */
@@ -71,57 +67,6 @@ struct Config {
      * Have we got access to private APIs?
      */
     bool authenticated = false;
-
-    /*
-     * Update all members to current values
-     */
-    void update()
-    {
-        std::lock_guard<std::mutex> lock(config_mutex_);
-
-        if (getenv("YOUTUBE_SCOPE_APIROOT")) {
-            apiroot = getenv("YOUTUBE_SCOPE_APIROOT");
-        }
-
-        if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") != nullptr) {
-            return;
-        }
-
-        /// TODO: The code commented out below should be uncommented as soon as
-        /// OnlineAccountClient::refresh_service_statuses() is fixed (Bug #1398813).
-        /// For now we have to re-instantiate a new OnlineAccountClient each time.
-
-        ///if (oa_client_ == nullptr) {
-            oa_client_.reset(
-                    new unity::scopes::OnlineAccountClient(SCOPE_INSTALL_NAME,
-                            "sharing", "google"));
-        ///} else {
-        ///    oa_client_->refresh_service_statuses();
-        ///}
-
-        for (auto const& status : oa_client_->get_service_statuses()) {
-            if (status.service_authenticated) {
-                authenticated = true;
-                access_token = status.access_token;
-                client_id = status.client_id;
-                client_secret = status.client_secret;
-                break;
-            }
-        }
-
-        if (!authenticated) {
-            access_token = "";
-            client_id = "";
-            client_secret = "";
-            std::cerr << "YouTube scope is unauthenticated" << std::endl;
-        } else {
-            std::cerr << "YouTube scope is authenticated" << std::endl;
-        }
-    }
-
-private:
-    std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client_ = nullptr;
-    std::mutex config_mutex_;
 };
 
 }

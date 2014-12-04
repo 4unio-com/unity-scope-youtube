@@ -31,6 +31,12 @@ void Scope::start(string const&) {
     string translation_directory = ScopeBase::scope_directory()
             + "/../share/locale/";
     bindtextdomain(GETTEXT_PACKAGE, translation_directory.c_str());
+
+    if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") == nullptr) {
+        oa_client_.reset(
+                new unity::scopes::OnlineAccountClient(SCOPE_INSTALL_NAME,
+                        "sharing", "google"));
+    }
 }
 
 void Scope::stop() {
@@ -38,12 +44,12 @@ void Scope::stop() {
 
 sc::SearchQueryBase::UPtr Scope::search(const sc::CannedQuery &query,
         const sc::SearchMetadata &metadata) {
-    return sc::SearchQueryBase::UPtr(new Query(query, metadata));
+    return sc::SearchQueryBase::UPtr(new Query(query, metadata, oa_client_));
 }
 
 sc::PreviewQueryBase::UPtr Scope::preview(sc::Result const& result,
         sc::ActionMetadata const& metadata) {
-    return sc::PreviewQueryBase::UPtr(new Preview(result, metadata));
+    return sc::PreviewQueryBase::UPtr(new Preview(result, metadata, oa_client_));
 }
 
 #define EXPORT __attribute__ ((visibility ("default")))

@@ -28,7 +28,6 @@
 #include <unity/scopes/Annotation.h>
 #include <unity/scopes/CategorisedResult.h>
 #include <unity/scopes/CategoryRenderer.h>
-#include <unity/scopes/OnlineAccountClient.h>
 #include <unity/scopes/QueryBase.h>
 #include <unity/scopes/SearchReply.h>
 #include <unity/scopes/SearchMetadata.h>
@@ -286,8 +285,10 @@ void push_resource(const sc::SearchReplyProxy &reply,
 
 }
 
-Query::Query(const sc::CannedQuery &query, const sc::SearchMetadata &metadata) :
-        sc::SearchQueryBase(query, metadata) {
+Query::Query(const sc::CannedQuery &query, const sc::SearchMetadata &metadata,
+             std::shared_ptr<sc::OnlineAccountClient> oa_client) :
+        sc::SearchQueryBase(query, metadata),
+        client_(oa_client) {
 }
 
 void Query::cancelled() {
@@ -524,7 +525,7 @@ string Query::country_code() const {
 }
 
 void Query::surfacing(const sc::SearchReplyProxy &reply) {
-    bool include_login_nag = !client_.config()->authenticated;
+    bool include_login_nag = !client_.authenticated();
 
     const sc::CannedQuery &query(sc::SearchQueryBase::query());
 

@@ -35,7 +35,8 @@ namespace scope {
 class Preview: public unity::scopes::PreviewQueryBase {
 public:
     Preview(const unity::scopes::Result &result,
-            const unity::scopes::ActionMetadata &metadata);
+            const unity::scopes::ActionMetadata &metadata,
+            std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client);
 
     ~Preview() = default;
 

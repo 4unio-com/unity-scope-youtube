@@ -66,10 +66,9 @@ static deque<shared_ptr<T>> get_typed_list(const string &filter,
 
 class Client::Priv {
 public:
-    Priv() :
+    Priv(std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client) :
             client_(http::make_client()), worker_ { [this]() {client_->run();} },
-            cancelled_(false) {
-        config_ = make_shared<Config>();
+            oa_client_(oa_client), cancelled_(false) {
     }
 
     ~Priv() {
@@ -83,7 +82,9 @@ public:
 
     std::thread worker_;
 
-    Config::Ptr config_;
+    Config config_;
+    std::mutex config_mutex_;
+    std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client_;
 
     std::atomic<bool> cancelled_;
 
@@ -93,18 +94,18 @@ public:
 
         http::Request::Configuration configuration;
         net::Uri::QueryParameters complete_parameters(parameters);
-        if (config_->authenticated) {
+        if (config_.authenticated) {
             configuration.header.add("Authorization",
-                    "Bearer " + config_->access_token);
+                    "Bearer " + config_.access_token);
         } else {
-            complete_parameters.emplace_back("key", config_->api_key);
+            complete_parameters.emplace_back("key", config_.api_key);
         }
 
-        net::Uri uri = net::make_uri(config_->apiroot, path,
+        net::Uri uri = net::make_uri(config_.apiroot, path,
                 complete_parameters);
         configuration.uri = client_->uri_to_string(uri);
-        configuration.header.add("Accept", config_->accept);
-        configuration.header.add("User-Agent", config_->user_agent + " (gzip)");
+        configuration.header.add("Accept", config_.accept);
+        configuration.header.add("User-Agent", config_.user_agent + " (gzip)");
         configuration.header.add("Accept-Encoding", "gzip");
 
         auto request = client_->head(configuration);
@@ -164,10 +165,58 @@ public:
 
         return prom->get_future();
     }
+
+    bool authenticated() {
+        std::lock_guard<std::mutex> lock(config_mutex_);
+        return config_.authenticated;
+    }
+
+    void update_config() {
+        std::lock_guard<std::mutex> lock(config_mutex_);
+
+        if (getenv("YOUTUBE_SCOPE_APIROOT")) {
+            config_.apiroot = getenv("YOUTUBE_SCOPE_APIROOT");
+        }
+
+        if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") != nullptr) {
+            return;
+        }
+
+        /// TODO: The code commented out below should be uncommented as soon as
+        /// OnlineAccountClient::refresh_service_statuses() is fixed (Bug #1398813).
+        /// For now we have to re-instantiate a new OnlineAccountClient each time.
+
+        ///if (oa_client_ == nullptr) {
+            oa_client_.reset(
+                    new unity::scopes::OnlineAccountClient(SCOPE_INSTALL_NAME,
+                            "sharing", "google"));
+        ///} else {
+        ///    oa_client_->refresh_service_statuses();
+        ///}
+
+        for (auto const& status : oa_client_->get_service_statuses()) {
+            if (status.service_authenticated) {
+                config_.authenticated = true;
+                config_.access_token = status.access_token;
+                config_.client_id = status.client_id;
+                config_.client_secret = status.client_secret;
+                break;
+            }
+        }
+
+        if (!config_.authenticated) {
+            config_.access_token = "";
+            config_.client_id = "";
+            config_.client_secret = "";
+            std::cerr << "YouTube scope is unauthenticated" << std::endl;
+        } else {
+            std::cerr << "YouTube scope is authenticated" << std::endl;
+        }
+    }
 };
 
-Client::Client() :
-        p(new Priv()) {
+Client::Client(std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client) :
+        p(new Priv(oa_client)) {
 }
 
 future<SearchListResponse::Ptr> Client::search(const string &query,
@@ -268,10 +317,10 @@ void Client::cancel() {
     p->cancelled_ = true;
 }
 
-Config::Ptr Client::config() {
-    return p->config_;
+bool Client::authenticated() {
+    return p->authenticated();
 }
 
 void Client::update_config() {
-    return p->config_->update();
+    p->update_config();
 }

@@ -19,6 +19,7 @@
 #ifndef YOUTUBE_SCOPE_SCOPE_H_
 #define YOUTUBE_SCOPE_SCOPE_H_
 
+#include <unity/scopes/OnlineAccountClient.h>
 #include <unity/scopes/PreviewQueryBase.h>
 #include <unity/scopes/QueryBase.h>
 #include <unity/scopes/ReplyProxyFwd.h>
@@ -40,6 +41,9 @@ public:
     virtual unity::scopes::SearchQueryBase::UPtr search(
             unity::scopes::CannedQuery const& q,
             unity::scopes::SearchMetadata const&) override;
+
+private:
+    std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client_;
 };
 
 }
