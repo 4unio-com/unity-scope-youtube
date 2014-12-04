@@ -176,6 +176,8 @@ public:
     }
 
     void update_config() {
+        config_ = Config();
+
         if (getenv("YOUTUBE_SCOPE_APIROOT")) {
             config_.apiroot = getenv("YOUTUBE_SCOPE_APIROOT");
         }
@@ -207,9 +209,6 @@ public:
         }
 
         if (!config_.authenticated) {
-            config_.access_token = "";
-            config_.client_id = "";
-            config_.client_secret = "";
             std::cerr << "YouTube scope is unauthenticated" << std::endl;
         } else {
             std::cerr << "YouTube scope is authenticated" << std::endl;
