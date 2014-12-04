@@ -42,7 +42,7 @@ public:
             unity::scopes::CannedQuery const& q,
             unity::scopes::SearchMetadata const&) override;
 
-private:
+protected:
     std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client_;
 };
 

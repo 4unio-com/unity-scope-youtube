@@ -19,10 +19,8 @@
 #ifndef YOUTUBE_API_CONFIG_H_
 #define YOUTUBE_API_CONFIG_H_
 
-#include <iostream>
 #include <memory>
 #include <string>
-#include <mutex>
 
 namespace youtube {
 namespace api {

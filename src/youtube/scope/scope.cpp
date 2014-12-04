@@ -34,7 +34,7 @@ void Scope::start(string const&) {
 
     if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") == nullptr) {
         oa_client_.reset(
-                new unity::scopes::OnlineAccountClient(SCOPE_INSTALL_NAME,
+                new sc::OnlineAccountClient(SCOPE_INSTALL_NAME,
                         "sharing", "google"));
     }
 }
