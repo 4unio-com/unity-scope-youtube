@@ -89,8 +89,6 @@ public:
 
     virtual bool authenticated();
 
-    virtual void update_config();
-
 protected:
     class Priv;
     friend Priv;

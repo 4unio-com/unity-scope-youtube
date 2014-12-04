@@ -694,8 +694,6 @@ void Query::search(const sc::SearchReplyProxy &reply,
 }
 
 void Query::run(sc::SearchReplyProxy const& reply) {
-    client_.update_config();
-
     try {
         const sc::SearchMetadata &meta(sc::SearchQueryBase::search_metadata());
         if (meta.contains_hint("no-internet")

@@ -84,6 +84,7 @@ public:
 
     Config config_;
     std::mutex config_mutex_;
+
     std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client_;
 
     std::atomic<bool> cancelled_;
@@ -91,6 +92,8 @@ public:
     void get(const net::Uri::Path &path,
             const net::Uri::QueryParameters &parameters,
             http::Request::Handler &handler) {
+        std::lock_guard<std::mutex> lock(config_mutex_);
+        update_config();
 
         http::Request::Configuration configuration;
         net::Uri::QueryParameters complete_parameters(parameters);
@@ -168,12 +171,11 @@ public:
 
     bool authenticated() {
         std::lock_guard<std::mutex> lock(config_mutex_);
+        update_config();
         return config_.authenticated;
     }
 
     void update_config() {
-        std::lock_guard<std::mutex> lock(config_mutex_);
-
         if (getenv("YOUTUBE_SCOPE_APIROOT")) {
             config_.apiroot = getenv("YOUTUBE_SCOPE_APIROOT");
         }
@@ -319,8 +321,4 @@ void Client::cancel() {
 
 bool Client::authenticated() {
     return p->authenticated();
-}
-
-void Client::update_config() {
-    p->update_config();
 }

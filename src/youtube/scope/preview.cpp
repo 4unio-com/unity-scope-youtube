@@ -123,8 +123,6 @@ void Preview::playlist(const sc::PreviewReplyProxy& reply) {
 }
 
 void Preview::run(sc::PreviewReplyProxy const& reply) {
-    client_.update_config();
-
     string kind = result()["kind"].get_string();
 
     if (PLAYABLE.find(kind) == PLAYABLE.cend()) {

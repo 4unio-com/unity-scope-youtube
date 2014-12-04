@@ -26,6 +26,8 @@ namespace youtube {
 namespace api {
 
 struct Config {
+    typedef std::shared_ptr<Config> Ptr;
+
     /*
      * The access token provided at instantiation
      */
