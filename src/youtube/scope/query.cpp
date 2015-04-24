@@ -34,6 +34,7 @@
 #include <unity/scopes/SearchMetadata.h>
 
 #include <sstream>
+#include <json/json.h>
 
 namespace sc = unity::scopes;
 namespace alg = boost::algorithm;
@@ -533,14 +534,54 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
     sc::Department::SPtr all_depts;
     bool first_dept = true;
 
+    Json::Value root_;
+    root_["id"] = "subscriptions";
+    Json::Value snippet;
+    snippet["kind"] = "channel";
+    snippet["title"] = _("My Subscriptions");
+    root_["snippet"] = snippet;
+    cout << root_;
+
+    GuideCategory subscriptions(root_);
+    cout << "==== create: "<< subscriptions.title() << endl;
+
     auto departments_future = client_.guide_categories(country_code(),
             search_metadata().locale());
     auto departments = get_or_throw(departments_future);
+    std::shared_ptr<GuideCategory> sub_ptr = std::make_shared<GuideCategory>(subscriptions);
+    departments.push_back(sub_ptr);
     for (GuideCategory::Ptr category : departments) {
+        cout << "==== title: " << category->title() << endl;;
+        cout << "==== id: " << category->id() << endl;;
         if (first_dept) {
             first_dept = false;
             all_depts = sc::Department::create("", query, category->title());
         } else {
+            if (category->id() == "subscriptions")
+            {
+
+                cout << "==== building subscriptions department/subdepartments" << endl;
+
+                sc::Department::SPtr dept = sc::Department::create("subscriptionns",
+                        query, category->title());
+                all_depts->add_subdepartment(dept);
+
+                cout << "==== login. authenticated? " << include_login_nag << endl;
+                if (include_login_nag) {
+                    add_login_nag(reply);
+                    continue;
+                }
+
+                auto subscriptions = client_.subscription_channels(client_.config_.access_token);
+                for (auto sub : subscriptions)
+                {
+                    cout << "==== a sub: " << sub.title() << endl;
+
+
+                }
+
+                continue;
+            }
             DepartmentPath path { DepartmentType::guide_category,
                     category->id(), SectionType::none };
             sc::Department::SPtr dept = sc::Department::create(path.to_string(),

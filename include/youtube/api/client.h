@@ -66,6 +66,8 @@ public:
     virtual std::future<SearchListResponse::Ptr> search(
             const std::string &query, unsigned int max_results, const std::string &category_id="");
 
+    virtual std::future<ChannelList> subscription_channels(std::string access_token);
+
     virtual std::future<ChannelList> category_channels(
             const std::string &categoryId);
 
