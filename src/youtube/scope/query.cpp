@@ -20,6 +20,7 @@
 #include <boost/algorithm/string/trim.hpp>
 
 #include <youtube/api/channel.h>
+#include <youtube/api/subscription.h>
 #include <youtube/api/playlist.h>
 
 #include <youtube/scope/localisation.h>
@@ -588,7 +589,7 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                 auto subscriptions = get_or_throw(subscriptions_future);
                 cout << "==== subscriptions size: " << subscriptions.size() << endl;
                 for (Subscription::Ptr subscription : subscriptions) {
-                    //cout << "==== subs channel: " << channel->id() << " " << channel->title() << endl;
+                    cout << "==== subs channel: " << subscription->id() << " " << subscription->title() << endl;
 
                 }
 

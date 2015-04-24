@@ -21,6 +21,7 @@
 
 #include <youtube/api/config.h>
 #include <youtube/api/channel.h>
+#include <youtube/api/subscription.h>
 #include <youtube/api/channel-section.h>
 #include <youtube/api/guide-category.h>
 #include <youtube/api/playlist.h>
@@ -45,6 +46,8 @@ public:
     typedef std::shared_ptr<Client> Ptr;
 
     typedef std::deque<Channel::Ptr> ChannelList;
+
+    typedef std::deque<Subscription::Ptr> SubscriptionList;
 
     typedef std::deque<ChannelSection::Ptr> ChannelSectionList;
 

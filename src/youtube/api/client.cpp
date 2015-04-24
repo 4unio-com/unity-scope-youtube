@@ -18,6 +18,7 @@
 
 #include <youtube/api/channel.h>
 #include <youtube/api/client.h>
+#include <youtube/api/subscription.h>
 #include <youtube/api/playlist.h>
 
 #include <boost/iostreams/filtering_stream.hpp>
@@ -54,7 +55,8 @@ template<typename T>
             if (kind == "youtube#searchResult") {
                 kind = item["id"]["kind"].asString();
             }
-
+            cout << "======== kind: " << kind << endl;
+            cout << "======== kind filter: " << filter << endl;
             if (kind == filter) {
                 results.emplace_back(make_shared<T>(item));
             }
@@ -249,11 +251,11 @@ future<Client::GuideCategoryList> Client::guide_categories(
             });
 }
 //KYLE
-future<Client::ChannelList> Client::subscription_channels(std::string access_token) {
-    return p->async_get<ChannelList>( { "youtube", "v3", "subscriptions" }, { {
+future<Client::SubscriptionList> Client::subscription_channels(std::string access_token) {
+    return p->async_get<SubscriptionList>( { "youtube", "v3", "subscriptions" }, { {
             "part", "snippet" }, { "mine", "true" }, {"access_token", access_token }, {"maxResults", "10"} },
             [](const json::Value &root) {
-                return get_typed_list<Channel>("youtube#subscriptions", root);
+                return get_typed_list<Subscription>("youtube#subscription", root);
             });
 }
 
