@@ -253,7 +253,7 @@ future<Client::ChannelList> Client::subscription_channels(std::string access_tok
     return p->async_get<ChannelList>( { "youtube", "v3", "subscriptions" }, { {
             "part", "snippet" }, { "mine", "true" }, {"access_token", access_token }, {"maxResults", "10"} },
             [](const json::Value &root) {
-                return get_typed_list<Channel>("youtube#subscription", root);
+                return get_typed_list<Channel>("youtube#subscriptions", root);
             });
 }
 

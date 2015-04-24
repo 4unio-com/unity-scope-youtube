@@ -70,6 +70,8 @@ protected:
     std::string country_code() const;
 
     youtube::api::Client client_;
+
+    std::shared_ptr<unity::scopes::OnlineAccountClient> oac;
 };
 
 }

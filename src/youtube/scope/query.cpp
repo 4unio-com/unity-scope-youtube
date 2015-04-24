@@ -290,7 +290,8 @@ void push_resource(const sc::SearchReplyProxy &reply,
 Query::Query(const sc::CannedQuery &query, const sc::SearchMetadata &metadata,
              std::shared_ptr<sc::OnlineAccountClient> oa_client) :
         sc::SearchQueryBase(query, metadata),
-        client_(oa_client) {
+        client_(oa_client),
+        oac(oa_client) {
 }
 
 void Query::cancelled() {
@@ -572,13 +573,25 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                     continue;
                 }
 
-                auto subscriptions = client_.subscription_channels(client_.config_.access_token);
-                for (auto sub : subscriptions)
+                std::string access_token;
+                for (auto const& status : oac->get_service_statuses())
                 {
-                    cout << "==== a sub: " << sub.title() << endl;
+                    if (status.service_authenticated)
+                    {
+                        access_token = status.access_token;
+                        break;
+                    }
+                }
+                cout << "==== acess token: " << access_token << endl;
 
+                auto subscriptions_future = client_.subscription_channels(access_token);
+                auto subscriptions = get_or_throw(subscriptions_future);
+                cout << "==== subscriptions size: " << subscriptions.size() << endl;
+                for (Subscription::Ptr subscription : subscriptions) {
+                    //cout << "==== subs channel: " << channel->id() << " " << channel->title() << endl;
 
                 }
+
 
                 continue;
             }
