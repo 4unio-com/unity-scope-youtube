@@ -561,7 +561,6 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
         } else {
             if (category->id() == "subscriptions")
             {
-
                 cout << "==== building subscriptions department/subdepartments" << endl;
 
                 sc::Department::SPtr dept = sc::Department::create("subscriptionns",
@@ -584,16 +583,16 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                     }
                 }
                 cout << "==== acess token: " << access_token << endl;
-
                 auto subscriptions_future = client_.subscription_channels(access_token);
                 auto subscriptions = get_or_throw(subscriptions_future);
                 cout << "==== subscriptions size: " << subscriptions.size() << endl;
                 for (Subscription::Ptr subscription : subscriptions) {
                     cout << "==== subs channel: " << subscription->id() << " " << subscription->title() << endl;
+                    sc::Department::SPtr dept_ = sc::Department::create("subscriptionns_" + subscription->id(),
+                             query, subscription->title());
+                    dept->add_subdepartment(dept_);
 
                 }
-
-
                 continue;
             }
             DepartmentPath path { DepartmentType::guide_category,

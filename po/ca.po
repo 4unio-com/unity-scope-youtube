@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unity-scope-youtube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-24 16:52-0400\n"
+"POT-Creation-Date: 2015-04-24 20:15-0400\n"
 "PO-Revision-Date: 2014-09-30 07:28+0000\n"
 "Last-Translator: David Planella <david.planella@ubuntu.com>\n"
 "Language-Team: Catalan <ca@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-12-12 06:51+0000\n"
 "X-Generator: Launchpad (build 17286)\n"
 
-#: ../src/youtube/scope/query.cpp:743
+#: ../src/youtube/scope/query.cpp:742
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
@@ -51,7 +51,7 @@ msgstr[1] "%d visualitzacions"
 msgid "Channel contents"
 msgstr "Continguts del canal"
 
-#: ../src/youtube/scope/query.cpp:428 ../src/youtube/scope/query.cpp:620
+#: ../src/youtube/scope/query.cpp:428 ../src/youtube/scope/query.cpp:619
 msgid "Channels"
 msgstr "Canals"
 
@@ -67,7 +67,7 @@ msgstr ""
 msgid "Playlist contents"
 msgstr "Continguts de la llista de reproducció"
 
-#: ../src/youtube/scope/query.cpp:447 ../src/youtube/scope/query.cpp:614
+#: ../src/youtube/scope/query.cpp:447 ../src/youtube/scope/query.cpp:613
 msgid "Playlists"
 msgstr "Llistes de reproducció"
 
@@ -75,7 +75,7 @@ msgstr "Llistes de reproducció"
 msgid "Search YouTube for videos and browse channels"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:396 ../src/youtube/scope/query.cpp:608
+#: ../src/youtube/scope/query.cpp:396 ../src/youtube/scope/query.cpp:607
 msgid "Videos"
 msgstr "Vídeos"
 
@@ -84,6 +84,6 @@ msgstr "Vídeos"
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/youtube/scope/query.cpp:757
+#: ../src/youtube/scope/query.cpp:756
 msgid "YouTube requires an internet connection"
 msgstr "El YouTube requereix una connexió a Internet"
