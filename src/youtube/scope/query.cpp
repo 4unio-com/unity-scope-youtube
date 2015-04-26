@@ -139,11 +139,11 @@ static T get_or_throw(future<T> &f) {
 }
 
 enum class DepartmentType {
-    guide_category, channel, playlist, aggregated
+    guide_category, channel, playlist, aggregated, subscriptions
 };
 
 enum class SectionType {
-    none, videos, playlists, channels
+    none, videos, playlists, channels, subscriptions
 };
 
 /**
@@ -178,9 +178,12 @@ struct DepartmentPath {
             department_type = DepartmentType::playlist;
         } else if (alg::starts_with(s, "aggregated:")) {
             department_type = DepartmentType::aggregated;
+        } else if (alg::starts_with(s, "subscriptions:")) {
+            department_type = DepartmentType::subscriptions;
         }
 
         department = s.substr(s.find(':') + 1);
+        cout << "==== department: " << department << endl;
     }
 
     string to_string() const {
@@ -211,6 +214,9 @@ struct DepartmentPath {
             break;
         case DepartmentType::aggregated:
             result << "aggregated:";
+            break;
+        case DepartmentType::subscriptions:
+            result << "subscriptions:";
             break;
         }
 
@@ -536,6 +542,7 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
     sc::Department::SPtr all_depts;
     bool first_dept = true;
 
+    //create department to hold My Subscriptions
     Json::Value root_;
     root_["id"] = "subscriptions";
     Json::Value snippet;
@@ -543,15 +550,20 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
     snippet["title"] = _("My Subscriptions");
     root_["snippet"] = snippet;
     cout << root_;
+    GuideCategory subscriptions_gc(root_);
+    std::shared_ptr<GuideCategory> subscriptions_ptr = std::make_shared<GuideCategory>(subscriptions_gc);
 
-    GuideCategory subscriptions(root_);
-    cout << "==== create: "<< subscriptions.title() << endl;
-
+    // get youtube main categories
     auto departments_future = client_.guide_categories(country_code(),
             search_metadata().locale());
     auto departments = get_or_throw(departments_future);
-    std::shared_ptr<GuideCategory> sub_ptr = std::make_shared<GuideCategory>(subscriptions);
-    departments.push_back(sub_ptr);
+
+    // add My Subscriptions department to the list of top level departments
+    departments.push_back(subscriptions_ptr);
+
+    sc::Department::SPtr subscriptions_dept;
+
+    // create the department structure
     for (GuideCategory::Ptr category : departments) {
         cout << "==== title: " << category->title() << endl;;
         cout << "==== id: " << category->id() << endl;;
@@ -559,20 +571,20 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
             first_dept = false;
             all_depts = sc::Department::create("", query, category->title());
         } else {
-            if (category->id() == "subscriptions")
+            if (category->id() == "subscriptions") // only add this hard coded dept once
             {
-                cout << "==== building subscriptions department/subdepartments" << endl;
+                DepartmentPath subscriptions_path { DepartmentType::subscriptions,
+                        category->id(), SectionType::none};
+                subscriptions_dept = sc::Department::create(
+                        subscriptions_path.to_string(), query, _("My Subscriptions"));
+                all_depts->add_subdepartment(subscriptions_dept);
+                cout << "== department id: " << subscriptions_path.to_string() << endl;
 
-                sc::Department::SPtr dept = sc::Department::create("subscriptionns",
-                        query, category->title());
-                all_depts->add_subdepartment(dept);
-
-                cout << "==== login. authenticated? " << include_login_nag << endl;
+                //we are in hard coded My Suscriptions dept, so login and else get sub depts
                 if (include_login_nag) {
                     add_login_nag(reply);
-                    continue;
+                    break;
                 }
-
                 std::string access_token;
                 for (auto const& status : oac->get_service_statuses())
                 {
@@ -582,30 +594,37 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                         break;
                     }
                 }
-                cout << "==== acess token: " << access_token << endl;
+                // we are logged in, so get user's subscription channels
                 auto subscriptions_future = client_.subscription_channels(access_token);
                 auto subscriptions = get_or_throw(subscriptions_future);
-                cout << "==== subscriptions size: " << subscriptions.size() << endl;
-                for (Subscription::Ptr subscription : subscriptions) {
-                    cout << "==== subs channel: " << subscription->id() << " " << subscription->title() << endl;
-                    sc::Department::SPtr dept_ = sc::Department::create("subscriptionns_" + subscription->id(),
-                             query, subscription->title());
-                    dept->add_subdepartment(dept_);
 
+                for (Subscription::Ptr subscription : subscriptions) {
+                    std::string department_id = "subscriptions:" + subscription->id();
+                    cout << "== subscriptions department id: " << department_id << endl;
+                    sc::Department::SPtr dept_ = sc::Department::create(
+                        department_id,
+                        query,
+                        subscription->title()
+                    );
+                    subscriptions_dept->add_subdepartment(dept_);
                 }
                 continue;
             }
+
+            //this handles top level youtube categories like Sports, Gaming, etc
             DepartmentPath path { DepartmentType::guide_category,
                     category->id(), SectionType::none };
             sc::Department::SPtr dept = sc::Department::create(path.to_string(),
                     query, category->title());
             all_depts->add_subdepartment(dept);
 
+            //these are the second level departments. we hard code this set for each top-level department, that is: Videos, Playlists, Channels
             DepartmentPath videos_path { DepartmentType::guide_category,
                     category->id(), SectionType::videos };
             sc::Department::SPtr videos = sc::Department::create(
                     videos_path.to_string(), query, _("Videos"));
             dept->add_subdepartment(videos);
+            cout << "== department id: " << videos_path.to_string() << endl;
 
             DepartmentPath playlists_path { DepartmentType::guide_category,
                     category->id(), SectionType::playlists };
@@ -621,11 +640,15 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
         }
     }
 
-
     string raw_department_id = query.department_id();
     if (!raw_department_id.empty()) {
         DepartmentPath path(raw_department_id);
+
         switch (path.department_type) {
+        case DepartmentType::subscriptions: {
+            cout << "==== subs: sectionType is subscriptions" <<  endl;
+           break;
+        }
         case DepartmentType::guide_category: {
             // FIXME Working around the UI bug (have to register departments before results)
             reply->register_departments(all_depts);
@@ -636,6 +659,7 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                 guide_category(reply, path.department);
                 break;
             }
+
             case SectionType::videos: {
                 // If we only want to see the videos of a department
                 guide_category_videos(reply, path.department);
