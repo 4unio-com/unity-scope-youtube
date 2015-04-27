@@ -55,8 +55,6 @@ template<typename T>
             if (kind == "youtube#searchResult") {
                 kind = item["id"]["kind"].asString();
             }
-            cout << "======== kind: " << kind << endl;
-            cout << "======== kind filter: " << filter << endl;
             if (kind == filter) {
                 results.emplace_back(make_shared<T>(item));
             }
@@ -253,25 +251,14 @@ future<Client::GuideCategoryList> Client::guide_categories(
 
 future<Client::SubscriptionList> Client::subscription_channels(std::string access_token) {
     return p->async_get<SubscriptionList>( { "youtube", "v3", "subscriptions" }, { {
-            "part", "snippet" }, { "mine", "true" }, {"access_token", access_token }, {"maxResults", "10"} },
+            "part", "snippet" }, { "mine", "true" }, {"access_token", access_token }, {"maxResults", "50"} },
             [](const json::Value &root) {
                 return get_typed_list<Subscription>("youtube#subscription", root);
             });
 }
-/*
-future<std::string> Client::subscription_uploadsId(std::string channelId, std::string access_token) {
-    return p->async_get<UploadList>( { "youtube", "v3", "channels" }, { {
-            "part", "snippet,contentDetails" }, { "id", department_id }, {"access_token", access_token } },
-            [](const json::Value &root) {
-                Json::Value items = root["tiems"];
-                Json::Value contentDetails = imes["contentDetails"];
-                return root;
-            });
-}
-*/
+
 future<std::string> Client::subscription_channel_uploads(std::string const &department_id, std::string &access_token) {
     std::string id = department_id.substr(13);
-    cout << "==== subs client s_c_u: dept id init: " << department_id << endl;
     return p->async_get<std::string>( { "youtube", "v3", "channels" }, { {
             "part", "snippet,contentDetails" }, { "id", department_id }, {"access_token", access_token } },
             [](const json::Value &root) {
@@ -280,7 +267,6 @@ future<std::string> Client::subscription_channel_uploads(std::string const &depa
                 Json::Value contentDetails = item["contentDetails"];
                 Json::Value relatedPlaylists = contentDetails["relatedPlaylists"];
                 Json::Value uploads = relatedPlaylists["uploads"];;
-    cout << "==== subs client s_c_u: uplods: " << uploads.asString() << endl;
                 return uploads.asString();
             });
 }

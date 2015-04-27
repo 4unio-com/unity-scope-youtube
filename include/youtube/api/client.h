@@ -25,7 +25,6 @@
 #include <youtube/api/channel-section.h>
 #include <youtube/api/guide-category.h>
 #include <youtube/api/playlist.h>
-#include <youtube/api/upload.h>
 #include <youtube/api/playlist-item.h>
 #include <youtube/api/search-list-response.h>
 #include <youtube/api/video.h>
@@ -49,8 +48,6 @@ public:
     typedef std::deque<Channel::Ptr> ChannelList;
 
     typedef std::deque<Subscription::Ptr> SubscriptionList;
-
-    typedef std::deque<Upload::Ptr> UploadList;
 
     typedef std::deque<ChannelSection::Ptr> ChannelSectionList;
 

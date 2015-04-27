@@ -183,7 +183,6 @@ struct DepartmentPath {
         }
 
         department = s.substr(s.find(':') + 1);
-        cout << "==== department: " << department << endl;
     }
 
     string to_string() const {
@@ -586,8 +585,6 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
 
     // create the department structure
     for (GuideCategory::Ptr category : departments) {
-        cout << "==== title: " << category->title() << endl;;
-        cout << "==== id: " << category->id() << endl;;
         if (first_dept) {
             first_dept = false;
             all_depts = sc::Department::create("", query, category->title());
@@ -599,7 +596,6 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                 subscriptions_dept = sc::Department::create(
                         subscriptions_path.to_string(), query, _("My Subscriptions"));
                 all_depts->add_subdepartment(subscriptions_dept);
-                cout << "== department id: " << subscriptions_path.to_string() << endl;
 
                 //we are in hard coded My Suscriptions dept, so login and else get sub depts
                 if (include_login_nag) {
@@ -666,7 +662,6 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
 
         switch (path.department_type) {
         case DepartmentType::subscriptions: {
-            cout << "==== subs: sectionType is subscriptions" <<  endl;
             subscription_videos(reply, path.department);
             break;
         }
