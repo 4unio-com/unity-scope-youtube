@@ -392,56 +392,26 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
         }
     }
 }
-//KYLE
+
 void Query::subscription_videos(const sc::SearchReplyProxy &reply,
         const string &department_id) {
     if (DEBUG_MODE) {
         cerr << "Finding subscription uploads: " << department_id << endl;
     }
 
-    cout << "==== subs IN subscription_uploads " << endl;
-    auto cat = reply->register_category("youtube", "", "",
+    auto cat = reply->register_category("youtube", _("Uploads"), "",
             sc::CategoryRenderer(BROWSE_TEMPLATE));
 
     auto uploads_future = client_.subscription_channel_uploads(department_id, access_token);
-    cout << "====subs 2: " << endl;
     auto uploads = get_or_throw(uploads_future);
-    cout << "====subs 3: " << endl;
-    cout << "====subs uploads.size(): " << uploads.size();
-    deque<future<Client::UploadList>> uploads_l;
-    for (Upload::Ptr upload : uploads) {
-        if (DEBUG_MODE) {
-            cerr << "  upload: " << upload->id() << " " << upload->title()
-                    << endl;
-        }
-        cout << "==== subs  upload: " << upload->id() << " " << upload->title()
-                    << endl;
-        //uploads_futures.emplace_back(client_.channel_videos(channel->id()));
+
+    auto playlist_future = client_.playlist_items(uploads);
+    Client::PlaylistItemList items = get_or_throw(playlist_future);
+
+    for (auto &playlist : items) {
+        push_resource(reply, cat, playlist);
     }
-/*
-    for (auto &it : uploads_futures) {
-        Client::VideoList videos = it.get();
-        for (auto &video : videos) {
-            if (DEBUG_MODE) {
-                cerr << "    video: " << video->id() << " " << video->title()
-                        << endl;
-            }
-            push_resource(reply, cat, video);
-        }
-    }
-
-    auto cat = reply->register_category("youtube", _("Channel contents"), "",
-            sc::CategoryRenderer(SEARCH_TEMPLATE));
-
-    auto channels_future = client_.channel_videos(channel_id);
-    Client::VideoList videos = get_or_throw(channels_future);
-
-    for (auto &video : videos) {
-        push_resource(reply, cat, video);
- 
-*/
 }
-
 
 void Query::guide_category_videos(const sc::SearchReplyProxy &reply,
         const string &department_id) {
@@ -473,6 +443,7 @@ void Query::guide_category_videos(const sc::SearchReplyProxy &reply,
             push_resource(reply, cat, video);
         }
     }
+
 }
 
 void Query::guide_category_channels(const sc::SearchReplyProxy &reply,

@@ -74,7 +74,7 @@ public:
 
     virtual std::future<SubscriptionList> subscription_channels(std::string access_token);
 
-    virtual std::future<UploadList> subscription_channel_uploads(std::string const &department_id, std::string &access_token);
+    virtual std::future<std::string> subscription_channel_uploads(std::string const &department_id, std::string &access_token);
 
     virtual std::future<ChannelList> category_channels(
             const std::string &categoryId);

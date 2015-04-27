@@ -258,16 +258,30 @@ future<Client::SubscriptionList> Client::subscription_channels(std::string acces
                 return get_typed_list<Subscription>("youtube#subscription", root);
             });
 }
-
-future<Client::UploadList> Client::subscription_channel_uploads(std::string const &department_id, std::string &access_token) {
-    std::string id = department_id.substr(13);
-    cout << "==== subs client s_c_u: dept id init: " << department_id << endl;
-    cout << "==== subs client s_c_u: dept id cut: " << id << endl;
+/*
+future<std::string> Client::subscription_uploadsId(std::string channelId, std::string access_token) {
     return p->async_get<UploadList>( { "youtube", "v3", "channels" }, { {
             "part", "snippet,contentDetails" }, { "id", department_id }, {"access_token", access_token } },
             [](const json::Value &root) {
-                cout << root.asString();
-                return get_typed_list<Upload>("youtube#chanelListResponse", root);
+                Json::Value items = root["tiems"];
+                Json::Value contentDetails = imes["contentDetails"];
+                return root;
+            });
+}
+*/
+future<std::string> Client::subscription_channel_uploads(std::string const &department_id, std::string &access_token) {
+    std::string id = department_id.substr(13);
+    cout << "==== subs client s_c_u: dept id init: " << department_id << endl;
+    return p->async_get<std::string>( { "youtube", "v3", "channels" }, { {
+            "part", "snippet,contentDetails" }, { "id", department_id }, {"access_token", access_token } },
+            [](const json::Value &root) {
+                Json::Value items = root["items"];
+                Json::Value item = items[0];
+                Json::Value contentDetails = item["contentDetails"];
+                Json::Value relatedPlaylists = contentDetails["relatedPlaylists"];
+                Json::Value uploads = relatedPlaylists["uploads"];;
+    cout << "==== subs client s_c_u: uplods: " << uploads.asString() << endl;
+                return uploads.asString();
             });
 }
 
