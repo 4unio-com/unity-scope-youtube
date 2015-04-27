@@ -23,6 +23,7 @@ add_library(
   youtube/api/client.cpp
   youtube/api/guide-category.cpp
   youtube/api/playlist.cpp
+  youtube/api/upload.cpp
   youtube/api/playlist-item.cpp
   youtube/api/search-list-response.cpp
   youtube/api/video.cpp

@@ -45,6 +45,9 @@ protected:
     void guide_category(const unity::scopes::SearchReplyProxy &reply,
             const std::string &department_id);
 
+    void subscription_videos(const unity::scopes::SearchReplyProxy &reply,
+            const std::string &department_id);
+
     void guide_category_videos(const unity::scopes::SearchReplyProxy &reply,
             const std::string &department_id);
 
@@ -72,6 +75,8 @@ protected:
     youtube::api::Client client_;
 
     std::shared_ptr<unity::scopes::OnlineAccountClient> oac;
+
+    std::string access_token;
 };
 
 }

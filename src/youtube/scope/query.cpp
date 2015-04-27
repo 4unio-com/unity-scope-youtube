@@ -392,6 +392,56 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
         }
     }
 }
+//KYLE
+void Query::subscription_videos(const sc::SearchReplyProxy &reply,
+        const string &department_id) {
+    if (DEBUG_MODE) {
+        cerr << "Finding subscription uploads: " << department_id << endl;
+    }
+
+    cout << "==== subs IN subscription_uploads " << endl;
+    auto cat = reply->register_category("youtube", "", "",
+            sc::CategoryRenderer(BROWSE_TEMPLATE));
+
+    auto uploads_future = client_.subscription_channel_uploads(department_id, access_token);
+    cout << "====subs 2: " << endl;
+    auto uploads = get_or_throw(uploads_future);
+    cout << "====subs 3: " << endl;
+    cout << "====subs uploads.size(): " << uploads.size();
+    deque<future<Client::UploadList>> uploads_l;
+    for (Upload::Ptr upload : uploads) {
+        if (DEBUG_MODE) {
+            cerr << "  upload: " << upload->id() << " " << upload->title()
+                    << endl;
+        }
+        cout << "==== subs  upload: " << upload->id() << " " << upload->title()
+                    << endl;
+        //uploads_futures.emplace_back(client_.channel_videos(channel->id()));
+    }
+/*
+    for (auto &it : uploads_futures) {
+        Client::VideoList videos = it.get();
+        for (auto &video : videos) {
+            if (DEBUG_MODE) {
+                cerr << "    video: " << video->id() << " " << video->title()
+                        << endl;
+            }
+            push_resource(reply, cat, video);
+        }
+    }
+
+    auto cat = reply->register_category("youtube", _("Channel contents"), "",
+            sc::CategoryRenderer(SEARCH_TEMPLATE));
+
+    auto channels_future = client_.channel_videos(channel_id);
+    Client::VideoList videos = get_or_throw(channels_future);
+
+    for (auto &video : videos) {
+        push_resource(reply, cat, video);
+ 
+*/
+}
+
 
 void Query::guide_category_videos(const sc::SearchReplyProxy &reply,
         const string &department_id) {
@@ -585,7 +635,6 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                     add_login_nag(reply);
                     break;
                 }
-                std::string access_token;
                 for (auto const& status : oac->get_service_statuses())
                 {
                     if (status.service_authenticated)
@@ -611,14 +660,14 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                 continue;
             }
 
-            //this handles top level youtube categories like Sports, Gaming, etc
+            //this handles top level dynamic youtube categories like Sports, Gaming, etc
             DepartmentPath path { DepartmentType::guide_category,
                     category->id(), SectionType::none };
             sc::Department::SPtr dept = sc::Department::create(path.to_string(),
                     query, category->title());
             all_depts->add_subdepartment(dept);
 
-            //these are the second level departments. we hard code this set for each top-level department, that is: Videos, Playlists, Channels
+            //these are the second level departments used for dynamic depts. We hard code each of these for each top-level department, that is: Videos, Playlists, Channels
             DepartmentPath videos_path { DepartmentType::guide_category,
                     category->id(), SectionType::videos };
             sc::Department::SPtr videos = sc::Department::create(
@@ -647,7 +696,8 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
         switch (path.department_type) {
         case DepartmentType::subscriptions: {
             cout << "==== subs: sectionType is subscriptions" <<  endl;
-           break;
+            subscription_videos(reply, path.department);
+            break;
         }
         case DepartmentType::guide_category: {
             // FIXME Working around the UI bug (have to register departments before results)

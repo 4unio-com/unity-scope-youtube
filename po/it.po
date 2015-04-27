@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unity-scope-youtube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-26 11:54-0400\n"
+"POT-Creation-Date: 2015-04-27 12:14-0400\n"
 "PO-Revision-Date: 2015-01-28 16:27+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2015-01-29 06:04+0000\n"
 "X-Generator: Launchpad (build 17306)\n"
 
-#: ../src/youtube/scope/query.cpp:770
+#: ../src/youtube/scope/query.cpp:817
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
@@ -47,11 +47,11 @@ msgid_plural "%d views"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/youtube/scope/query.cpp:503
+#: ../src/youtube/scope/query.cpp:553
 msgid "Channel contents"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:434 ../src/youtube/scope/query.cpp:641
+#: ../src/youtube/scope/query.cpp:484 ../src/youtube/scope/query.cpp:687
 msgid "Channels"
 msgstr ""
 
@@ -59,15 +59,15 @@ msgstr ""
 msgid "Log-in to YouTube"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:550 ../src/youtube/scope/query.cpp:579
+#: ../src/youtube/scope/query.cpp:600 ../src/youtube/scope/query.cpp:629
 msgid "My Subscriptions"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:486
+#: ../src/youtube/scope/query.cpp:536
 msgid "Playlist contents"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:453 ../src/youtube/scope/query.cpp:635
+#: ../src/youtube/scope/query.cpp:503 ../src/youtube/scope/query.cpp:681
 msgid "Playlists"
 msgstr ""
 
@@ -75,15 +75,15 @@ msgstr ""
 msgid "Search YouTube for videos and browse channels"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:402 ../src/youtube/scope/query.cpp:628
+#: ../src/youtube/scope/query.cpp:452 ../src/youtube/scope/query.cpp:674
 msgid "Videos"
 msgstr ""
 
 #: ../data/com.ubuntu.scopes.youtube.ini.in.h:1
-#: ../src/youtube/scope/query.cpp:518
+#: ../src/youtube/scope/query.cpp:568
 msgid "YouTube"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:784
+#: ../src/youtube/scope/query.cpp:831
 msgid "YouTube requires an internet connection"
 msgstr ""

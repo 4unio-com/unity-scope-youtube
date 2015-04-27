@@ -250,7 +250,7 @@ future<Client::GuideCategoryList> Client::guide_categories(
             return get_typed_list<GuideCategory>("youtube#guideCategory", root);
             });
 }
-//KYLE
+
 future<Client::SubscriptionList> Client::subscription_channels(std::string access_token) {
     return p->async_get<SubscriptionList>( { "youtube", "v3", "subscriptions" }, { {
             "part", "snippet" }, { "mine", "true" }, {"access_token", access_token }, {"maxResults", "10"} },
@@ -259,6 +259,17 @@ future<Client::SubscriptionList> Client::subscription_channels(std::string acces
             });
 }
 
+future<Client::UploadList> Client::subscription_channel_uploads(std::string const &department_id, std::string &access_token) {
+    std::string id = department_id.substr(13);
+    cout << "==== subs client s_c_u: dept id init: " << department_id << endl;
+    cout << "==== subs client s_c_u: dept id cut: " << id << endl;
+    return p->async_get<UploadList>( { "youtube", "v3", "channels" }, { {
+            "part", "snippet,contentDetails" }, { "id", department_id }, {"access_token", access_token } },
+            [](const json::Value &root) {
+                cout << root.asString();
+                return get_typed_list<Upload>("youtube#chanelListResponse", root);
+            });
+}
 
 future<Client::ChannelList> Client::category_channels(
         const string &categoryId) {
