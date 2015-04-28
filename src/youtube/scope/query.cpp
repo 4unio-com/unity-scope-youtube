@@ -89,6 +89,27 @@ const static string SEARCH_TEMPLATE =
 }
 )";
 
+const static string SUBSCRIPTIONS_TEMPLATE =
+        R"(
+{
+  "schema-version": 1,
+  "template": {
+    "category-layout": "grid",
+    "card-size": "medium",
+    "card-layout": "horizontal",
+    "non-interactive": "true"
+  },
+  "components": {
+    "title": "title",
+    "art" : {
+      "field": "art",
+      "aspect-ratio": 1.7
+    },
+    "subtitle": "subtitle"
+  }
+}
+)";
+
 const static string POPULAR_TEMPLATE =
         R"(
 {
@@ -425,8 +446,8 @@ void Query::subscriptions(const sc::SearchReplyProxy &reply) {
         cerr << "Finding subscriptions: " << endl;
     }
 
-    auto cat = reply->register_category("subscriptions", _("Subscriptions"), "",
-            sc::CategoryRenderer(SEARCH_TEMPLATE));
+    auto cat = reply->register_category("subscriptions", "", "",
+            sc::CategoryRenderer(SUBSCRIPTIONS_TEMPLATE));
 
     auto subs_future = client_.subscription_channels(access_token);
     Client::SubscriptionList items = get_or_throw(subs_future);
