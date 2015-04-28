@@ -659,10 +659,8 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                 // we are logged in, so get user's subscription channels
                 auto subscriptions_future = client_.subscription_channels(access_token);
                 auto subscriptions = get_or_throw(subscriptions_future);
-                subscription_depts.clear();
                 for (Subscription::Ptr subscription : subscriptions) {
                     std::string department_id = "subscription:" + subscription->id();
-                    subscription_depts.emplace_back(department_id);
                     cout << "== subscriptions department id: " << department_id << endl;
                     sc::Department::SPtr dept_ = sc::Department::create(
                         department_id,

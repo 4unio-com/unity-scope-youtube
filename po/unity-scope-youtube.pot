@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-27 20:46-0400\n"
+"POT-Creation-Date: 2015-04-27 20:48-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,15 +53,15 @@ msgstr ""
 msgid "Uploads"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:466 ../src/youtube/scope/query.cpp:688
+#: ../src/youtube/scope/query.cpp:466 ../src/youtube/scope/query.cpp:686
 msgid "Videos"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:499 ../src/youtube/scope/query.cpp:700
+#: ../src/youtube/scope/query.cpp:499 ../src/youtube/scope/query.cpp:698
 msgid "Channels"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:518 ../src/youtube/scope/query.cpp:694
+#: ../src/youtube/scope/query.cpp:518 ../src/youtube/scope/query.cpp:692
 msgid "Playlists"
 msgstr ""
 
@@ -77,14 +77,14 @@ msgstr ""
 msgid "My Subscriptions"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:835
+#: ../src/youtube/scope/query.cpp:833
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/youtube/scope/query.cpp:849
+#: ../src/youtube/scope/query.cpp:847
 msgid "YouTube requires an internet connection"
 msgstr ""
 

@@ -79,8 +79,6 @@ protected:
     std::shared_ptr<unity::scopes::OnlineAccountClient> oac;
 
     std::string access_token;
-
-    std::vector<std::string> subscription_depts;
 };
 
 }
