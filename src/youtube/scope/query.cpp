@@ -268,6 +268,8 @@ void push_resource(const sc::SearchReplyProxy &reply,
         DepartmentPath path { DepartmentType::subscriptions,
                 subscription->id() };
         cout << "==== subs push reply dept id: " << path.to_string() << endl;
+        cout << "==== subs push reply picture: " << subscription->picture() << endl;
+        res["art"] = subscription->picture();
         res.set_uri(new_query.to_uri());
         break;
     }
@@ -424,14 +426,14 @@ void Query::subscriptions(const sc::SearchReplyProxy &reply) {
     }
 
     auto cat = reply->register_category("subscriptions", _("Subscriptions"), "",
-            sc::CategoryRenderer(BROWSE_TEMPLATE));
+            sc::CategoryRenderer(SEARCH_TEMPLATE));
 
     auto subs_future = client_.subscription_channels(access_token);
     Client::SubscriptionList items = get_or_throw(subs_future);
 
     cout << "==== new items.size: " << items.size() << endl;
-    for (auto &subscription_item : items) {
-        push_resource(reply, cat, subscription_item);
+    for (auto &item : items) {
+        push_resource(reply, cat, item);
     }
 }
 

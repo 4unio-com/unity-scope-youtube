@@ -32,6 +32,9 @@ Subscription::Subscription(const json::Value &data) {
     title_ = snippet["title"].asString();
     json::Value resourceId = snippet["resourceId"];
     id_ = resourceId["channelId"].asString();
+    json::Value thumbnails = snippet["thumbnails"];
+    json::Value default_ = thumbnails["default"];
+    picture_ = default_["url"].asString();
 }
 
 const string & Subscription::title() const {
