@@ -379,6 +379,19 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
         cerr << "Finding channels: " << department_id << endl;
     }
 
+    bool logged_in = false;
+    for (auto const& status : oac->get_service_statuses())
+    {
+         if (status.service_authenticated)
+        {
+            access_token = status.access_token;
+            logged_in = true;
+            break;
+        }
+    }
+    if (! logged_in)
+        add_login_nag(reply);
+
     auto channels_future = client_.category_channels(department_id);
     auto channels = get_or_throw(channels_future);
     deque<future<Client::ChannelSectionList>> channel_section_futures;
@@ -646,9 +659,26 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
             search_metadata().locale());
     auto departments = get_or_throw(departments_future);
 
-    // add My Subscriptions department to the list of top level departments
-    departments.push_back(subscriptions_ptr);
+    // if logged in, add My Subscriptions department to the list of top level departments
+    // in position 1 (so Best of Youtube is position 0)
+    bool logged_in = false;
+    for (auto const& status : oac->get_service_statuses())
+    {
+         if (status.service_authenticated)
+        {
+            access_token = status.access_token;
+            logged_in = true;
+            break;
+        }
+    }
+    if (logged_in)
+    {
+        auto dept_0 = departments[0];
+        departments.pop_front();
+        departments.push_front(subscriptions_ptr);
+        departments.push_front(dept_0);
 
+    }
     sc::Department::SPtr subscriptions_dept;
 
     // create the department structure
@@ -659,42 +689,28 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
         } else {
             if (category->id() == "subscriptions") // only add this hard coded dept and dynamic sub depts once
             {
-                DepartmentPath subscriptions_path { DepartmentType::subscriptions,
-                        category->id(), SectionType::none};
-                subscriptions_dept = sc::Department::create(
-                        subscriptions_path.to_string(), query, _("My Subscriptions"));
-                all_depts->add_subdepartment(subscriptions_dept);
+                    DepartmentPath subscriptions_path { DepartmentType::subscriptions,
+                            category->id(), SectionType::none};
+                    subscriptions_dept = sc::Department::create(
+                            subscriptions_path.to_string(), query, _("My Subscriptions"));
+                    all_depts->add_subdepartment(subscriptions_dept);
 
-                cout << "==== subs my subs dept id: " << subscriptions_path.to_string() << endl;
-                //we are in hard coded My Suscriptions dept, so login and else get sub depts
-                if (include_login_nag) {
-                    add_login_nag(reply);
-                    break;
-                }
-                for (auto const& status : oac->get_service_statuses())
-                {
-                     if (status.service_authenticated)
-                    {
-                        access_token = status.access_token;
-                        break;
+                    cout << "==== subs my subs dept id: " << subscriptions_path.to_string() << endl;
+                    // we are logged in, so get user's subscription channels
+                    auto subscriptions_future = client_.subscription_channels(access_token);
+                    auto subscriptions = get_or_throw(subscriptions_future);
+                    for (Subscription::Ptr subscription : subscriptions) {
+                        std::string department_id = "subscription:" + subscription->id();
+                        cout << "== subscriptions department id: " << department_id << endl;
+                        sc::Department::SPtr dept_ = sc::Department::create(
+                            department_id,
+                            query,
+                            subscription->title()
+                        );
+                        subscriptions_dept->add_subdepartment(dept_);
                     }
-                }
-                // we are logged in, so get user's subscription channels
-                auto subscriptions_future = client_.subscription_channels(access_token);
-                auto subscriptions = get_or_throw(subscriptions_future);
-                for (Subscription::Ptr subscription : subscriptions) {
-                    std::string department_id = "subscription:" + subscription->id();
-                    cout << "== subscriptions department id: " << department_id << endl;
-                    sc::Department::SPtr dept_ = sc::Department::create(
-                        department_id,
-                        query,
-                        subscription->title()
-                    );
-                    subscriptions_dept->add_subdepartment(dept_);
-                }
-                continue;
+                    continue;
             }
-
             //this handles top level dynamic youtube departments like Sports, Gaming, etc
             DepartmentPath path { DepartmentType::guide_category,
                     category->id(), SectionType::none };
