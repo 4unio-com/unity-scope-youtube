@@ -361,6 +361,7 @@ void Query::add_login_nag(const sc::SearchReplyProxy &reply) {
                                           query(),
                                           sc::OnlineAccountClient::InvalidateResults,
                                           sc::OnlineAccountClient::DoNothing);
+
     reply->push(res);
 }
 
@@ -515,7 +516,6 @@ void Query::guide_category_videos(const sc::SearchReplyProxy &reply,
             push_resource(reply, cat, video);
         }
     }
-
 }
 
 void Query::guide_category_channels(const sc::SearchReplyProxy &reply,
@@ -727,10 +727,10 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
         }
     }
 
+
     string raw_department_id = query.department_id();
     if (!raw_department_id.empty()) {
         DepartmentPath path(raw_department_id);
-
         switch (path.department_type) {
         case DepartmentType::subscriptions: {
             reply->register_departments(all_depts);
@@ -752,7 +752,6 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                 guide_category(reply, path.department);
                 break;
             }
-
             case SectionType::videos: {
                 // If we only want to see the videos of a department
                 guide_category_videos(reply, path.department);

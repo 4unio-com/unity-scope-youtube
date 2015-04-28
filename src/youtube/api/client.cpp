@@ -43,181 +43,182 @@ using namespace std;
 namespace {
 
 template<typename T>
-    static deque<shared_ptr<T>> get_typed_list(const string &filter,
-            const json::Value &root) {
-        deque<shared_ptr<T>> results;
-        json::Value data = root["items"];
-        for (json::ArrayIndex index = 0; index < data.size(); ++index) {
-            json::Value item = data[index];
+static deque<shared_ptr<T>> get_typed_list(const string &filter,
+        const json::Value &root) {
+    deque<shared_ptr<T>> results;
+    json::Value data = root["items"];
+    for (json::ArrayIndex index = 0; index < data.size(); ++index) {
+        json::Value item = data[index];
 
-            string kind = item["kind"].asString();
-            if (kind == "youtube#searchResult") {
-                kind = item["id"]["kind"].asString();
-            }
-            if (kind == filter) {
-                results.emplace_back(make_shared<T>(item));
-            }
+        string kind = item["kind"].asString();
+        if (kind == "youtube#searchResult") {
+            kind = item["id"]["kind"].asString();
         }
-        return results;
+
+        if (kind == filter) {
+            results.emplace_back(make_shared<T>(item));
+        }
     }
+    return results;
+}
 
 }
 
 class Client::Priv {
-    public:
-        Priv(std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client) :
+public:
+    Priv(std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client) :
             client_(http::make_client()), worker_ { [this]() {client_->run();} },
             oa_client_(oa_client), cancelled_(false) {
-            }
+    }
 
-        ~Priv() {
-            client_->stop();
-            if (worker_.joinable()) {
-                worker_.join();
-            }
+    ~Priv() {
+        client_->stop();
+        if (worker_.joinable()) {
+            worker_.join();
+        }
+    }
+
+    std::shared_ptr<core::net::http::Client> client_;
+
+    std::thread worker_;
+
+    Config config_;
+    std::mutex config_mutex_;
+
+    std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client_;
+
+    std::atomic<bool> cancelled_;
+
+    void get(const net::Uri::Path &path,
+            const net::Uri::QueryParameters &parameters,
+            http::Request::Handler &handler) {
+        std::lock_guard<std::mutex> lock(config_mutex_);
+        update_config();
+
+        http::Request::Configuration configuration;
+        net::Uri::QueryParameters complete_parameters(parameters);
+        if (config_.authenticated) {
+            configuration.header.add("Authorization",
+                    "Bearer " + config_.access_token);
+        } else {
+            complete_parameters.emplace_back("key", config_.api_key);
         }
 
-        std::shared_ptr<core::net::http::Client> client_;
+        net::Uri uri = net::make_uri(config_.apiroot, path,
+                complete_parameters);
+        configuration.uri = client_->uri_to_string(uri);
+        configuration.header.add("Accept", config_.accept);
+        configuration.header.add("User-Agent", config_.user_agent + " (gzip)");
+        configuration.header.add("Accept-Encoding", "gzip");
 
-        std::thread worker_;
+        auto request = client_->head(configuration);
+        request->async_execute(handler);
+    }
 
-        Config config_;
-        std::mutex config_mutex_;
-
-        std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client_;
-
-        std::atomic<bool> cancelled_;
-
-        void get(const net::Uri::Path &path,
-                const net::Uri::QueryParameters &parameters,
-                http::Request::Handler &handler) {
-            std::lock_guard<std::mutex> lock(config_mutex_);
-            update_config();
-
-            http::Request::Configuration configuration;
-            net::Uri::QueryParameters complete_parameters(parameters);
-            if (config_.authenticated) {
-                configuration.header.add("Authorization",
-                        "Bearer " + config_.access_token);
-            } else {
-                complete_parameters.emplace_back("key", config_.api_key);
-            }
-
-            net::Uri uri = net::make_uri(config_.apiroot, path,
-                    complete_parameters);
-            configuration.uri = client_->uri_to_string(uri);
-            configuration.header.add("Accept", config_.accept);
-            configuration.header.add("User-Agent", config_.user_agent + " (gzip)");
-            configuration.header.add("Accept-Encoding", "gzip");
-
-            auto request = client_->head(configuration);
-            request->async_execute(handler);
-        }
-
-        http::Request::Progress::Next progress_report(
-                const http::Request::Progress&) {
-            return cancelled_ ?
+    http::Request::Progress::Next progress_report(
+            const http::Request::Progress&) {
+        return cancelled_ ?
                 http::Request::Progress::Next::abort_operation :
                 http::Request::Progress::Next::continue_operation;
-        }
+    }
 
-        template<typename T>
-            future<T> async_get(const net::Uri::Path &path,
-                    const net::Uri::QueryParameters &parameters,
-                    const function<T(const json::Value &root)> &func) {
-                auto prom = make_shared<promise<T>>();
+    template<typename T>
+    future<T> async_get(const net::Uri::Path &path,
+            const net::Uri::QueryParameters &parameters,
+            const function<T(const json::Value &root)> &func) {
+        auto prom = make_shared<promise<T>>();
 
-                http::Request::Handler handler;
-                handler.on_progress(
-                        bind(&Client::Priv::progress_report, this, placeholders::_1));
-                handler.on_error([prom](const net::Error& e)
-                        {
-                        prom->set_exception(make_exception_ptr(e));
-                        });
-                handler.on_response(
-                        [prom,func](const http::Response& response)
-                        {
-                        string decompressed;
+        http::Request::Handler handler;
+        handler.on_progress(
+                bind(&Client::Priv::progress_report, this, placeholders::_1));
+        handler.on_error([prom](const net::Error& e)
+        {
+            prom->set_exception(make_exception_ptr(e));
+        });
+        handler.on_response(
+                [prom,func](const http::Response& response)
+                {
+                    string decompressed;
 
-                        if(!response.body.empty()) {
+                    if(!response.body.empty()) {
                         try {
-                        io::filtering_ostream os;
-                        os.push(io::gzip_decompressor());
-                        os.push(io::back_inserter(decompressed));
-                        os << response.body;
-                        boost::iostreams::close(os);
+                            io::filtering_ostream os;
+                            os.push(io::gzip_decompressor());
+                            os.push(io::back_inserter(decompressed));
+                            os << response.body;
+                            boost::iostreams::close(os);
                         } catch(io::gzip_error &e) {
-                        prom->set_exception(make_exception_ptr(e));
-                        return;
+                            prom->set_exception(make_exception_ptr(e));
+                            return;
                         }
-                        }
+                    }
 
-                        json::Value root;
-                        json::Reader reader;
-                        reader.parse(decompressed, root);
+                    json::Value root;
+                    json::Reader reader;
+                    reader.parse(decompressed, root);
 
-                        if (response.status != http::Status::ok) {
-                            prom->set_exception(make_exception_ptr(domain_error(root["error"].asString())));
-                        } else {
-                            prom->set_value(func(root));
-                        }
-                        });
+                    if (response.status != http::Status::ok) {
+                        prom->set_exception(make_exception_ptr(domain_error(root["error"].asString())));
+                    } else {
+                        prom->set_value(func(root));
+                    }
+                });
 
-                get(path, parameters, handler);
+        get(path, parameters, handler);
 
-                return prom->get_future();
-            }
+        return prom->get_future();
+    }
 
-        bool authenticated() {
-            std::lock_guard<std::mutex> lock(config_mutex_);
-            update_config();
-            return config_.authenticated;
+    bool authenticated() {
+        std::lock_guard<std::mutex> lock(config_mutex_);
+        update_config();
+        return config_.authenticated;
+    }
+
+    void update_config() {
+        config_ = Config();
+
+        if (getenv("YOUTUBE_SCOPE_APIROOT")) {
+            config_.apiroot = getenv("YOUTUBE_SCOPE_APIROOT");
         }
 
-        void update_config() {
-            config_ = Config();
+        if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") != nullptr) {
+            return;
+        }
 
-            if (getenv("YOUTUBE_SCOPE_APIROOT")) {
-                config_.apiroot = getenv("YOUTUBE_SCOPE_APIROOT");
-            }
+        /// TODO: The code commented out below should be uncommented as soon as
+        /// OnlineAccountClient::refresh_service_statuses() is fixed (Bug #1398813).
+        /// For now we have to re-instantiate a new OnlineAccountClient each time.
 
-            if (getenv("YOUTUBE_SCOPE_IGNORE_ACCOUNTS") != nullptr) {
-                return;
-            }
-
-            /// TODO: The code commented out below should be uncommented as soon as
-            /// OnlineAccountClient::refresh_service_statuses() is fixed (Bug #1398813).
-            /// For now we have to re-instantiate a new OnlineAccountClient each time.
-
-            ///if (oa_client_ == nullptr) {
+        ///if (oa_client_ == nullptr) {
             oa_client_.reset(
                     new unity::scopes::OnlineAccountClient(SCOPE_INSTALL_NAME,
-                        "sharing", "google"));
-            ///} else {
-            ///    oa_client_->refresh_service_statuses();
-            ///}
+                            "sharing", "google"));
+        ///} else {
+        ///    oa_client_->refresh_service_statuses();
+        ///}
 
-            for (auto const& status : oa_client_->get_service_statuses()) {
-                if (status.service_authenticated) {
-                    config_.authenticated = true;
-                    config_.access_token = status.access_token;
-                    config_.client_id = status.client_id;
-                    config_.client_secret = status.client_secret;
-                    break;
-                }
-            }
-
-            if (!config_.authenticated) {
-                std::cerr << "YouTube scope is unauthenticated" << std::endl;
-            } else {
-                std::cerr << "YouTube scope is authenticated" << std::endl;
+        for (auto const& status : oa_client_->get_service_statuses()) {
+            if (status.service_authenticated) {
+                config_.authenticated = true;
+                config_.access_token = status.access_token;
+                config_.client_id = status.client_id;
+                config_.client_secret = status.client_secret;
+                break;
             }
         }
+
+        if (!config_.authenticated) {
+            std::cerr << "YouTube scope is unauthenticated" << std::endl;
+        } else {
+            std::cerr << "YouTube scope is authenticated" << std::endl;
+        }
+    }
 };
 
 Client::Client(std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client) :
-    p(new Priv(oa_client)) {
-    }
+        p(new Priv(oa_client)) {
+}
 
 future<SearchListResponse::Ptr> Client::search(const string &query,
         unsigned int max_results, const std::string &category_id) {
@@ -233,18 +234,17 @@ future<SearchListResponse::Ptr> Client::search(const string &query,
     return p->async_get<SearchListResponse::Ptr>( { "youtube", "v3", "search" },
             parameters,
             [](const json::Value &root) {
-            return make_shared<SearchListResponse>(root);
+                return make_shared<SearchListResponse>(root);
             });
 }
-
 
 future<Client::GuideCategoryList> Client::guide_categories(
         const string &region_code, const string &locale) {
     return p->async_get<GuideCategoryList>(
             { "youtube", "v3", "guideCategories" }, { { "part", "snippet" }, {
-            "regionCode", region_code }, { "hl", locale } },
+                    "regionCode", region_code }, { "hl", locale } },
             [](const json::Value &root) {
-            return get_typed_list<GuideCategory>("youtube#guideCategory", root);
+                return get_typed_list<GuideCategory>("youtube#guideCategory", root);
             });
 }
 
