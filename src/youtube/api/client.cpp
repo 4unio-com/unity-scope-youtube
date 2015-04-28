@@ -277,7 +277,7 @@ future<std::string> Client::subscription_channel_uploads(std::string const &depa
 future<Client::SubscriptionItemList> Client::subscription_items(
         const string &playlistId) {
     return p->async_get<SubscriptionItemList>( { "youtube", "v3", "playlistItems" },
-            { { "part", "snippet" }, { "playlistId", playlistId } },
+            { { "part", "snippet" }, { "playlistId", playlistId }, {"maxResults", "50"}  },
             [](const json::Value &root) {
 cout << "==== subs items"<< endl << root << endl;
                 return get_typed_list<SubscriptionItem>("youtube#playlistItem", root);
