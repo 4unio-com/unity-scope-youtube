@@ -21,6 +21,7 @@
 
 #include <youtube/api/channel.h>
 #include <youtube/api/subscription.h>
+#include <youtube/api/subscription-item.h>
 #include <youtube/api/playlist.h>
 
 #include <youtube/scope/localisation.h>
@@ -139,11 +140,11 @@ static T get_or_throw(future<T> &f) {
 }
 
 enum class DepartmentType {
-    guide_category, channel, playlist, aggregated, subscriptions
+    guide_category, channel, playlist, aggregated, subscriptions, subscription
 };
 
 enum class SectionType {
-    none, videos, playlists, channels, subscriptions
+    none, videos, playlists, channels, subscriptions, subscription
 };
 
 /**
@@ -180,6 +181,8 @@ struct DepartmentPath {
             department_type = DepartmentType::aggregated;
         } else if (alg::starts_with(s, "subscriptions:")) {
             department_type = DepartmentType::subscriptions;
+        } else if (alg::starts_with(s, "subscription:")) {
+            department_type = DepartmentType::subscription;
         }
 
         department = s.substr(s.find(':') + 1);
@@ -217,6 +220,9 @@ struct DepartmentPath {
         case DepartmentType::subscriptions:
             result << "subscriptions:";
             break;
+        case DepartmentType::subscription:
+            result << "subscription:";
+            break;
         }
 
         result << department;
@@ -253,6 +259,27 @@ void push_resource(const sc::SearchReplyProxy &reply,
                 guide_category->id() };
         new_query.set_department_id(path.to_string());
         res.set_uri(new_query.to_uri());
+        break;
+    }
+    case Resource::Kind::subscription: {
+        cout << "==== subs push resource" << endl;
+        Subscription::Ptr subscription(
+                static_pointer_cast<Subscription>(resource));
+        DepartmentPath path { DepartmentType::subscriptions,
+                subscription->id() };
+        cout << "==== subs push reply dept id: " << path.to_string() << endl;
+        res.set_uri(new_query.to_uri());
+        break;
+    }
+    case Resource::Kind::subscriptionItem: {
+        cout << "==== subs item push_resource" << endl;
+        SubscriptionItem::Ptr subs_item(
+                static_pointer_cast<SubscriptionItem>(resource));
+        res["link"] = subs_item->link();
+        cout << "==== subs item push_res. title: " << subs_item->video_id() << endl;
+        res["description"] = subs_item->description();
+        res["subtitle"] = subs_item->title();
+        res.set_uri(subs_item->video_id());
         break;
     }
     case Resource::Kind::playlist: {
@@ -316,7 +343,6 @@ void Query::add_login_nag(const sc::SearchReplyProxy &reply) {
                                           query(),
                                           sc::OnlineAccountClient::InvalidateResults,
                                           sc::OnlineAccountClient::DoNothing);
-
     reply->push(res);
 }
 
@@ -392,23 +418,42 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
     }
 }
 
+void Query::subscriptions(const sc::SearchReplyProxy &reply) {
+    if (DEBUG_MODE) {
+        cerr << "Finding subscriptions: " << endl;
+    }
+
+    auto cat = reply->register_category("subscriptions", _("Subscriptions"), "",
+            sc::CategoryRenderer(BROWSE_TEMPLATE));
+
+    auto subs_future = client_.subscription_channels(access_token);
+    Client::SubscriptionList items = get_or_throw(subs_future);
+
+    cout << "==== new items.size: " << items.size() << endl;
+    for (auto &subscription_item : items) {
+        push_resource(reply, cat, subscription_item);
+    }
+}
+
 void Query::subscription_videos(const sc::SearchReplyProxy &reply,
         const string &department_id) {
     if (DEBUG_MODE) {
         cerr << "Finding subscription uploads: " << department_id << endl;
     }
 
-    auto cat = reply->register_category("youtube", _("Uploads"), "",
+    auto cat = reply->register_category("subscription", _("Uploads"), "",
             sc::CategoryRenderer(BROWSE_TEMPLATE));
 
-    auto uploads_future = client_.subscription_channel_uploads(department_id, access_token);
+    auto uploads_future = client_.subscription_channel_uploads(department_id);
     auto uploads = get_or_throw(uploads_future);
+    cout <<"==== subs. channel uploads id: " << uploads << endl;
 
-    auto playlist_future = client_.playlist_items(uploads);
-    Client::PlaylistItemList items = get_or_throw(playlist_future);
+    auto subscription_items_future = client_.subscription_items(uploads);
+    Client::SubscriptionItemList items = get_or_throw(subscription_items_future);
 
-    for (auto &playlist : items) {
-        push_resource(reply, cat, playlist);
+    cout << "==== new items.size: " << items.size() << endl;
+    for (auto &subscription_item : items) {
+        push_resource(reply, cat, subscription_item);
     }
 }
 
@@ -589,7 +634,7 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
             first_dept = false;
             all_depts = sc::Department::create("", query, category->title());
         } else {
-            if (category->id() == "subscriptions") // only add this hard coded dept once
+            if (category->id() == "subscriptions") // only add this hard coded dept and dynamic sub depts once
             {
                 DepartmentPath subscriptions_path { DepartmentType::subscriptions,
                         category->id(), SectionType::none};
@@ -597,6 +642,7 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                         subscriptions_path.to_string(), query, _("My Subscriptions"));
                 all_depts->add_subdepartment(subscriptions_dept);
 
+                cout << "==== subs my subs dept id: " << subscriptions_path.to_string() << endl;
                 //we are in hard coded My Suscriptions dept, so login and else get sub depts
                 if (include_login_nag) {
                     add_login_nag(reply);
@@ -604,7 +650,7 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                 }
                 for (auto const& status : oac->get_service_statuses())
                 {
-                    if (status.service_authenticated)
+                     if (status.service_authenticated)
                     {
                         access_token = status.access_token;
                         break;
@@ -613,9 +659,10 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                 // we are logged in, so get user's subscription channels
                 auto subscriptions_future = client_.subscription_channels(access_token);
                 auto subscriptions = get_or_throw(subscriptions_future);
-
+                subscription_depts.clear();
                 for (Subscription::Ptr subscription : subscriptions) {
-                    std::string department_id = "subscriptions:" + subscription->id();
+                    std::string department_id = "subscription:" + subscription->id();
+                    subscription_depts.emplace_back(department_id);
                     cout << "== subscriptions department id: " << department_id << endl;
                     sc::Department::SPtr dept_ = sc::Department::create(
                         department_id,
@@ -627,7 +674,7 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                 continue;
             }
 
-            //this handles top level dynamic youtube categories like Sports, Gaming, etc
+            //this handles top level dynamic youtube departments like Sports, Gaming, etc
             DepartmentPath path { DepartmentType::guide_category,
                     category->id(), SectionType::none };
             sc::Department::SPtr dept = sc::Department::create(path.to_string(),
@@ -640,7 +687,6 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
             sc::Department::SPtr videos = sc::Department::create(
                     videos_path.to_string(), query, _("Videos"));
             dept->add_subdepartment(videos);
-            cout << "== department id: " << videos_path.to_string() << endl;
 
             DepartmentPath playlists_path { DepartmentType::guide_category,
                     category->id(), SectionType::playlists };
@@ -662,6 +708,13 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
 
         switch (path.department_type) {
         case DepartmentType::subscriptions: {
+            reply->register_departments(all_depts);
+            subscriptions(reply);
+            break;
+        }
+        case DepartmentType::subscription: {
+            cout << "==== subs videos" << endl;
+            reply->register_departments(all_depts);
             subscription_videos(reply, path.department);
             break;
         }

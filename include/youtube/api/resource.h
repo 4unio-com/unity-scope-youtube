@@ -28,7 +28,7 @@ namespace api {
 class Resource {
 public:
     enum class Kind {
-        channel, channelSection, guideCategory, playlist, playlistItem, video, subscription, uploads
+        channel, channelSection, guideCategory, playlist, playlistItem, video, subscription, subscriptionItem
     };
 
     typedef std::shared_ptr<Resource> Ptr;

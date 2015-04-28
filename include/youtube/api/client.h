@@ -22,6 +22,7 @@
 #include <youtube/api/config.h>
 #include <youtube/api/channel.h>
 #include <youtube/api/subscription.h>
+#include <youtube/api/subscription-item.h>
 #include <youtube/api/channel-section.h>
 #include <youtube/api/guide-category.h>
 #include <youtube/api/playlist.h>
@@ -49,6 +50,8 @@ public:
 
     typedef std::deque<Subscription::Ptr> SubscriptionList;
 
+    typedef std::deque<SubscriptionItem::Ptr> SubscriptionItemList;
+
     typedef std::deque<ChannelSection::Ptr> ChannelSectionList;
 
     typedef std::deque<GuideCategory::Ptr> GuideCategoryList;
@@ -71,7 +74,9 @@ public:
 
     virtual std::future<SubscriptionList> subscription_channels(std::string access_token);
 
-    virtual std::future<std::string> subscription_channel_uploads(std::string const &department_id, std::string &access_token);
+    virtual std::future<std::string> subscription_channel_uploads(std::string const &department_id);
+
+    virtual std::future<SubscriptionItemList> subscription_items( const std::string &playlistId);
 
     virtual std::future<ChannelList> category_channels(
             const std::string &categoryId);

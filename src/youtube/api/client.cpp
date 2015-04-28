@@ -18,7 +18,6 @@
 
 #include <youtube/api/channel.h>
 #include <youtube/api/client.h>
-#include <youtube/api/subscription.h>
 #include <youtube/api/playlist.h>
 
 #include <boost/iostreams/filtering_stream.hpp>
@@ -56,7 +55,11 @@ template<typename T>
                 kind = item["id"]["kind"].asString();
             }
             if (kind == filter) {
+                if (filter == "youtube#playlistItem")
+                    cout << "====  subs fiter is sub item " << endl;
                 results.emplace_back(make_shared<T>(item));
+                if (filter == "youtube#playlistItem")
+                    cout << "====  subs fiter is sub item SUCCES" << endl;
             }
         }
         return results;
@@ -257,10 +260,10 @@ future<Client::SubscriptionList> Client::subscription_channels(std::string acces
             });
 }
 
-future<std::string> Client::subscription_channel_uploads(std::string const &department_id, std::string &access_token) {
+future<std::string> Client::subscription_channel_uploads(std::string const &department_id) {
     std::string id = department_id.substr(13);
     return p->async_get<std::string>( { "youtube", "v3", "channels" }, { {
-            "part", "snippet,contentDetails" }, { "id", department_id }, {"access_token", access_token } },
+            "part", "snippet,contentDetails" }, { "id", department_id } },
             [](const json::Value &root) {
                 Json::Value items = root["items"];
                 Json::Value item = items[0];
@@ -268,6 +271,16 @@ future<std::string> Client::subscription_channel_uploads(std::string const &depa
                 Json::Value relatedPlaylists = contentDetails["relatedPlaylists"];
                 Json::Value uploads = relatedPlaylists["uploads"];;
                 return uploads.asString();
+            });
+}
+
+future<Client::SubscriptionItemList> Client::subscription_items(
+        const string &playlistId) {
+    return p->async_get<SubscriptionItemList>( { "youtube", "v3", "playlistItems" },
+            { { "part", "snippet" }, { "playlistId", playlistId } },
+            [](const json::Value &root) {
+cout << "==== subs items"<< endl << root << endl;
+                return get_typed_list<SubscriptionItem>("youtube#playlistItem", root);
             });
 }
 
