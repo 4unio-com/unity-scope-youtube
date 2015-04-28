@@ -283,23 +283,18 @@ void push_resource(const sc::SearchReplyProxy &reply,
         break;
     }
     case Resource::Kind::subscription: {
-        cout << "==== subs push resource" << endl;
         Subscription::Ptr subscription(
                 static_pointer_cast<Subscription>(resource));
         DepartmentPath path { DepartmentType::subscriptions,
                 subscription->id() };
-        cout << "==== subs push reply dept id: " << path.to_string() << endl;
-        cout << "==== subs push reply picture: " << subscription->picture() << endl;
         res["art"] = subscription->picture();
         res.set_uri(new_query.to_uri());
         break;
     }
     case Resource::Kind::subscriptionItem: {
-        cout << "==== subs item push_resource" << endl;
         SubscriptionItem::Ptr subs_item(
                 static_pointer_cast<SubscriptionItem>(resource));
         res["link"] = subs_item->link();
-        cout << "==== subs item push_res. title: " << subs_item->video_id() << endl;
         res["description"] = subs_item->description();
         res["subtitle"] = subs_item->title();
         res.set_uri(subs_item->video_id());
@@ -465,7 +460,6 @@ void Query::subscriptions(const sc::SearchReplyProxy &reply) {
     auto subs_future = client_.subscription_channels(access_token);
     Client::SubscriptionList items = get_or_throw(subs_future);
 
-    cout << "==== new items.size: " << items.size() << endl;
     for (auto &item : items) {
         push_resource(reply, cat, item);
     }
@@ -482,12 +476,10 @@ void Query::subscription_videos(const sc::SearchReplyProxy &reply,
 
     auto uploads_future = client_.subscription_channel_uploads(department_id);
     auto uploads = get_or_throw(uploads_future);
-    cout <<"==== subs. channel uploads id: " << uploads << endl;
 
     auto subscription_items_future = client_.subscription_items(uploads);
     Client::SubscriptionItemList items = get_or_throw(subscription_items_future);
 
-    cout << "==== new items.size: " << items.size() << endl;
     for (auto &subscription_item : items) {
         push_resource(reply, cat, subscription_item);
     }
@@ -643,14 +635,13 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
     sc::Department::SPtr all_depts;
     bool first_dept = true;
 
-    //create department to hold My Subscriptions
+    //create json for department to hold My Subscriptions
     Json::Value root_;
     root_["id"] = "subscriptions";
     Json::Value snippet;
     snippet["kind"] = "channel";
     snippet["title"] = _("My Subscriptions");
     root_["snippet"] = snippet;
-    cout << root_;
     GuideCategory subscriptions_gc(root_);
     std::shared_ptr<GuideCategory> subscriptions_ptr = std::make_shared<GuideCategory>(subscriptions_gc);
 
@@ -677,7 +668,6 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
         departments.pop_front();
         departments.push_front(subscriptions_ptr);
         departments.push_front(dept_0);
-
     }
     sc::Department::SPtr subscriptions_dept;
 
@@ -687,38 +677,36 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
             first_dept = false;
             all_depts = sc::Department::create("", query, category->title());
         } else {
-            if (category->id() == "subscriptions") // only add this hard coded dept and dynamic sub depts once
+            if (category->id() == "subscriptions") // only add this hard coded dept and its dynamic sub depts once
             {
-                    DepartmentPath subscriptions_path { DepartmentType::subscriptions,
-                            category->id(), SectionType::none};
-                    subscriptions_dept = sc::Department::create(
-                            subscriptions_path.to_string(), query, _("My Subscriptions"));
-                    all_depts->add_subdepartment(subscriptions_dept);
+                DepartmentPath subscriptions_path { DepartmentType::subscriptions,
+                        category->id(), SectionType::none};
+                subscriptions_dept = sc::Department::create(
+                        subscriptions_path.to_string(), query, _("My Subscriptions"));
+                all_depts->add_subdepartment(subscriptions_dept);
 
-                    cout << "==== subs my subs dept id: " << subscriptions_path.to_string() << endl;
-                    // we are logged in, so get user's subscription channels
-                    auto subscriptions_future = client_.subscription_channels(access_token);
-                    auto subscriptions = get_or_throw(subscriptions_future);
-                    for (Subscription::Ptr subscription : subscriptions) {
-                        std::string department_id = "subscription:" + subscription->id();
-                        cout << "== subscriptions department id: " << department_id << endl;
-                        sc::Department::SPtr dept_ = sc::Department::create(
-                            department_id,
-                            query,
-                            subscription->title()
-                        );
-                        subscriptions_dept->add_subdepartment(dept_);
-                    }
-                    continue;
+                // we are logged in, so get user's subscription channels
+                auto subscriptions_future = client_.subscription_channels(access_token);
+                auto subscriptions = get_or_throw(subscriptions_future);
+                for (Subscription::Ptr subscription : subscriptions) {
+                    std::string department_id = "subscription:" + subscription->id();
+                    sc::Department::SPtr dept_ = sc::Department::create(
+                        department_id,
+                        query,
+                        subscription->title()
+                    );
+                    subscriptions_dept->add_subdepartment(dept_);
+                }
+                continue;
             }
-            //this handles top level dynamic youtube departments like Sports, Gaming, etc
+            // this handles top level dynamic youtube departments like Sports, Gaming, etc
             DepartmentPath path { DepartmentType::guide_category,
                     category->id(), SectionType::none };
             sc::Department::SPtr dept = sc::Department::create(path.to_string(),
                     query, category->title());
             all_depts->add_subdepartment(dept);
 
-            //these are the second level departments used for dynamic depts. We hard code each of these for each top-level department, that is: Videos, Playlists, Channels
+            // these are the second level departments used for youtube derived dynamic depts
             DepartmentPath videos_path { DepartmentType::guide_category,
                     category->id(), SectionType::videos };
             sc::Department::SPtr videos = sc::Department::create(
@@ -750,7 +738,6 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
             break;
         }
         case DepartmentType::subscription: {
-            cout << "==== subs videos" << endl;
             reply->register_departments(all_depts);
             subscription_videos(reply, path.department);
             break;

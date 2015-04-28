@@ -27,10 +27,6 @@ using namespace youtube::api;
 using namespace std;
 
 SubscriptionItem::SubscriptionItem(const json::Value &data) {
-
-
-    cout << "==== in subs item construnctor";
-
     string kind = data["kind"].asString();
 
     json::Value id = data["id"];
