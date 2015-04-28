@@ -13,7 +13,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Author: Pete Woods <pete.woods@canonical.com>
+ * Authors:
+ *   - Pete Woods <pete.woods@canonical.com>
+ *   - Kyle Nitzsche <kyle.nitzsche@canonical.com>
  */
 
 #ifndef YOUTUBE_SCOPE_QUERY_H_
