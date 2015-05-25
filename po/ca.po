@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unity-scope-youtube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-28 11:08-0400\n"
+"POT-Creation-Date: 2015-05-25 11:02+0100\n"
 "PO-Revision-Date: 2014-09-30 07:28+0000\n"
 "Last-Translator: David Planella <david.planella@ubuntu.com>\n"
 "Language-Team: Catalan <ca@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-12-12 06:51+0000\n"
 "X-Generator: Launchpad (build 17286)\n"
 
-#: ../src/youtube/scope/query.cpp:871
+#: ../src/youtube/scope/query.cpp:858
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
@@ -33,7 +33,7 @@ msgid_plural "%d subscribers"
 msgstr[0] "Un subscriptor"
 msgstr[1] "%d subscriptors"
 
-#: ../src/youtube/scope/query.cpp:313
+#: ../src/youtube/scope/query.cpp:308
 #, c-format
 msgid "1 video"
 msgid_plural "%d videos"
@@ -47,27 +47,27 @@ msgid_plural "%d views"
 msgstr[0] "Una visualització"
 msgstr[1] "%d visualitzacions"
 
-#: ../src/youtube/scope/query.cpp:604
+#: ../src/youtube/scope/query.cpp:596
 msgid "Channel contents"
 msgstr "Continguts del canal"
 
-#: ../src/youtube/scope/query.cpp:535 ../src/youtube/scope/query.cpp:736
+#: ../src/youtube/scope/query.cpp:527 ../src/youtube/scope/query.cpp:725
 msgid "Channels"
 msgstr "Canals"
 
-#: ../src/youtube/scope/query.cpp:362
+#: ../src/youtube/scope/query.cpp:357
 msgid "Log-in to YouTube"
 msgstr "Entra al YouTube"
 
-#: ../src/youtube/scope/query.cpp:651 ../src/youtube/scope/query.cpp:694
+#: ../src/youtube/scope/query.cpp:643 ../src/youtube/scope/query.cpp:685
 msgid "My Subscriptions"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:587
+#: ../src/youtube/scope/query.cpp:579
 msgid "Playlist contents"
 msgstr "Continguts de la llista de reproducció"
 
-#: ../src/youtube/scope/query.cpp:554 ../src/youtube/scope/query.cpp:730
+#: ../src/youtube/scope/query.cpp:546 ../src/youtube/scope/query.cpp:719
 msgid "Playlists"
 msgstr "Llistes de reproducció"
 
@@ -75,19 +75,19 @@ msgstr "Llistes de reproducció"
 msgid "Search YouTube for videos and browse channels"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:480
+#: ../src/youtube/scope/query.cpp:475
 msgid "Uploads"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:502 ../src/youtube/scope/query.cpp:724
+#: ../src/youtube/scope/query.cpp:495 ../src/youtube/scope/query.cpp:713
 msgid "Videos"
 msgstr "Vídeos"
 
 #: ../data/com.ubuntu.scopes.youtube.ini.in.h:1
-#: ../src/youtube/scope/query.cpp:619
+#: ../src/youtube/scope/query.cpp:611
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/youtube/scope/query.cpp:885
+#: ../src/youtube/scope/query.cpp:872
 msgid "YouTube requires an internet connection"
 msgstr "El YouTube requereix una connexió a Internet"
