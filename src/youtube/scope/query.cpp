@@ -165,7 +165,7 @@ enum class DepartmentType {
 };
 
 enum class SectionType {
-    none, videos, playlists, channels, subscriptions, subscription
+    none, videos, playlists, channels
 };
 
 /**
