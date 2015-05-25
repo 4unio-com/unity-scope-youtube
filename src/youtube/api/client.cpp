@@ -248,6 +248,37 @@ future<Client::GuideCategoryList> Client::guide_categories(
             });
 }
 
+future<Client::SubscriptionList> Client::subscription_channels(std::string access_token) {
+    return p->async_get<SubscriptionList>( { "youtube", "v3", "subscriptions" }, { {
+            "part", "snippet" }, { "mine", "true" }, {"access_token", access_token }, {"maxResults", "50"} },
+            [](const json::Value &root) {
+                return get_typed_list<Subscription>("youtube#subscription", root);
+            });
+}
+
+future<std::string> Client::subscription_channel_uploads(std::string const &department_id) {
+    std::string id = department_id.substr(13);
+    return p->async_get<std::string>( { "youtube", "v3", "channels" }, { {
+            "part", "snippet,contentDetails" }, { "id", department_id } },
+            [](const json::Value &root) {
+                Json::Value items = root["items"];
+                Json::Value item = items[0];
+                Json::Value contentDetails = item["contentDetails"];
+                Json::Value relatedPlaylists = contentDetails["relatedPlaylists"];
+                Json::Value uploads = relatedPlaylists["uploads"];;
+                return uploads.asString();
+            });
+}
+
+future<Client::SubscriptionItemList> Client::subscription_items(
+        const string &playlistId) {
+    return p->async_get<SubscriptionItemList>( { "youtube", "v3", "playlistItems" },
+            { { "part", "snippet" }, { "playlistId", playlistId }, {"maxResults", "50"}  },
+            [](const json::Value &root) {
+                return get_typed_list<SubscriptionItem>("youtube#playlistItem", root);
+            });
+}
+
 future<Client::ChannelList> Client::category_channels(
         const string &categoryId) {
     return p->async_get<ChannelList>( { "youtube", "v3", "channels" }, { {

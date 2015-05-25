@@ -20,6 +20,8 @@
 #include <boost/algorithm/string/trim.hpp>
 
 #include <youtube/api/channel.h>
+#include <youtube/api/subscription.h>
+#include <youtube/api/subscription-item.h>
 #include <youtube/api/playlist.h>
 
 #include <youtube/scope/localisation.h>
@@ -34,6 +36,7 @@
 #include <unity/scopes/SearchMetadata.h>
 
 #include <sstream>
+#include <json/json.h>
 
 namespace sc = unity::scopes;
 namespace alg = boost::algorithm;
@@ -74,6 +77,27 @@ const static string SEARCH_TEMPLATE =
     "category-layout": "grid",
     "card-size": "medium",
     "card-layout": "horizontal"
+  },
+  "components": {
+    "title": "title",
+    "art" : {
+      "field": "art",
+      "aspect-ratio": 1.7
+    },
+    "subtitle": "subtitle"
+  }
+}
+)";
+
+const static string SUBSCRIPTIONS_TEMPLATE =
+        R"(
+{
+  "schema-version": 1,
+  "template": {
+    "category-layout": "grid",
+    "card-size": "medium",
+    "card-layout": "horizontal",
+    "non-interactive": "true"
   },
   "components": {
     "title": "title",
@@ -137,11 +161,11 @@ static T get_or_throw(future<T> &f) {
 }
 
 enum class DepartmentType {
-    guide_category, channel, playlist, aggregated
+    guide_category, channel, playlist, aggregated, subscriptions, subscription
 };
 
 enum class SectionType {
-    none, videos, playlists, channels
+    none, videos, playlists, channels, subscriptions, subscription
 };
 
 /**
@@ -176,6 +200,10 @@ struct DepartmentPath {
             department_type = DepartmentType::playlist;
         } else if (alg::starts_with(s, "aggregated:")) {
             department_type = DepartmentType::aggregated;
+        } else if (alg::starts_with(s, "subscriptions:")) {
+            department_type = DepartmentType::subscriptions;
+        } else if (alg::starts_with(s, "subscription:")) {
+            department_type = DepartmentType::subscription;
         }
 
         department = s.substr(s.find(':') + 1);
@@ -209,6 +237,12 @@ struct DepartmentPath {
             break;
         case DepartmentType::aggregated:
             result << "aggregated:";
+            break;
+        case DepartmentType::subscriptions:
+            result << "subscriptions:";
+            break;
+        case DepartmentType::subscription:
+            result << "subscription:";
             break;
         }
 
@@ -246,6 +280,24 @@ void push_resource(const sc::SearchReplyProxy &reply,
                 guide_category->id() };
         new_query.set_department_id(path.to_string());
         res.set_uri(new_query.to_uri());
+        break;
+    }
+    case Resource::Kind::subscription: {
+        Subscription::Ptr subscription(
+                static_pointer_cast<Subscription>(resource));
+        DepartmentPath path { DepartmentType::subscriptions,
+                subscription->id() };
+        res["art"] = subscription->picture();
+        res.set_uri(new_query.to_uri());
+        break;
+    }
+    case Resource::Kind::subscriptionItem: {
+        SubscriptionItem::Ptr subs_item(
+                static_pointer_cast<SubscriptionItem>(resource));
+        res["link"] = subs_item->link();
+        res["description"] = subs_item->description();
+        res["subtitle"] = subs_item->title();
+        res.set_uri(subs_item->video_id());
         break;
     }
     case Resource::Kind::playlist: {
@@ -289,7 +341,8 @@ void push_resource(const sc::SearchReplyProxy &reply,
 Query::Query(const sc::CannedQuery &query, const sc::SearchMetadata &metadata,
              std::shared_ptr<sc::OnlineAccountClient> oa_client) :
         sc::SearchQueryBase(query, metadata),
-        client_(oa_client) {
+        client_(oa_client),
+        oac(oa_client) {
 }
 
 void Query::cancelled() {
@@ -321,6 +374,19 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
     if (DEBUG_MODE) {
         cerr << "Finding channels: " << department_id << endl;
     }
+
+    bool logged_in = false;
+    for (auto const& status : oac->get_service_statuses())
+    {
+         if (status.service_authenticated)
+        {
+            access_token = status.access_token;
+            logged_in = true;
+            break;
+        }
+    }
+    if (! logged_in)
+        add_login_nag(reply);
 
     auto channels_future = client_.category_channels(department_id);
     auto channels = get_or_throw(channels_future);
@@ -381,6 +447,42 @@ void Query::guide_category(const sc::SearchReplyProxy &reply,
             PlaylistItem::Ptr video(*it);
             push_resource(reply, cat, video);
         }
+    }
+}
+
+void Query::subscriptions(const sc::SearchReplyProxy &reply) {
+    if (DEBUG_MODE) {
+        cerr << "Finding subscriptions: " << endl;
+    }
+
+    auto cat = reply->register_category("subscriptions", "", "",
+            sc::CategoryRenderer(SUBSCRIPTIONS_TEMPLATE));
+
+    auto subs_future = client_.subscription_channels(access_token);
+    Client::SubscriptionList items = get_or_throw(subs_future);
+
+    for (auto &item : items) {
+        push_resource(reply, cat, item);
+    }
+}
+
+void Query::subscription_videos(const sc::SearchReplyProxy &reply,
+        const string &department_id) {
+    if (DEBUG_MODE) {
+        cerr << "Finding subscription uploads: " << department_id << endl;
+    }
+
+    auto cat = reply->register_category("subscription", _("Uploads"), "",
+            sc::CategoryRenderer(BROWSE_TEMPLATE));
+
+    auto uploads_future = client_.subscription_channel_uploads(department_id);
+    auto uploads = get_or_throw(uploads_future);
+
+    auto subscription_items_future = client_.subscription_items(uploads);
+    Client::SubscriptionItemList items = get_or_throw(subscription_items_future);
+
+    for (auto &subscription_item : items) {
+        push_resource(reply, cat, subscription_item);
     }
 }
 
@@ -533,20 +635,78 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
     sc::Department::SPtr all_depts;
     bool first_dept = true;
 
+    //create json for department to hold My Subscriptions
+    Json::Value root_;
+    root_["id"] = "subscriptions";
+    Json::Value snippet;
+    snippet["kind"] = "channel";
+    snippet["title"] = _("My Subscriptions");
+    root_["snippet"] = snippet;
+    GuideCategory subscriptions_gc(root_);
+    std::shared_ptr<GuideCategory> subscriptions_ptr = std::make_shared<GuideCategory>(subscriptions_gc);
+
+    // get youtube main categories
     auto departments_future = client_.guide_categories(country_code(),
             search_metadata().locale());
     auto departments = get_or_throw(departments_future);
+
+    // if logged in, add My Subscriptions department to the list of top level departments
+    // in position 1 (so Best of Youtube is position 0)
+    bool logged_in = false;
+    for (auto const& status : oac->get_service_statuses())
+    {
+         if (status.service_authenticated)
+        {
+            access_token = status.access_token;
+            logged_in = true;
+            break;
+        }
+    }
+    if (logged_in)
+    {
+        auto dept_0 = departments[0];
+        departments.pop_front();
+        departments.push_front(subscriptions_ptr);
+        departments.push_front(dept_0);
+    }
+    sc::Department::SPtr subscriptions_dept;
+
+    // create the department structure
     for (GuideCategory::Ptr category : departments) {
         if (first_dept) {
             first_dept = false;
             all_depts = sc::Department::create("", query, category->title());
         } else {
+            if (category->id() == "subscriptions") // only add this hard coded dept and its dynamic sub depts once
+            {
+                DepartmentPath subscriptions_path { DepartmentType::subscriptions,
+                        category->id(), SectionType::none};
+                subscriptions_dept = sc::Department::create(
+                        subscriptions_path.to_string(), query, _("My Subscriptions"));
+                all_depts->add_subdepartment(subscriptions_dept);
+
+                // we are logged in, so get user's subscription channels
+                auto subscriptions_future = client_.subscription_channels(access_token);
+                auto subscriptions = get_or_throw(subscriptions_future);
+                for (Subscription::Ptr subscription : subscriptions) {
+                    std::string department_id = "subscription:" + subscription->id();
+                    sc::Department::SPtr dept_ = sc::Department::create(
+                        department_id,
+                        query,
+                        subscription->title()
+                    );
+                    subscriptions_dept->add_subdepartment(dept_);
+                }
+                continue;
+            }
+            // this handles top level dynamic youtube departments like Sports, Gaming, etc
             DepartmentPath path { DepartmentType::guide_category,
                     category->id(), SectionType::none };
             sc::Department::SPtr dept = sc::Department::create(path.to_string(),
                     query, category->title());
             all_depts->add_subdepartment(dept);
 
+            // these are the second level departments used for youtube derived dynamic depts
             DepartmentPath videos_path { DepartmentType::guide_category,
                     category->id(), SectionType::videos };
             sc::Department::SPtr videos = sc::Department::create(
@@ -572,6 +732,16 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
     if (!raw_department_id.empty()) {
         DepartmentPath path(raw_department_id);
         switch (path.department_type) {
+        case DepartmentType::subscriptions: {
+            reply->register_departments(all_depts);
+            subscriptions(reply);
+            break;
+        }
+        case DepartmentType::subscription: {
+            reply->register_departments(all_depts);
+            subscription_videos(reply, path.department);
+            break;
+        }
         case DepartmentType::guide_category: {
             // FIXME Working around the UI bug (have to register departments before results)
             reply->register_departments(all_depts);

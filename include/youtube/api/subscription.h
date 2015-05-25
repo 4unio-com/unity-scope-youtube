@@ -13,42 +13,50 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Author: Pete Woods <pete.woods@canonical.com>
+ * Author: Kyle Nitzsche <kyle.nitzsche@canonical.com>
  */
 
-#ifndef YOUTUBE_API_RESOURCE_H_
-#define YOUTUBE_API_RESOURCE_H_
+#ifndef YOUTUBE_API_SUBSCRIPTION_H_
+#define YOUTUBE_API_SUBSCRIPTION_H_
+
+#include <youtube/api/resource.h>
 
 #include <memory>
-#include <string>
+
+namespace Json {
+class Value;
+}
 
 namespace youtube {
 namespace api {
 
-class Resource {
+class Subscription: public Resource {
 public:
-    enum class Kind {
-        channel, channelSection, guideCategory, playlist, playlistItem, video, subscription, subscriptionItem
-    };
+    typedef std::shared_ptr<Subscription> Ptr;
 
-    typedef std::shared_ptr<Resource> Ptr;
+    Subscription(const Json::Value &data);
 
-    Resource() = default;
+    ~Subscription() = default;
 
-    virtual ~Resource() = default;
+    const std::string & title() const override;
 
-    virtual const std::string & title() const = 0;
+    const std::string & picture() const override;
 
-    virtual const std::string & picture() const = 0;
+    const std::string & id() const override;
 
-    virtual const std::string & id() const = 0;
+    Kind kind() const override;
 
-    virtual Kind kind() const = 0;
+    std::string kind_str() const override;
 
-    virtual std::string kind_str() const = 0;
+protected:
+    std::string title_;
+
+    std::string picture_;
+
+    std::string id_;
 };
 
 }
 }
 
-#endif // YOUTUBE_API_RESOURCE_H_
+#endif /* YOUTUBE_API_CHANNEL_H_ */

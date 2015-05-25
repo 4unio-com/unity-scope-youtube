@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-18 17:24+0000\n"
+"POT-Creation-Date: 2015-04-28 12:01-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: ../data/com.ubuntu.scopes.youtube.ini.in.h:1
-#: ../src/youtube/scope/query.cpp:508
+#: ../src/youtube/scope/query.cpp:611
 msgid "YouTube"
 msgstr ""
 
@@ -27,56 +27,64 @@ msgstr ""
 msgid "Search YouTube for videos and browse channels"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:235
+#: ../src/youtube/scope/query.cpp:269
 #, c-format
 msgid "1 subscriber"
 msgid_plural "%d subscribers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/youtube/scope/query.cpp:256
+#: ../src/youtube/scope/query.cpp:308
 #, c-format
 msgid "1 video"
 msgid_plural "%d videos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/youtube/scope/query.cpp:303
+#: ../src/youtube/scope/query.cpp:357
 msgid "Log-in to YouTube"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:392 ../src/youtube/scope/query.cpp:552
+#: ../src/youtube/scope/query.cpp:475
+msgid "Uploads"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:495 ../src/youtube/scope/query.cpp:713
 msgid "Videos"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:424 ../src/youtube/scope/query.cpp:564
+#: ../src/youtube/scope/query.cpp:527 ../src/youtube/scope/query.cpp:725
 msgid "Channels"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:443 ../src/youtube/scope/query.cpp:558
+#: ../src/youtube/scope/query.cpp:546 ../src/youtube/scope/query.cpp:719
 msgid "Playlists"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:476
+#: ../src/youtube/scope/query.cpp:579
 msgid "Playlist contents"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:493
+#: ../src/youtube/scope/query.cpp:596
 msgid "Channel contents"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:687
+#: ../src/youtube/scope/query.cpp:643 ../src/youtube/scope/query.cpp:685
+msgid "My Subscriptions"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:858
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/youtube/scope/query.cpp:701
+#: ../src/youtube/scope/query.cpp:872
 msgid "YouTube requires an internet connection"
 msgstr ""
 
-#: ../src/youtube/scope/preview.cpp:77
+#: ../src/youtube/scope/preview.cpp:78
 #, c-format
 msgid "1 view"
 msgid_plural "%d views"

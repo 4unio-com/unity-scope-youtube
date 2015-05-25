@@ -13,7 +13,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Author: Pete Woods <pete.woods@canonical.com>
+ * Authors:
+ *   - Pete Woods <pete.woods@canonical.com>
+ *   - Kyle Nitzsche <kyle.nitzsche@canonical.com>
  */
 
 #ifndef YOUTUBE_SCOPE_QUERY_H_
@@ -45,6 +47,11 @@ protected:
     void guide_category(const unity::scopes::SearchReplyProxy &reply,
             const std::string &department_id);
 
+    void subscriptions(const unity::scopes::SearchReplyProxy &reply);
+
+    void subscription_videos(const unity::scopes::SearchReplyProxy &reply,
+            const std::string &department_id);
+
     void guide_category_videos(const unity::scopes::SearchReplyProxy &reply,
             const std::string &department_id);
 
@@ -70,6 +77,10 @@ protected:
     std::string country_code() const;
 
     youtube::api::Client client_;
+
+    std::shared_ptr<unity::scopes::OnlineAccountClient> oac;
+
+    std::string access_token;
 };
 
 }

@@ -18,6 +18,8 @@ configure_file(
 add_library(
   ${SCOPE_NAME}-static OBJECT
   youtube/api/channel.cpp
+  youtube/api/subscription.cpp
+  youtube/api/subscription-item.cpp
   youtube/api/channel-section.cpp
   youtube/api/client.cpp
   youtube/api/guide-category.cpp
