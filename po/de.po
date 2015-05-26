@@ -6,25 +6,26 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: unity-scope-youtube\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-25 11:02+0100\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-05-25 11:06+0100\n"
 "PO-Revision-Date: 2015-05-20 10:01+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German <de@li.org>\n"
-"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-05-22 05:11+0000\n"
+"X-Launchpad-Export-Date: 2015-05-26 05:54+0000\n"
 "X-Generator: Launchpad (build 17514)\n"
 
-#: ../src/youtube/scope/query.cpp:858
-#, c-format
-msgid "1 result from YouTube"
-msgid_plural "%d results from YouTube"
-msgstr[0] ""
-msgstr[1] ""
+#: ../data/com.ubuntu.scopes.youtube.ini.in.h:1
+#: ../src/youtube/scope/query.cpp:611
+msgid "YouTube"
+msgstr ""
+
+#: ../data/com.ubuntu.scopes.youtube.ini.in.h:2
+msgid "Search YouTube for videos and browse channels"
+msgstr ""
 
 #: ../src/youtube/scope/query.cpp:269
 #, c-format
@@ -40,39 +41,8 @@ msgid_plural "%d videos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/youtube/scope/preview.cpp:78
-#, c-format
-msgid "1 view"
-msgid_plural "%d views"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../src/youtube/scope/query.cpp:596
-msgid "Channel contents"
-msgstr ""
-
-#: ../src/youtube/scope/query.cpp:527 ../src/youtube/scope/query.cpp:725
-msgid "Channels"
-msgstr ""
-
 #: ../src/youtube/scope/query.cpp:357
 msgid "Log-in to YouTube"
-msgstr ""
-
-#: ../src/youtube/scope/query.cpp:643 ../src/youtube/scope/query.cpp:685
-msgid "My Subscriptions"
-msgstr ""
-
-#: ../src/youtube/scope/query.cpp:579
-msgid "Playlist contents"
-msgstr ""
-
-#: ../src/youtube/scope/query.cpp:546 ../src/youtube/scope/query.cpp:719
-msgid "Playlists"
-msgstr ""
-
-#: ../data/com.ubuntu.scopes.youtube.ini.in.h:2
-msgid "Search YouTube for videos and browse channels"
 msgstr ""
 
 #: ../src/youtube/scope/query.cpp:475
@@ -83,11 +53,40 @@ msgstr ""
 msgid "Videos"
 msgstr ""
 
-#: ../data/com.ubuntu.scopes.youtube.ini.in.h:1
-#: ../src/youtube/scope/query.cpp:611
-msgid "YouTube"
+#: ../src/youtube/scope/query.cpp:527 ../src/youtube/scope/query.cpp:725
+msgid "Channels"
 msgstr ""
+
+#: ../src/youtube/scope/query.cpp:546 ../src/youtube/scope/query.cpp:719
+msgid "Playlists"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:579
+msgid "Playlist contents"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:596
+msgid "Channel contents"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:643 ../src/youtube/scope/query.cpp:685
+msgid "My Subscriptions"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:858
+#, c-format
+msgid "1 result from YouTube"
+msgid_plural "%d results from YouTube"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/youtube/scope/query.cpp:872
 msgid "YouTube requires an internet connection"
 msgstr ""
+
+#: ../src/youtube/scope/preview.cpp:78
+#, c-format
+msgid "1 view"
+msgid_plural "%d views"
+msgstr[0] ""
+msgstr[1] ""

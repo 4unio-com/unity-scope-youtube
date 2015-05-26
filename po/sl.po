@@ -6,28 +6,27 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: unity-scope-youtube\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-25 11:02+0100\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-05-25 11:06+0100\n"
 "PO-Revision-Date: 2015-05-01 12:16+0000\n"
 "Last-Translator: Sasa Batistic <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
-"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2015-05-02 05:37+0000\n"
-"X-Generator: Launchpad (build 17474)\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
+"X-Launchpad-Export-Date: 2015-05-26 05:54+0000\n"
+"X-Generator: Launchpad (build 17514)\n"
 
-#: ../src/youtube/scope/query.cpp:858
-#, c-format
-msgid "1 result from YouTube"
-msgid_plural "%d results from YouTube"
-msgstr[0] "%d rezultatov v YouTube"
-msgstr[1] "1 rezultat v YouTube"
-msgstr[2] "%d rezultata v YouTube"
-msgstr[3] "%d rezultati v YouTube"
+#: ../data/com.ubuntu.scopes.youtube.ini.in.h:1
+#: ../src/youtube/scope/query.cpp:611
+msgid "YouTube"
+msgstr "YouTube"
+
+#: ../data/com.ubuntu.scopes.youtube.ini.in.h:2
+msgid "Search YouTube for videos and browse channels"
+msgstr "Poiščite videoposnetke v YouTube in brskajte po kanalih"
 
 #: ../src/youtube/scope/query.cpp:269
 #, c-format
@@ -47,42 +46,9 @@ msgstr[1] "1 videoposnetek"
 msgstr[2] "%d videoposnetka"
 msgstr[3] "%d videoposnetki"
 
-#: ../src/youtube/scope/preview.cpp:78
-#, c-format
-msgid "1 view"
-msgid_plural "%d views"
-msgstr[0] "%d ogledov"
-msgstr[1] "1 ogled"
-msgstr[2] "%d ogleda"
-msgstr[3] "%d ogledi"
-
-#: ../src/youtube/scope/query.cpp:596
-msgid "Channel contents"
-msgstr "Vsebina kanalov"
-
-#: ../src/youtube/scope/query.cpp:527 ../src/youtube/scope/query.cpp:725
-msgid "Channels"
-msgstr "Kanali"
-
 #: ../src/youtube/scope/query.cpp:357
 msgid "Log-in to YouTube"
 msgstr "Prijavite se v YouTube"
-
-#: ../src/youtube/scope/query.cpp:643 ../src/youtube/scope/query.cpp:685
-msgid "My Subscriptions"
-msgstr ""
-
-#: ../src/youtube/scope/query.cpp:579
-msgid "Playlist contents"
-msgstr "Vsebina seznama predvajanja"
-
-#: ../src/youtube/scope/query.cpp:546 ../src/youtube/scope/query.cpp:719
-msgid "Playlists"
-msgstr "Seznami predvajanja"
-
-#: ../data/com.ubuntu.scopes.youtube.ini.in.h:2
-msgid "Search YouTube for videos and browse channels"
-msgstr "Poiščite videoposnetke v YouTube in brskajte po kanalih"
 
 #: ../src/youtube/scope/query.cpp:475
 msgid "Uploads"
@@ -92,11 +58,44 @@ msgstr ""
 msgid "Videos"
 msgstr "Videoposnetki"
 
-#: ../data/com.ubuntu.scopes.youtube.ini.in.h:1
-#: ../src/youtube/scope/query.cpp:611
-msgid "YouTube"
-msgstr "YouTube"
+#: ../src/youtube/scope/query.cpp:527 ../src/youtube/scope/query.cpp:725
+msgid "Channels"
+msgstr "Kanali"
+
+#: ../src/youtube/scope/query.cpp:546 ../src/youtube/scope/query.cpp:719
+msgid "Playlists"
+msgstr "Seznami predvajanja"
+
+#: ../src/youtube/scope/query.cpp:579
+msgid "Playlist contents"
+msgstr "Vsebina seznama predvajanja"
+
+#: ../src/youtube/scope/query.cpp:596
+msgid "Channel contents"
+msgstr "Vsebina kanalov"
+
+#: ../src/youtube/scope/query.cpp:643 ../src/youtube/scope/query.cpp:685
+msgid "My Subscriptions"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:858
+#, c-format
+msgid "1 result from YouTube"
+msgid_plural "%d results from YouTube"
+msgstr[0] "%d rezultatov v YouTube"
+msgstr[1] "1 rezultat v YouTube"
+msgstr[2] "%d rezultata v YouTube"
+msgstr[3] "%d rezultati v YouTube"
 
 #: ../src/youtube/scope/query.cpp:872
 msgid "YouTube requires an internet connection"
 msgstr "YouTube zahteva internetno povezavo"
+
+#: ../src/youtube/scope/preview.cpp:78
+#, c-format
+msgid "1 view"
+msgid_plural "%d views"
+msgstr[0] "%d ogledov"
+msgstr[1] "1 ogled"
+msgstr[2] "%d ogleda"
+msgstr[3] "%d ogledi"
