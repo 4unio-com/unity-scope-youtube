@@ -1,20 +1,21 @@
-# Spanish translation for unity-scope-youtube
-# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# Polish translation for unity-scope-youtube
+# Copyright (c) 2015 Rosetta Contributors and Canonical Ltd 2015
 # This file is distributed under the same license as the unity-scope-youtube package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: unity-scope-youtube\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2015-05-25 11:06+0100\n"
-"PO-Revision-Date: 2015-10-22 18:14+0000\n"
-"Last-Translator: Víctor R. Ruiz <Unknown>\n"
-"Language-Team: Spanish <es@li.org>\n"
+"PO-Revision-Date: 2015-10-22 17:48+0000\n"
+"Last-Translator: Bartosz Kosiorek <Unknown>\n"
+"Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2;\n"
 "X-Launchpad-Export-Date: 2015-10-23 05:49+0000\n"
 "X-Generator: Launchpad (build 17812)\n"
 
@@ -25,68 +26,72 @@ msgstr "YouTube"
 
 #: ../data/com.ubuntu.scopes.youtube.ini.in.h:2
 msgid "Search YouTube for videos and browse channels"
-msgstr "Buscar vídeos y explorar canales de YouTube"
+msgstr "Przeszukaj YouTube w celu odnalezenia filmów oraz przeglądaj kanały"
 
 #: ../src/youtube/scope/query.cpp:269
 #, c-format
 msgid "1 subscriber"
 msgid_plural "%d subscribers"
-msgstr[0] "1 suscriptor"
-msgstr[1] "%d suscriptores"
+msgstr[0] "1 prenumerator"
+msgstr[1] "%d prenumeratorów"
+msgstr[2] "%d prenumeratorów"
 
 #: ../src/youtube/scope/query.cpp:308
 #, c-format
 msgid "1 video"
 msgid_plural "%d videos"
-msgstr[0] "1 vídeo"
-msgstr[1] "%d vídeos"
+msgstr[0] "1 film"
+msgstr[1] "%d filmy"
+msgstr[2] "%d filmów"
 
 #: ../src/youtube/scope/query.cpp:357
 msgid "Log-in to YouTube"
-msgstr "Iniciar sesión en YouTube"
+msgstr "Zaloguj do YouTube"
 
 #: ../src/youtube/scope/query.cpp:475
 msgid "Uploads"
-msgstr "Vídeos subidos"
+msgstr "Wysłane"
 
 #: ../src/youtube/scope/query.cpp:495 ../src/youtube/scope/query.cpp:713
 msgid "Videos"
-msgstr "Vídeos"
+msgstr "Filmy"
 
 #: ../src/youtube/scope/query.cpp:527 ../src/youtube/scope/query.cpp:725
 msgid "Channels"
-msgstr "Canales"
+msgstr "Kanały"
 
 #: ../src/youtube/scope/query.cpp:546 ../src/youtube/scope/query.cpp:719
 msgid "Playlists"
-msgstr "Listas de reproducción"
+msgstr "Listy odtwarzania"
 
 #: ../src/youtube/scope/query.cpp:579
 msgid "Playlist contents"
-msgstr "Contenido de la lista"
+msgstr "Zawartość listy odtwarzania"
 
 #: ../src/youtube/scope/query.cpp:596
 msgid "Channel contents"
-msgstr "Contenido del canal"
+msgstr "Zawartość kanału"
 
 #: ../src/youtube/scope/query.cpp:643 ../src/youtube/scope/query.cpp:685
 msgid "My Subscriptions"
-msgstr "Mis suscripciones"
+msgstr "Moje subskrypcje"
 
 #: ../src/youtube/scope/query.cpp:858
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
-msgstr[0] "1 resultado de YouTube"
-msgstr[1] "%d resultados de YouTube"
+msgstr[0] "1 wynik z YouTube"
+msgstr[1] "%d wyniki z YouTube"
+msgstr[2] "%d wyników z YouTube"
 
 #: ../src/youtube/scope/query.cpp:872
 msgid "YouTube requires an internet connection"
-msgstr "YouTube necesita una conexión a Internet"
+msgstr "YouTube wymaga połączenia internetowego"
 
 #: ../src/youtube/scope/preview.cpp:78
 #, c-format
 msgid "1 view"
 msgid_plural "%d views"
-msgstr[0] "1 visualización"
-msgstr[1] "%d visualizaciones"
+msgstr[0] "1 obejrzenie"
+msgstr[1] "%d obejrzenia"
+msgstr[2] "%d obejrzeń"
