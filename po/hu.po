@@ -1,0 +1,92 @@
+# Hungarian translation for unity-scope-youtube
+# Copyright (c) 2015 Rosetta Contributors and Canonical Ltd 2015
+# This file is distributed under the same license as the unity-scope-youtube package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: unity-scope-youtube\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-05-25 11:06+0100\n"
+"PO-Revision-Date: 2015-10-23 09:46+0000\n"
+"Last-Translator: Richard Somlói <ricsipontaz@gmail.com>\n"
+"Language-Team: Hungarian <hu@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2015-10-24 06:01+0000\n"
+"X-Generator: Launchpad (build 17812)\n"
+
+#: ../data/com.ubuntu.scopes.youtube.ini.in.h:1
+#: ../src/youtube/scope/query.cpp:611
+msgid "YouTube"
+msgstr "YouTube"
+
+#: ../data/com.ubuntu.scopes.youtube.ini.in.h:2
+msgid "Search YouTube for videos and browse channels"
+msgstr "Youtube videók keresése és a csatornák böngészése"
+
+#: ../src/youtube/scope/query.cpp:269
+#, c-format
+msgid "1 subscriber"
+msgid_plural "%d subscribers"
+msgstr[0] "1 feliratkozó"
+msgstr[1] "%d feliratkozó"
+
+#: ../src/youtube/scope/query.cpp:308
+#, c-format
+msgid "1 video"
+msgid_plural "%d videos"
+msgstr[0] "1 videó"
+msgstr[1] "%d videó"
+
+#: ../src/youtube/scope/query.cpp:357
+msgid "Log-in to YouTube"
+msgstr "Bejelentkezés a Youtube-ba"
+
+#: ../src/youtube/scope/query.cpp:475
+msgid "Uploads"
+msgstr "Feltöltések"
+
+#: ../src/youtube/scope/query.cpp:495 ../src/youtube/scope/query.cpp:713
+msgid "Videos"
+msgstr "Videók"
+
+#: ../src/youtube/scope/query.cpp:527 ../src/youtube/scope/query.cpp:725
+msgid "Channels"
+msgstr "Csatornák"
+
+#: ../src/youtube/scope/query.cpp:546 ../src/youtube/scope/query.cpp:719
+msgid "Playlists"
+msgstr "Lejátszólisták"
+
+#: ../src/youtube/scope/query.cpp:579
+msgid "Playlist contents"
+msgstr "Lejátszólista tartalma"
+
+#: ../src/youtube/scope/query.cpp:596
+msgid "Channel contents"
+msgstr "Csatorna tartalma"
+
+#: ../src/youtube/scope/query.cpp:643 ../src/youtube/scope/query.cpp:685
+msgid "My Subscriptions"
+msgstr "Feliratkozásaim"
+
+#: ../src/youtube/scope/query.cpp:858
+#, c-format
+msgid "1 result from YouTube"
+msgid_plural "%d results from YouTube"
+msgstr[0] "1 Youtube találat"
+msgstr[1] "%d Youtube találat"
+
+#: ../src/youtube/scope/query.cpp:872
+msgid "YouTube requires an internet connection"
+msgstr "A Youtube használata internet kapcsolatot igényel"
+
+#: ../src/youtube/scope/preview.cpp:78
+#, c-format
+msgid "1 view"
+msgid_plural "%d views"
+msgstr[0] "1 megtekintés"
+msgstr[1] "%d megtekintés"
