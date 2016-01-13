@@ -25,7 +25,7 @@ msgstr "YouTube"
 
 #: ../data/com.ubuntu.scopes.youtube.ini.in.h:2
 msgid "Search YouTube for videos and browse channels"
-msgstr "Youtube videók keresése és a csatornák böngészése"
+msgstr "YouTube videók keresése és a csatornák böngészése"
 
 #: ../src/youtube/scope/query.cpp:269
 #, c-format
@@ -43,7 +43,7 @@ msgstr[1] "%d videó"
 
 #: ../src/youtube/scope/query.cpp:357
 msgid "Log-in to YouTube"
-msgstr "Bejelentkezés a Youtube-ba"
+msgstr "Bejelentkezés a YouTube-ba"
 
 #: ../src/youtube/scope/query.cpp:475
 msgid "Uploads"
@@ -77,12 +77,12 @@ msgstr "Feliratkozásaim"
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
-msgstr[0] "1 Youtube találat"
-msgstr[1] "%d Youtube találat"
+msgstr[0] "1 YouTube találat"
+msgstr[1] "%d YouTube találat"
 
 #: ../src/youtube/scope/query.cpp:872
 msgid "YouTube requires an internet connection"
-msgstr "A Youtube használata internet kapcsolatot igényel"
+msgstr "A YouTube használata internet kapcsolatot igényel"
 
 #: ../src/youtube/scope/preview.cpp:78
 #, c-format
