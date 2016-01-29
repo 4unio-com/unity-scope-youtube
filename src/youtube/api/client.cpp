@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author: Pete Woods <pete.woods@canonical.com>
+ *         Gary Wang  <gary.wang@canonical.com>
  */
 
 #include <youtube/api/channel.h>
@@ -22,6 +23,7 @@
 
 #include <boost/iostreams/filtering_stream.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
+#include <boost/algorithm/string.hpp>
 #include <core/net/error.h>
 #include <core/net/uri.h>
 #include <core/net/http/content_type.h>
@@ -62,6 +64,17 @@ static deque<shared_ptr<T>> get_typed_list(const string &filter,
     return results;
 }
 
+template<typename T>
+static T is_successful(const json::Value &root) {
+    //for rating, server gives no-content back with 204 http status code
+    if (root.isNull()) {
+        return T(true);
+    }
+    T results = (root["id"].asString().length() > 0 || root["kind"].asString().length()> 0)
+                 ? true : false;
+    return results;
+}
+
 }
 
 class Client::Priv {
@@ -93,6 +106,44 @@ public:
             const net::Uri::QueryParameters &parameters,
             http::Request::Handler &handler) {
         std::lock_guard<std::mutex> lock(config_mutex_);
+        auto configuration = net_config(path, parameters);
+
+        configuration.header.add("Accept", config_.accept);
+        configuration.header.add("User-Agent", config_.user_agent + " (gzip)");
+        configuration.header.add("Accept-Encoding", "gzip");
+
+        auto request = client_->head(configuration);
+        request->async_execute(handler);
+    }
+
+    void post(const net::Uri::Path &path,
+            const net::Uri::QueryParameters &parameters,
+            const std::string &postmsg,
+            const std::string &content_type,
+            http::Request::Handler &handler) {
+        std::lock_guard<std::mutex> lock(config_mutex_);
+        http::Request::Configuration configuration = net_config(path, parameters);
+        configuration.header.add("User-Agent", config_.user_agent);
+        configuration.header.add("Content-Type", content_type);
+
+        auto request = client_->post(configuration, postmsg, content_type);
+        request->async_execute(handler);
+    }
+
+    void del(const net::Uri::Path &path,
+            const net::Uri::QueryParameters &parameters,
+            http::Request::Handler &handler) {
+        std::lock_guard<std::mutex> lock(config_mutex_);
+        http::Request::Configuration configuration = net_config(path, parameters);
+        configuration.header.add("User-Agent", config_.user_agent);
+        configuration.header.add("X-HTTP-Method-Override", "DELETE");
+
+        auto request = client_->post(configuration, "", "");
+        request->async_execute(handler);
+    }
+
+    http::Request::Configuration net_config(const net::Uri::Path &path,
+                                            const net::Uri::QueryParameters &parameters) {
         update_config();
 
         http::Request::Configuration configuration;
@@ -107,12 +158,8 @@ public:
         net::Uri uri = net::make_uri(config_.apiroot, path,
                 complete_parameters);
         configuration.uri = client_->uri_to_string(uri);
-        configuration.header.add("Accept", config_.accept);
-        configuration.header.add("User-Agent", config_.user_agent + " (gzip)");
-        configuration.header.add("Accept-Encoding", "gzip");
 
-        auto request = client_->head(configuration);
-        request->async_execute(handler);
+        return configuration;
     }
 
     http::Request::Progress::Next progress_report(
@@ -165,6 +212,76 @@ public:
                 });
 
         get(path, parameters, handler);
+
+        return prom->get_future();
+    }
+
+    template<typename T>
+    future<T> async_post(const net::Uri::Path &path,
+            const net::Uri::QueryParameters &parameters,
+            const std::string &postmsg,
+            const std::string &content_type,
+            const function<T(const json::Value &root)> &func) {
+        auto prom = make_shared<promise<T>>();
+
+        http::Request::Handler handler;
+        handler.on_progress(
+                bind(&Client::Priv::progress_report, this, placeholders::_1));
+        handler.on_error([prom](const net::Error& e)
+        {
+            prom->set_exception(make_exception_ptr(e));
+        });
+        handler.on_response(
+                [prom,func](const http::Response& response)
+                {
+                    json::Value root;
+                    json::Reader reader;
+                    reader.parse(response.body, root);
+
+                    if (response.status != http::Status::created &&
+                            response.status != http::Status::ok &&
+                            response.status != http::Status::no_content) {
+                        prom->set_exception(make_exception_ptr(domain_error(root["error"].asString())));
+                    } else {
+                        prom->set_value(func(root));
+                    }
+                });
+
+        post(path, parameters, postmsg, content_type, handler);
+
+        return prom->get_future();
+    }
+
+    template<typename T>
+    future<T> async_del(const net::Uri::Path &path,
+            const net::Uri::QueryParameters &parameters,
+            const function<T(const json::Value &root)> &func) {
+        auto prom = make_shared<promise<T>>();
+
+        http::Request::Handler handler;
+        handler.on_progress(
+                bind(&Client::Priv::progress_report, this, placeholders::_1));
+        handler.on_error([prom](const net::Error& e)
+        {
+            prom->set_exception(make_exception_ptr(e));
+        });
+        handler.on_response(
+                [prom,func](const http::Response& response)
+                {
+                    json::Value root;
+                    json::Reader reader;
+                    reader.parse(response.body, root);
+
+                    if (response.status != http::Status::created &&
+                            response.status != http::Status::ok &&
+                            response.status != http::Status::no_content) {
+                        prom->set_exception(make_exception_ptr(domain_error(root["error"].asString())));
+                    } else {
+                        prom->set_value(func(root));
+                    }
+                });
+
+        del(path, parameters, handler);
 
         return prom->get_future();
     }
@@ -248,11 +365,19 @@ future<Client::GuideCategoryList> Client::guide_categories(
             });
 }
 
-future<Client::SubscriptionList> Client::subscription_channels(std::string access_token) {
+future<Client::SubscriptionList> Client::subscription_channels() {
     return p->async_get<SubscriptionList>( { "youtube", "v3", "subscriptions" }, { {
-            "part", "snippet" }, { "mine", "true" }, {"access_token", access_token }, {"maxResults", "50"} },
+            "part", "snippet" }, { "mine", "true" }, {"maxResults", "50"} },
             [](const json::Value &root) {
                 return get_typed_list<Subscription>("youtube#subscription", root);
+    });
+}
+
+future<Client::ChannelList> Client::auth_user_info() {
+    return p->async_get<ChannelList>( { "youtube", "v3", "channels" }, { {
+            "part", "snippet,contentDetails,statistics" }, { "mine", "true" } },
+            [](const json::Value &root) {
+                return get_typed_list<Channel>("youtube#channel", root);
             });
 }
 
@@ -267,7 +392,7 @@ future<std::string> Client::subscription_channel_uploads(std::string const &depa
                 Json::Value relatedPlaylists = contentDetails["relatedPlaylists"];
                 Json::Value uploads = relatedPlaylists["uploads"];;
                 return uploads.asString();
-            });
+        });
 }
 
 future<Client::SubscriptionItemList> Client::subscription_items(
@@ -283,6 +408,15 @@ future<Client::ChannelList> Client::category_channels(
         const string &categoryId) {
     return p->async_get<ChannelList>( { "youtube", "v3", "channels" }, { {
             "part", "snippet,statistics" }, { "categoryId", categoryId } },
+            [](const json::Value &root) {
+                return get_typed_list<Channel>("youtube#channel", root);
+            });
+}
+
+future<Client::ChannelList> Client::channels_statistics(
+        const string &channelId) {
+    return p->async_get<ChannelList>( { "youtube", "v3", "channels" }, { {
+            "part", "statistics,snippet" }, { "id", channelId } },
             [](const json::Value &root) {
                 return get_typed_list<Channel>("youtube#channel", root);
             });
@@ -345,6 +479,89 @@ future<Client::PlaylistItemList> Client::playlist_items(
             });
 }
 
+future<Client::CommentList> Client::video_comments(const std::string &videoId) {
+    return p->async_get<CommentList>( { "youtube", "v3", "commentThreads" },
+            { { "part", "snippet" }, {"order", "time"}, { "videoId", videoId },
+              { "textFormat", "plainText"}, {"maxResults","15"}},
+            [](const json::Value &root) {
+                return get_typed_list<Comment>("youtube#commentThread", root);
+    });
+}
+
+future<bool> Client::post_comments(const string &videoId, const string postmsg) {
+    Json::Value comThreadRoot;
+    comThreadRoot["snippet"]["topLevelComment"]["snippet"]["textOriginal"] = postmsg;
+    comThreadRoot["snippet"]["topLevelComment"]["snippet"]["videoId"] = videoId;
+
+    Json::StyledWriter writer;
+    std::string postbody = writer.write( comThreadRoot );
+    std::string content_type = "application/json";
+
+    return p->async_post<bool>({ "youtube", "v3", "commentThreads" },
+            { { "part", "snippet" }}, postbody, content_type,
+            [](const json::Value &root) {
+                auto results = is_successful<bool>(root);
+                return results;
+            });
+}
+
+future<bool> Client::rate(const string &videoId, bool likes) {
+    return p->async_post<bool>( { "youtube", "v3", "videos", "rate" },
+            { { "id", videoId }, { "rating", likes ? "like":"dislike"} }, "", "",
+            [](const json::Value &root) {
+                return is_successful<bool>(root);
+    });
+}
+
+future<Client::SubscriptionList> Client::subscribeId(const string &channelId) {
+    return p->async_get<SubscriptionList>( { "youtube", "v3", "subscriptions" }, { {
+            "part", "snippet" }, { "mine", "true" }, {"forChannelId", channelId} },
+            [](const json::Value &root) {
+                return get_typed_list<Subscription>("youtube#subscription", root);
+            });
+}
+
+future<bool> Client::subscribe(const string &channelId) {
+    Json::Value channelRoot;
+    channelRoot["snippet"]["resourceId"]["channelId"] = channelId;
+    channelRoot["snippet"]["resourceId"]["kind"] = "youtube#channel";
+
+    Json::StyledWriter writer;
+    std::string postbody = writer.write( channelRoot );
+    std::string content_type = "application/json";
+
+    return p->async_post<bool>({ "youtube", "v3", "subscriptions" },
+            { { "part", "snippet" }}, postbody, content_type,
+            [](const json::Value &root) {
+                return is_successful<bool>(root);
+            });
+}
+
+future<bool> Client::unSubscribe(const string &subscribeId) {
+    return p->async_del<bool>({ "youtube", "v3", "subscriptions" },
+            { { "id", subscribeId }},
+            [](const json::Value &root) {
+                return is_successful<bool>(root);
+    });
+}
+
+future<bool> Client::addVideoIntoPlayList(const string &videoId,
+                                          const string &playlistId) {
+    Json::Value channelRoot;
+    channelRoot["snippet"]["playlistId"] = playlistId;
+    channelRoot["snippet"]["resourceId"]["kind"] = "youtube#video";
+    channelRoot["snippet"]["resourceId"]["videoId"] = videoId;
+
+    Json::StyledWriter writer;
+    std::string postbody = writer.write( channelRoot );
+    std::string content_type = "application/json";
+
+    return p->async_post<bool>({ "youtube", "v3", "playlistItems" },
+            { { "part", "snippet" }}, postbody, content_type,
+            [](const json::Value &root) {
+                return is_successful<bool>(root);
+            });
+}
 void Client::cancel() {
     p->cancelled_ = true;
 }

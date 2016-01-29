@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author: Kyle Nitzsche <kyle.nitzsche@canonical.com>
+ *         Gary Wang  <gary.wang@canonical.com>
  */
 
 #include <youtube/api/subscription.h>
@@ -28,10 +29,11 @@ using namespace std;
 
 Subscription::Subscription(const json::Value &data) {
 
+    id_ = data["id"].asString();
     json::Value snippet = data["snippet"];
     title_ = snippet["title"].asString();
     json::Value resourceId = snippet["resourceId"];
-    id_ = resourceId["channelId"].asString();
+    vid_ = resourceId["channelId"].asString();
     json::Value thumbnails = snippet["thumbnails"];
     json::Value default_ = thumbnails["default"];
     picture_ = default_["url"].asString();
@@ -46,6 +48,11 @@ const string & Subscription::picture() const {
 }
 
 const string & Subscription::id() const {
+    return vid_;
+}
+
+const string &Subscription::subscribeId() const
+{
     return id_;
 }
 

@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author: Pete Woods <pete.woods@canonical.com>
+ *         Gary Wang  <gary.wang@canonical.com>
  */
 
 #ifndef YOUTUBE_API_CLIENT_H_
@@ -29,6 +30,7 @@
 #include <youtube/api/playlist-item.h>
 #include <youtube/api/search-list-response.h>
 #include <youtube/api/video.h>
+#include <youtube/api/comment.h>
 
 #include <unity/scopes/OnlineAccountClient.h>
 
@@ -61,6 +63,8 @@ public:
     typedef std::deque<Playlist::Ptr> PlaylistList;
 
     typedef std::deque<Video::Ptr> VideoList;
+    
+    typedef std::deque<Comment::Ptr> CommentList;
 
     Client(std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client);
 
@@ -72,7 +76,9 @@ public:
     virtual std::future<SearchListResponse::Ptr> search(
             const std::string &query, unsigned int max_results, const std::string &category_id="");
 
-    virtual std::future<SubscriptionList> subscription_channels(std::string access_token);
+    virtual std::future<SubscriptionList> subscription_channels();
+
+    virtual std::future<ChannelList> auth_user_info();
 
     virtual std::future<std::string> subscription_channel_uploads(std::string const &department_id);
 
@@ -80,6 +86,9 @@ public:
 
     virtual std::future<ChannelList> category_channels(
             const std::string &categoryId);
+
+    virtual std::future<ChannelList> channels_statistics(
+            const std::string &channelId);
 
     virtual std::future<ChannelSectionList> channel_sections(
             const std::string &channelId, int maxResults);
@@ -96,6 +105,21 @@ public:
             const std::string &playlistId);
 
     virtual std::future<VideoList> videos(const std::string &videoId);
+
+    virtual std::future<CommentList> video_comments(const std::string &videoId);
+    
+    virtual std::future<bool> post_comments(const std::string &videoId, const std::string msg);
+
+    virtual std::future<bool> rate(const std::string &videoId, bool likes);
+
+    virtual std::future<Client::SubscriptionList> subscribeId(const std::string &channelId);
+
+    virtual std::future<bool> subscribe(const std::string &channelId);
+    
+    virtual std::future<bool> unSubscribe(const std::string &subscribeId);
+    
+    virtual std::future<bool> addVideoIntoPlayList(const std::string &videoId,
+                                                   const std::string &playlistId);
 
     virtual void cancel();
 

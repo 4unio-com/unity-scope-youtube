@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author: Kyle Nitzsche <kyle.nitzsche@canonical.com>
+ *         Gary Wang  <gary.wang@canonical.com>
  */
 
 #ifndef YOUTUBE_API_SUBSCRIPTION_H_
@@ -44,6 +45,8 @@ public:
 
     const std::string & id() const override;
 
+    const std::string & subscribeId() const;
+
     Kind kind() const override;
 
     std::string kind_str() const override;
@@ -52,6 +55,8 @@ protected:
     std::string title_;
 
     std::string picture_;
+
+    std::string vid_;
 
     std::string id_;
 };

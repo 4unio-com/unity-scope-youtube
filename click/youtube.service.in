@@ -17,7 +17,7 @@
           <setting name="TokenPath">o/oauth2/token</setting>
           <setting name="RedirectUri">https://wiki.ubuntu.com/</setting>
           <setting name="ResponseType">code</setting>
-          <setting type="as" name="Scope">['https://www.googleapis.com/auth/youtube.readonly']</setting>
+          <setting type="as" name="Scope">['https://www.googleapis.com/auth/youtube.force-ssl','https://www.googleapis.com/auth/youtube']</setting>
           <setting name="ClientId">368477111780-4tf0t65ol86nkvf6guksr8d1om0aebob.apps.googleusercontent.com</setting>
           <setting name="ClientSecret">bNfrMJzYmesl2sm1XutVnlmv</setting>
           <setting type="as" name="AllowedSchemes">['https','http']</setting>

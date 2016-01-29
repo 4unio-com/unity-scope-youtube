@@ -17,12 +17,13 @@
  *         Gary Wang  <gary.wang@canonical.com>
  */
 
-#ifndef YOUTUBE_API_CHANNEL_H_
-#define YOUTUBE_API_CHANNEL_H_
+#ifndef API_COMMENT_H_
+#define API_COMMENT_H_
 
-#include <youtube/api/resource.h>
+#include <youtube/api/user.h>
 
 #include <memory>
+#include <string>
 
 namespace Json {
 class Value;
@@ -31,63 +32,41 @@ class Value;
 namespace youtube {
 namespace api {
 
-class Channel: public Resource {
+class Comment: public Resource {
 public:
-    typedef std::shared_ptr<Channel> Ptr;
+    typedef std::shared_ptr<Comment> Ptr;
 
-    Channel(const Json::Value &data);
+    Comment(const Json::Value &data);
 
-    ~Channel() = default;
-
-    const std::string & title() const override;
-
-    const std::string & description() const;
-
-    const std::string & picture() const override;
+    virtual ~Comment() = default;
 
     const std::string & id() const override;
 
-    unsigned int subscriber_count() const;
+    const std::string & title() const override;
 
-    unsigned int video_count() const;
+    const std::string & picture() const override;
 
-    long view_count() const;
+    const std::string & body() const;
 
-    const std::string likes_playlist() const;
-
-    const std::string favorites_playlist() const;
-
-    const std::string watchLater_playlist() const;
+    const std::string & created_at() const;
+    
+    const User & user() const;
 
     Kind kind() const override;
 
     std::string kind_str() const override;
 
 protected:
-    std::string title_;
+    std::string body_;
 
-    std::string description_;
-
-    std::string picture_;
-
+    std::string created_at_;
+    
     std::string id_;
-
-    std::string content_rating_;
-
-    unsigned int subscriber_count_;
-
-    unsigned int video_count_;
-
-    long         view_count_;
-
-    std::string likes_playlist_;
-
-    std::string favorites_playlist_;
-
-    std::string watchLater_playlist_;
+    
+    User user_;
 };
 
 }
 }
 
-#endif /* YOUTUBE_API_CHANNEL_H_ */
+#endif // API_COMMENT_H_

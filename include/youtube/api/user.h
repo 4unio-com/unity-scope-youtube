@@ -17,12 +17,13 @@
  *         Gary Wang  <gary.wang@canonical.com>
  */
 
-#ifndef YOUTUBE_API_CHANNEL_H_
-#define YOUTUBE_API_CHANNEL_H_
+#ifndef API_USER_H_
+#define API_USER_H_
 
 #include <youtube/api/resource.h>
 
 #include <memory>
+#include <string>
 
 namespace Json {
 class Value;
@@ -31,33 +32,19 @@ class Value;
 namespace youtube {
 namespace api {
 
-class Channel: public Resource {
+class User: public Resource {
 public:
-    typedef std::shared_ptr<Channel> Ptr;
+    typedef std::shared_ptr<User> Ptr;
 
-    Channel(const Json::Value &data);
+    User(const Json::Value &data);
 
-    ~Channel() = default;
+    virtual ~User() = default;
 
     const std::string & title() const override;
 
-    const std::string & description() const;
-
-    const std::string & picture() const override;
-
     const std::string & id() const override;
 
-    unsigned int subscriber_count() const;
-
-    unsigned int video_count() const;
-
-    long view_count() const;
-
-    const std::string likes_playlist() const;
-
-    const std::string favorites_playlist() const;
-
-    const std::string watchLater_playlist() const;
+    const std::string & picture() const override;
 
     Kind kind() const override;
 
@@ -66,28 +53,12 @@ public:
 protected:
     std::string title_;
 
-    std::string description_;
-
-    std::string picture_;
-
     std::string id_;
 
-    std::string content_rating_;
-
-    unsigned int subscriber_count_;
-
-    unsigned int video_count_;
-
-    long         view_count_;
-
-    std::string likes_playlist_;
-
-    std::string favorites_playlist_;
-
-    std::string watchLater_playlist_;
+    std::string picture_;
 };
 
 }
 }
 
-#endif /* YOUTUBE_API_CHANNEL_H_ */
+#endif // API_USER_H_
