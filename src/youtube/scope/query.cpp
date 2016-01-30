@@ -931,16 +931,15 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
             break;
         }
         case DepartmentType::playlist: {
-
             // If we click on a playlist in the search results(except auth user play list)
             // Need to add a dummy department to pass the validation check
-            bool is_user_playlist = false;
+            bool is_user_playlist = alg::ends_with(raw_department_id, "my_playlist");
             for(map<string, string>::iterator iterator = my_playlist_.begin();
-                iterator != my_playlist_.end(); iterator++) {
-                std::string department_id = "playlist:" + iterator->second;
+                iterator != my_playlist_.end() && !is_user_playlist;
+                iterator++) {
+                string department_id = "playlist:" + iterator->second;
                 if (department_id == raw_department_id) {
                     is_user_playlist = true;
-                    break;
                 }
             }
 
