@@ -651,7 +651,7 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
     auto departments = get_or_throw(departments_future);
 
     // if logged in, add My Subscriptions department to the list of top level departments
-    // in position 1 (so Best of Youtube is position 0)
+    // in position 1 (so Best of YouTube is position 0)
     bool logged_in = false;
     for (auto const& status : oac->get_service_statuses())
     {
