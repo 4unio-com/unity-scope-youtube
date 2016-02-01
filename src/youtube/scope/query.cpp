@@ -381,6 +381,8 @@ void push_resource(const sc::SearchReplyProxy &reply, const sc::Category::SCPtr 
         res["musicaggregation"]=true;
         break;
     }
+    default:
+      break;
     }
 
     if (!reply->push(res)) {
