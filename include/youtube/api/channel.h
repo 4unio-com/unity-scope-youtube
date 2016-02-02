@@ -51,7 +51,7 @@ public:
 
     unsigned int video_count() const;
 
-    long view_count() const;
+    long long view_count() const;
 
     const std::string likes_playlist() const;
 
@@ -78,7 +78,7 @@ protected:
 
     unsigned int video_count_;
 
-    long         view_count_;
+    long long    view_count_;
 
     std::string likes_playlist_;
 

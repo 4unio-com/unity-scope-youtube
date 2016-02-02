@@ -47,16 +47,16 @@ using namespace std;
 using namespace youtube::api;
 using namespace youtube::scope;
 
-extern string format_fixed(long number) {
+extern string format_fixed(long long number) {
     string n = to_string(number);
     std::stringstream ss;
     ss.imbue(std::locale(""));
-    ss << std::fixed << stol(n);
+    ss << std::fixed << stoll(n);
     return ss.str();
 }
 
 namespace {
-static constexpr bool DEBUG_MODE = true;
+static constexpr bool DEBUG_MODE = false;
 
 const static string BROWSE_TEMPLATE =
         R"(
@@ -1048,13 +1048,7 @@ void Query::run(sc::SearchReplyProxy const& reply) {
         if (query_string.empty()) {
             surfacing(reply);
         } else {
-            string prefix("ChannelId::");
-            if (!query_string.compare(0, prefix.size(), prefix)) {
-                auto channelId = query_string.substr(prefix.size());
-                channel(reply, channelId);
-            } else {
-                search(reply, query_string);
-            }
+            search(reply, query_string);
         }
     } catch (domain_error &e) {
         cerr << "ERROR: " << e.what() << endl;

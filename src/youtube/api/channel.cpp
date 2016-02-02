@@ -46,17 +46,15 @@ Channel::Channel(const json::Value &data) {
     picture_ = picture["url"].asString();
 
     json::Value statistics = data["statistics"];
-    view_count_ = stol(statistics["viewCount"].asString());
+    view_count_ = stoll(statistics["viewCount"].asString());
     subscriber_count_ = stoi(statistics["subscriberCount"].asString());
     video_count_ = stoi(statistics["videoCount"].asString());
 
     json::Value contentDetails = data["contentDetails"];
-//    if (!contentDetails.isNull()) {
-        json::Value relatedPlaylists = contentDetails["relatedPlaylists"];
-        likes_playlist_ = relatedPlaylists["likes"].asString();
-        favorites_playlist_ = relatedPlaylists["favorites"].asString();
-        watchLater_playlist_ = relatedPlaylists["watchLater"].asString();
-//    }
+    json::Value relatedPlaylists = contentDetails["relatedPlaylists"];
+    likes_playlist_ = relatedPlaylists["likes"].asString();
+    favorites_playlist_ = relatedPlaylists["favorites"].asString();
+    watchLater_playlist_ = relatedPlaylists["watchLater"].asString();
 }
 
 const string & Channel::title() const {
@@ -83,7 +81,7 @@ unsigned int Channel::video_count() const {
     return video_count_;
 }
 
-long Channel::view_count() const {
+long long Channel::view_count() const {
     return view_count_;
 }
 

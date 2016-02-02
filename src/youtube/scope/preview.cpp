@@ -37,7 +37,7 @@ using namespace std;
 using namespace youtube::scope;
 using namespace youtube::api;
 
-extern string format_fixed(long number);
+extern string format_fixed(long long number);
 
 namespace {
 static const unordered_set<string> PLAYABLE = { "youtube#video",
@@ -141,11 +141,13 @@ void Preview::playable(const sc::PreviewReplyProxy& reply) {
                   {"id", sc::Variant("add_fav_list")},
                   {"label", sc::Variant(_("Add to favorites list"))}
               });
+	    sc::CannedQuery new_query(SCOPE_INSTALL_NAME);
+            new_query.set_department_id("channel:"+cid);
             builder.add_tuple({
-                  {"id", sc::Variant("user_channel")},
-                  {"label", sc::Variant(_("User channel"))},
-                  {"uri", sc::Variant("scope://com.ubuntu.scopes.youtube_youtube?q=ChannelId::" + cid)}
-              });
+                {"id", sc::Variant("user_channel")},
+                {"label", sc::Variant(_("User channel"))},
+                {"uri", sc::Variant(new_query.to_uri())}
+            });
         }
         actions.add_attribute_value("actions", builder.end());
         widgets.emplace_back(actions);
@@ -276,11 +278,13 @@ void Preview::userInfo(const sc::PreviewReplyProxy& reply) {
               {"label", sc::Variant(_("View in browser"))},
               {"uri", sc::Variant("https://www.youtube.com/channel/" + cid)}
           });
+        sc::CannedQuery new_query(SCOPE_INSTALL_NAME);
+        new_query.set_department_id("channel:"+cid);
         builder.add_tuple({
-              {"id", sc::Variant("view")},
+              {"id", sc::Variant("user_channel")},
               {"label", sc::Variant(_("User channel"))},
-              {"uri", sc::Variant("scope://com.ubuntu.scopes.youtube_youtube?q=ChannelId::" + cid)}
-          });
+              {"uri", sc::Variant(new_query.to_uri())}
+        });
     }
     actions.add_attribute_value("actions", builder.end());
 
