@@ -61,6 +61,11 @@ MATCHER_P2(ResultProp, prop, value, "") {
 }
 
 MATCHER_P(IsDepartment, department, "") {
+//    cerr << "!!!--------------------------" << endl;
+//    cerr << sc::Variant(arg->serialize()).serialize_json() << endl;
+//    cerr << "-----------------------------" << endl;
+//    cerr << sc::Variant(department->serialize()).serialize_json() << endl;
+//    cerr << "===--------------------------" << endl;
     return arg->serialize() == department->serialize();
 }
 
@@ -1021,6 +1026,18 @@ TEST_F(TestYoutubeScope, surface_music) {
     NaggyMock<sct::MockSearchReply> reply;
 
     sc::CannedQuery query(SCOPE_NAME, "", "aggregated:musicaggregator"); // pick the music department
+
+    sc::Department::SPtr departments = sc::Department::create("", query,
+                "Best of YouTube");
+    add_department(departments, "GCRmVhdHVyZWQ", "Featured", query);
+    add_department(departments, "GCUGFpZCBDaGFubmVscw", "Paid Channels", query);
+    add_department(departments, "GCTXVzaWM", "Music", query);
+    add_department(departments, "GCQ29tZWR5", "Comedy", query);
+    departments->add_subdepartment(
+            sc::Department::create("aggregated:musicaggregator", query, " "));
+
+    EXPECT_CALL(reply, register_departments(IsDepartment(departments))).Times(
+            1);
 
     expect_category(reply, renderer, "youtube", "YouTube");
 

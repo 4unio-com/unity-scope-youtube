@@ -750,13 +750,27 @@ string Query::country_code() const {
 }
 
 void Query::surfacing(const sc::SearchReplyProxy &reply) {
-    bool include_login_nag = !client_.authenticated();
-
     const sc::CannedQuery &query(sc::SearchQueryBase::query());
 
     string raw_department_id = query.department_id();
 
-    if (!include_login_nag) {
+    bool authenticated = client_.authenticated();
+
+    bool include_login_nag = !authenticated;
+
+    if (!raw_department_id.empty()) {
+        DepartmentPath path(raw_department_id);
+        if (path.department_type == DepartmentType::aggregated) {
+            // Don't include the login nag when we are aggregated
+            include_login_nag = false;
+        }
+    }
+
+    if (include_login_nag) {
+        add_login_nag(reply);
+    }
+
+    if (authenticated) {
         auto user_future = client_.auth_user_info();
         auto channels = get_or_throw(user_future);
         if (channels.size() > 0) {
@@ -771,8 +785,6 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
                 push_channel_info(reply, channel_cat , channels[0]);
             }
         }
-    } else {
-        add_login_nag(reply);
     }
 
     sc::Department::SPtr all_depts;
@@ -805,7 +817,7 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
 
     // if logged in, add My Subscriptions and My Playlist department to the list of top level departments
     // in position 1 (so Best of YouTube is position 0)
-    if (!include_login_nag) {
+    if (authenticated) {
         auto dept_0 = departments[0];
         departments.pop_front();
         departments.push_front(playlist_ptr);
@@ -981,9 +993,6 @@ void Query::surfacing(const sc::SearchReplyProxy &reply) {
             } else {
                 popular_videos(reply);
             }
-
-            // Don't include the login nag when we are aggregated
-            include_login_nag = false;
 
             break;
         }
