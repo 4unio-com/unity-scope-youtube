@@ -14,14 +14,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author: Pete Woods <pete.woods@canonical.com>
+ *         Gary Wang  <gary.wang@canonical.com>
  */
 
-#ifndef YOUTUBE_SCOPE_PREVIEW_H_
-#define YOUTUBE_SCOPE_PREVIEW_H_
+#ifndef SCOPE_ACTIVATIOIN_H_
+#define SCOPE_ACTIVATIOIN_H_
 
 #include <youtube/api/client.h>
 
-#include <unity/scopes/PreviewQueryBase.h>
+#include <unity/scopes/ActivationQueryBase.h>
 
 namespace unity {
 namespace scopes {
@@ -32,29 +33,34 @@ class Result;
 namespace youtube {
 namespace scope {
 
-class Preview: public unity::scopes::PreviewQueryBase {
+/**
+ * Represents an individual action request.
+ *
+ * Each time a action is performed in the UI a new Action
+ * object is created.
+ */
+class Activation : public unity::scopes::ActivationQueryBase
+{
 public:
-    Preview(const unity::scopes::Result &result,
-            const unity::scopes::ActionMetadata &metadata,
-            std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client);
+    Activation(const unity::scopes::Result &result,
+           const unity::scopes::ActionMetadata & metadata,
+           std::string const& action_id,
+           std::shared_ptr<unity::scopes::OnlineAccountClient> oa_client);
 
-    ~Preview() = default;
+    ~Activation() = default;
 
-    void cancelled() override;
+     /**
+     * Trigger the action object with action id.
+     */
+     virtual unity::scopes::ActivationResponse activate() override;
 
-    void run(unity::scopes::PreviewReplyProxy const& reply) override;
-
-protected:
-    void playable(const unity::scopes::PreviewReplyProxy& reply);
-
-    void playlist(const unity::scopes::PreviewReplyProxy& reply);
-
-    void userInfo(const unity::scopes::PreviewReplyProxy& reply);
-
+private:
+    std::string const action_id_;
+    
     youtube::api::Client client_;
 };
 
 }
 }
 
-#endif // YOUTUBE_SCOPE_PREVIEW_H_
+#endif // SCOPE_ACTIVATION_H_

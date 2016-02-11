@@ -10,3 +10,5 @@ LocationDataNeeded=true
 PageHeader.Logo = logo.png
 PageHeader.DividerColor = #b31217
 PageHeader.Background = color:///#ffffff
+PreviewButtonColor=#b31217
+

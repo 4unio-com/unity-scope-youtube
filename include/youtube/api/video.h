@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author: Pete Woods <pete.woods@canonical.com>
+ *         Gary Wang  <gary.wang@canonical.com>
  */
 
 #ifndef YOUTUBE_API_VIDEO_H_
@@ -40,7 +41,7 @@ public:
         unsigned int dislike_count;
         unsigned int favorite_count;
         unsigned int like_count;
-        unsigned int view_count;
+        long         view_count;
     };
 
     Video(const Json::Value &data);
@@ -52,6 +53,10 @@ public:
     const std::string & username() const;
 
     const std::string & link() const;
+
+    const std::string & publishedAt() const;
+
+    const std::string & channelId() const;
 
     const std::string & picture() const override;
 
@@ -79,6 +84,10 @@ protected:
     std::string picture_;
 
     std::string description_;
+
+    std::string channelId_;
+
+    std::string publishedAt_;
 
     bool has_statistics_;
 

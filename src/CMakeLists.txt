@@ -27,9 +27,12 @@ add_library(
   youtube/api/playlist-item.cpp
   youtube/api/search-list-response.cpp
   youtube/api/video.cpp
+  youtube/api/user.cpp
+  youtube/api/comment.cpp  
   youtube/scope/preview.cpp
   youtube/scope/query.cpp
   youtube/scope/scope.cpp
+  youtube/scope/activation.cpp
 )
 
 set_target_properties(

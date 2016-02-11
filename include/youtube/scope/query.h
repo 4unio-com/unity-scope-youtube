@@ -78,9 +78,7 @@ protected:
 
     youtube::api::Client client_;
 
-    std::shared_ptr<unity::scopes::OnlineAccountClient> oac;
-
-    std::string access_token;
+    std::map<std::string, std::string> my_playlist_;
 };
 
 }

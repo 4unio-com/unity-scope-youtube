@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author: Pete Woods <pete.woods@canonical.com>
+ *         Gary Wang  <gary.wang@canonical.com>
  */
 
 #ifndef YOUTUBE_API_CHANNEL_H_
@@ -48,6 +49,16 @@ public:
 
     unsigned int subscriber_count() const;
 
+    unsigned int video_count() const;
+
+    long long view_count() const;
+
+    const std::string likes_playlist() const;
+
+    const std::string favorites_playlist() const;
+
+    const std::string watchLater_playlist() const;
+
     Kind kind() const override;
 
     std::string kind_str() const override;
@@ -64,6 +75,16 @@ protected:
     std::string content_rating_;
 
     unsigned int subscriber_count_;
+
+    unsigned int video_count_;
+
+    long long    view_count_;
+
+    std::string likes_playlist_;
+
+    std::string favorites_playlist_;
+
+    std::string watchLater_playlist_;
 };
 
 }

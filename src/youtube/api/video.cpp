@@ -14,8 +14,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author: Pete Woods <pete.woods@canonical.com>
+ *         Gary Wang  <gary.wang@canonical.com>
  */
 
+#include <boost/algorithm/string.hpp>
 #include <youtube/api/video.h>
 
 #include <json/json.h>
@@ -42,6 +44,12 @@ Video::Video(const json::Value &data) :
 
     link_ = "http://www.youtube.com/watch?v=" + id_;
 
+    channelId_ = snippet["channelId"].asString();
+    publishedAt_ = snippet["publishedAt"].asString();
+    std::vector<std::string> published_time;
+    boost::split(published_time, publishedAt_, boost::is_any_of("T"));
+    publishedAt_ = published_time[0];
+
     username_ = snippet["channelTitle"].asString();
 
     json::Value thumbnails = snippet["thumbnails"];
@@ -56,7 +64,7 @@ Video::Video(const json::Value &data) :
         statistics_.dislike_count = stoi(statistics["dislikeCount"].asString());
         statistics_.favorite_count = stoi(statistics["favoriteCount"].asString());
         statistics_.like_count = stoi(statistics["likeCount"].asString());
-        statistics_.view_count = stoi(statistics["viewCount"].asString());
+        statistics_.view_count = stol(statistics["viewCount"].asString());
     }
 }
 
@@ -74,6 +82,16 @@ const string & Video::id() const {
 
 const string & Video::link() const {
     return link_;
+}
+
+const string &Video::publishedAt() const
+{
+    return publishedAt_;
+}
+
+const string &Video::channelId() const
+{
+    return channelId_;
 }
 
 const string & Video::picture() const {

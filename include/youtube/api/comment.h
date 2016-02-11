@@ -13,16 +13,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Author: Kyle Nitzsche <kyle.nitzsche@canonical.com>
+ * Author: Pete Woods <pete.woods@canonical.com>
  *         Gary Wang  <gary.wang@canonical.com>
  */
 
-#ifndef YOUTUBE_API_SUBSCRIPTION_H_
-#define YOUTUBE_API_SUBSCRIPTION_H_
+#ifndef API_COMMENT_H_
+#define API_COMMENT_H_
 
-#include <youtube/api/resource.h>
+#include <youtube/api/user.h>
 
 #include <memory>
+#include <string>
 
 namespace Json {
 class Value;
@@ -31,37 +32,41 @@ class Value;
 namespace youtube {
 namespace api {
 
-class Subscription: public Resource {
+class Comment: public Resource {
 public:
-    typedef std::shared_ptr<Subscription> Ptr;
+    typedef std::shared_ptr<Comment> Ptr;
 
-    Subscription(const Json::Value &data);
+    Comment(const Json::Value &data);
 
-    ~Subscription() = default;
+    virtual ~Comment() = default;
+
+    const std::string & id() const override;
 
     const std::string & title() const override;
 
     const std::string & picture() const override;
 
-    const std::string & id() const override;
+    const std::string & body() const;
 
-    const std::string & subscribeId() const;
+    const std::string & created_at() const;
+    
+    const User & user() const;
 
     Kind kind() const override;
 
     std::string kind_str() const override;
 
 protected:
-    std::string title_;
+    std::string body_;
 
-    std::string picture_;
-
-    std::string vid_;
-
+    std::string created_at_;
+    
     std::string id_;
+    
+    User user_;
 };
 
 }
 }
 
-#endif /* YOUTUBE_API_CHANNEL_H_ */
+#endif // API_COMMENT_H_

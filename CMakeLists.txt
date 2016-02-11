@@ -38,7 +38,7 @@ include_directories(
   ${SCOPE_INCLUDE_DIRS}
 )
 
-set(SCOPE_VERSION "1.0.19-${BZR_REVNO}")
+set(SCOPE_VERSION "1.5.0-${BZR_REVNO}")
 set(CMAKE_INSTALL_PREFIX /)
 set(SCOPE_NAME "com.ubuntu.scopes.youtube")
 set(SCOPE_INSTALL_NAME "${SCOPE_NAME}_youtube")
