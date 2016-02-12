@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-10-24 06:01+0000\n"
-"X-Generator: Launchpad (build 17812)\n"
+"X-Launchpad-Export-Date: 2016-02-12 05:40+0000\n"
+"X-Generator: Launchpad (build 17923)\n"
 
 #: ../data/com.ubuntu.scopes.youtube.ini.in.h:1
 #: ../src/youtube/scope/query.cpp:611
@@ -25,7 +25,7 @@ msgstr "YouTube"
 
 #: ../data/com.ubuntu.scopes.youtube.ini.in.h:2
 msgid "Search YouTube for videos and browse channels"
-msgstr "YouTube videók keresése és a csatornák böngészése"
+msgstr "Youtube videók keresése és a csatornák böngészése"
 
 #: ../src/youtube/scope/query.cpp:269
 #, c-format
@@ -43,7 +43,7 @@ msgstr[1] "%d videó"
 
 #: ../src/youtube/scope/query.cpp:357
 msgid "Log-in to YouTube"
-msgstr "Bejelentkezés a YouTube-ba"
+msgstr "Bejelentkezés a Youtube-ba"
 
 #: ../src/youtube/scope/query.cpp:475
 msgid "Uploads"
@@ -77,12 +77,12 @@ msgstr "Feliratkozásaim"
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
-msgstr[0] "1 YouTube találat"
-msgstr[1] "%d YouTube találat"
+msgstr[0] "1 Youtube találat"
+msgstr[1] "%d Youtube találat"
 
 #: ../src/youtube/scope/query.cpp:872
 msgid "YouTube requires an internet connection"
-msgstr "A YouTube használata internet kapcsolatot igényel"
+msgstr "A Youtube használata internet kapcsolatot igényel"
 
 #: ../src/youtube/scope/preview.cpp:78
 #, c-format
