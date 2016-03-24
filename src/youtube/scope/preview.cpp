@@ -85,6 +85,10 @@ void Preview::playable(const sc::PreviewReplyProxy& reply) {
     sc::PreviewWidget video("video", "video");
     video.add_attribute_mapping("source", "link");
     video.add_attribute_mapping("screenshot", "art");
+    sc::VariantMap share_data;
+    share_data["uri"] = result()["link"];
+    share_data["content-type"] = sc::Variant("videos");
+    video.add_attribute_value("share-data", sc::Variant(share_data));
     widgets.emplace_back(video);
 
     sc::PreviewWidget w_expandable("expandable", "expandable");
@@ -227,6 +231,10 @@ void Preview::playlist(const sc::PreviewReplyProxy& reply) {
 
     sc::PreviewWidget image("image", "image");
     image.add_attribute_mapping("source", "art");
+    sc::VariantMap share_data;
+    share_data["uri"] = result()["art"];
+    share_data["content-type"] = sc::Variant("pictures");
+    image.add_attribute_value("share-data", sc::Variant(share_data));
 
     sc::PreviewWidget description("summary", "text");
     description.add_attribute_mapping("text", "description");
@@ -260,6 +268,10 @@ void Preview::userInfo(const sc::PreviewReplyProxy& reply) {
     boost::replace_all(artwork_url, "s88-c-k-no", "s240-c-k-no");
     sc::PreviewWidget art("art", "image");
     art.add_attribute_value("source", sc::Variant(artwork_url));
+    sc::VariantMap share_data;
+    share_data["uri"] = result()["art"];
+    share_data["content-type"] = sc::Variant("pictures");
+    art.add_attribute_value("share-data", sc::Variant(share_data));
 
     sc::PreviewWidget statistics("statistics", "header");
     statistics.add_attribute_value("title", sc::Variant(
