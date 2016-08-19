@@ -127,7 +127,7 @@ void Preview::playable(const sc::PreviewReplyProxy& reply) {
             builder.add_tuple({
                   {"id", sc::Variant(subsribedList.size() > 0 ?
                    "unsubscribe:" + subsribedList[0]->subscribeId() : "subscribe:" + cid)},
-                  {"label", sc::Variant(_(subsribedList.size() > 0 ? "Unsubscribe": "Subscribe"))}
+                  {"label", sc::Variant(_(subsribedList.size() > 0 ? _("Unsubscribe"): _("Subscribe")))}
               });
             builder.add_tuple({
                   {"id", sc::Variant("thumb_up")},
