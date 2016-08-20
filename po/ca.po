@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unity-scope-youtube\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-05-25 11:06+0100\n"
+"POT-Creation-Date: 2016-08-19 09:13+0000\n"
 "PO-Revision-Date: 2014-09-30 07:28+0000\n"
 "Last-Translator: David Planella <david.planella@ubuntu.com>\n"
 "Language-Team: Catalan <ca@li.org>\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2016-04-01 05:58+0000\n"
-"X-Generator: Launchpad (build 17972)\n"
+"X-Launchpad-Export-Date: 2016-08-20 06:13+0000\n"
+"X-Generator: Launchpad (build 18176)\n"
 
 #: ../data/com.ubuntu.scopes.youtube.ini.in.h:1
-#: ../src/youtube/scope/query.cpp:611
+#: ../src/youtube/scope/query.cpp:733
 msgid "YouTube"
 msgstr "YouTube"
 
@@ -27,66 +27,159 @@ msgstr "YouTube"
 msgid "Search YouTube for videos and browse channels"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:269
+#: ../src/youtube/scope/query.cpp:309 ../src/youtube/scope/query.cpp:778
+msgid "Favorites"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:310 ../src/youtube/scope/query.cpp:779
+msgid "Watch Later"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:321
 #, c-format
 msgid "1 subscriber"
 msgid_plural "%d subscribers"
 msgstr[0] "Un subscriptor"
 msgstr[1] "%d subscriptors"
 
-#: ../src/youtube/scope/query.cpp:308
+#: ../src/youtube/scope/query.cpp:360
 #, c-format
 msgid "1 video"
 msgid_plural "%d videos"
 msgstr[0] "1 vídeo"
 msgstr[1] "%d vídeos"
 
-#: ../src/youtube/scope/query.cpp:357
+#: ../src/youtube/scope/query.cpp:403
+msgid "</b> videos"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:404
+msgid "</b> views"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:405
+msgid "</b> subscribers"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:460
 msgid "Log-in to YouTube"
 msgstr "Entra al YouTube"
 
-#: ../src/youtube/scope/query.cpp:475
+#: ../src/youtube/scope/query.cpp:565
 msgid "Uploads"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:495 ../src/youtube/scope/query.cpp:713
+#: ../src/youtube/scope/query.cpp:585 ../src/youtube/scope/query.cpp:889
 msgid "Videos"
 msgstr "Vídeos"
 
-#: ../src/youtube/scope/query.cpp:527 ../src/youtube/scope/query.cpp:725
+#: ../src/youtube/scope/query.cpp:612
+msgid "No video can be found in this channel"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:623 ../src/youtube/scope/query.cpp:901
 msgid "Channels"
 msgstr "Canals"
 
-#: ../src/youtube/scope/query.cpp:546 ../src/youtube/scope/query.cpp:719
+#: ../src/youtube/scope/query.cpp:637
+msgid "No channel can be found"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:648 ../src/youtube/scope/query.cpp:895
 msgid "Playlists"
 msgstr "Llistes de reproducció"
 
-#: ../src/youtube/scope/query.cpp:579
+#: ../src/youtube/scope/query.cpp:676
+msgid "No playlist can be found in this channel"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:687
 msgid "Playlist contents"
 msgstr "Continguts de la llista de reproducció"
 
-#: ../src/youtube/scope/query.cpp:596
+#: ../src/youtube/scope/query.cpp:704
 msgid "Channel contents"
 msgstr "Continguts del canal"
 
-#: ../src/youtube/scope/query.cpp:643 ../src/youtube/scope/query.cpp:685
+#: ../src/youtube/scope/query.cpp:724
+msgid "No video can be found"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:777
+msgid "Likes"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:798 ../src/youtube/scope/query.cpp:840
 msgid "My Subscriptions"
 msgstr ""
 
-#: ../src/youtube/scope/query.cpp:858
+#: ../src/youtube/scope/query.cpp:808 ../src/youtube/scope/query.cpp:861
+msgid "My Playlist"
+msgstr ""
+
+#: ../src/youtube/scope/query.cpp:1035
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
 msgstr[0] "Un resultat del YouTube"
 msgstr[1] "%d resultats del YouTube"
 
-#: ../src/youtube/scope/query.cpp:872
+#: ../src/youtube/scope/query.cpp:1049
 msgid "YouTube requires an internet connection"
 msgstr "El YouTube requereix una connexió a Internet"
 
-#: ../src/youtube/scope/preview.cpp:78
-#, c-format
-msgid "1 view"
-msgid_plural "%d views"
-msgstr[0] "Una visualització"
-msgstr[1] "%d visualitzacions"
+#: ../src/youtube/scope/preview.cpp:79
+msgid " views"
+msgstr ""
+
+#: ../src/youtube/scope/preview.cpp:97
+msgid "<br/>  Published on: </b>"
+msgstr ""
+
+#: ../src/youtube/scope/preview.cpp:102
+msgid "Please login to post a comment  "
+msgstr ""
+
+#: ../src/youtube/scope/preview.cpp:108
+msgid "open"
+msgstr ""
+
+#: ../src/youtube/scope/preview.cpp:109
+msgid "Login to youtube"
+msgstr ""
+
+#: ../src/youtube/scope/preview.cpp:130
+msgid "Unsubscribe"
+msgstr ""
+
+#: ../src/youtube/scope/preview.cpp:130
+msgid "Subscribe"
+msgstr ""
+
+#: ../src/youtube/scope/preview.cpp:134
+msgid "Thumb up"
+msgstr ""
+
+#: ../src/youtube/scope/preview.cpp:138
+msgid "Thumb down"
+msgstr ""
+
+#: ../src/youtube/scope/preview.cpp:142
+msgid "Add to watch list"
+msgstr ""
+
+#: ../src/youtube/scope/preview.cpp:146
+msgid "Add to favorites list"
+msgstr ""
+
+#: ../src/youtube/scope/preview.cpp:152 ../src/youtube/scope/preview.cpp:297
+msgid "User channel"
+msgstr ""
+
+#: ../src/youtube/scope/preview.cpp:161
+msgid "Post"
+msgstr ""
+
+#: ../src/youtube/scope/preview.cpp:290
+msgid "View in browser"
+msgstr ""

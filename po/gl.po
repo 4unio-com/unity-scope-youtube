@@ -1,16 +1,16 @@
-# Friulian translation for unity-scope-youtube
-# Copyright (c) 2015 Rosetta Contributors and Canonical Ltd 2015
+# Galician translation for unity-scope-youtube
+# Copyright (c) 2016 Rosetta Contributors and Canonical Ltd 2016
 # This file is distributed under the same license as the unity-scope-youtube package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: unity-scope-youtube\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-08-19 09:13+0000\n"
-"PO-Revision-Date: 2015-01-28 16:31+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Friulian <fur@li.org>\n"
+"PO-Revision-Date: 2016-08-19 22:59+0000\n"
+"Last-Translator: Marcos Lans <Unknown>\n"
+"Language-Team: Galician <gl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,73 +21,73 @@ msgstr ""
 #: ../data/com.ubuntu.scopes.youtube.ini.in.h:1
 #: ../src/youtube/scope/query.cpp:733
 msgid "YouTube"
-msgstr ""
+msgstr "YouTube"
 
 #: ../data/com.ubuntu.scopes.youtube.ini.in.h:2
 msgid "Search YouTube for videos and browse channels"
-msgstr ""
+msgstr "Busque vídeos en YouTube e explore as canles"
 
 #: ../src/youtube/scope/query.cpp:309 ../src/youtube/scope/query.cpp:778
 msgid "Favorites"
-msgstr ""
+msgstr "Favoritos"
 
 #: ../src/youtube/scope/query.cpp:310 ../src/youtube/scope/query.cpp:779
 msgid "Watch Later"
-msgstr ""
+msgstr "Ver máis tarde"
 
 #: ../src/youtube/scope/query.cpp:321
 #, c-format
 msgid "1 subscriber"
 msgid_plural "%d subscribers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 subscritor"
+msgstr[1] "%d subscritores"
 
 #: ../src/youtube/scope/query.cpp:360
 #, c-format
 msgid "1 video"
 msgid_plural "%d videos"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 vídeo"
+msgstr[1] "%d vídeos"
 
 #: ../src/youtube/scope/query.cpp:403
 msgid "</b> videos"
-msgstr ""
+msgstr "</b> vídeos"
 
 #: ../src/youtube/scope/query.cpp:404
 msgid "</b> views"
-msgstr ""
+msgstr "</b> visualizacións"
 
 #: ../src/youtube/scope/query.cpp:405
 msgid "</b> subscribers"
-msgstr ""
+msgstr "</b> subscritores"
 
 #: ../src/youtube/scope/query.cpp:460
 msgid "Log-in to YouTube"
-msgstr ""
+msgstr "Iniciar sesión no YouTube"
 
 #: ../src/youtube/scope/query.cpp:565
 msgid "Uploads"
-msgstr ""
+msgstr "Subidas"
 
 #: ../src/youtube/scope/query.cpp:585 ../src/youtube/scope/query.cpp:889
 msgid "Videos"
-msgstr ""
+msgstr "Vídeos"
 
 #: ../src/youtube/scope/query.cpp:612
 msgid "No video can be found in this channel"
-msgstr ""
+msgstr "Non é posíbel atopar vídeos nesta canle"
 
 #: ../src/youtube/scope/query.cpp:623 ../src/youtube/scope/query.cpp:901
 msgid "Channels"
-msgstr ""
+msgstr "Canles"
 
 #: ../src/youtube/scope/query.cpp:637
 msgid "No channel can be found"
-msgstr ""
+msgstr "Non se atopou ningunha canle"
 
 #: ../src/youtube/scope/query.cpp:648 ../src/youtube/scope/query.cpp:895
 msgid "Playlists"
-msgstr ""
+msgstr "Listas de reprodución"
 
 #: ../src/youtube/scope/query.cpp:676
 msgid "No playlist can be found in this channel"
@@ -107,7 +107,7 @@ msgstr ""
 
 #: ../src/youtube/scope/query.cpp:777
 msgid "Likes"
-msgstr ""
+msgstr "Gústames"
 
 #: ../src/youtube/scope/query.cpp:798 ../src/youtube/scope/query.cpp:840
 msgid "My Subscriptions"
@@ -134,7 +134,7 @@ msgstr ""
 
 #: ../src/youtube/scope/preview.cpp:97
 msgid "<br/>  Published on: </b>"
-msgstr ""
+msgstr "<br/>  Publicado: </b>"
 
 #: ../src/youtube/scope/preview.cpp:102
 msgid "Please login to post a comment  "
@@ -142,27 +142,27 @@ msgstr ""
 
 #: ../src/youtube/scope/preview.cpp:108
 msgid "open"
-msgstr ""
+msgstr "abrir"
 
 #: ../src/youtube/scope/preview.cpp:109
 msgid "Login to youtube"
-msgstr ""
+msgstr "Iniciar sesión no youtube"
 
 #: ../src/youtube/scope/preview.cpp:130
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Cancelar subscrición"
 
 #: ../src/youtube/scope/preview.cpp:130
 msgid "Subscribe"
-msgstr ""
+msgstr "Subscribir"
 
 #: ../src/youtube/scope/preview.cpp:134
 msgid "Thumb up"
-msgstr ""
+msgstr "Polgar arriba"
 
 #: ../src/youtube/scope/preview.cpp:138
 msgid "Thumb down"
-msgstr ""
+msgstr "Polgar abaixo"
 
 #: ../src/youtube/scope/preview.cpp:142
 msgid "Add to watch list"
@@ -170,16 +170,16 @@ msgstr ""
 
 #: ../src/youtube/scope/preview.cpp:146
 msgid "Add to favorites list"
-msgstr ""
+msgstr "Engadir a favoritos"
 
 #: ../src/youtube/scope/preview.cpp:152 ../src/youtube/scope/preview.cpp:297
 msgid "User channel"
-msgstr ""
+msgstr "Canle do usuario"
 
 #: ../src/youtube/scope/preview.cpp:161
 msgid "Post"
-msgstr ""
+msgstr "Publicar"
 
 #: ../src/youtube/scope/preview.cpp:290
 msgid "View in browser"
-msgstr ""
+msgstr "Ver no navegador"
