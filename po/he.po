@@ -1,16 +1,16 @@
-# Spanish translation for unity-scope-youtube
-# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# Hebrew translation for unity-scope-youtube
+# Copyright (c) 2016 Rosetta Contributors and Canonical Ltd 2016
 # This file is distributed under the same license as the unity-scope-youtube package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: unity-scope-youtube\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-08-19 09:13+0000\n"
-"PO-Revision-Date: 2016-08-21 17:11+0000\n"
-"Last-Translator: Jose Luis Tirado <Unknown>\n"
-"Language-Team: Spanish <es@li.org>\n"
+"PO-Revision-Date: 2016-08-21 08:36+0000\n"
+"Last-Translator: Yaron <sh.yaron@gmail.com>\n"
+"Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,161 +25,161 @@ msgstr "YouTube"
 
 #: ../data/com.ubuntu.scopes.youtube.ini.in.h:2
 msgid "Search YouTube for videos and browse channels"
-msgstr "Buscar vídeos y explorar canales de YouTube"
+msgstr "חיפוש סרטונים ועיון בערוצים ב־YouTube"
 
 #: ../src/youtube/scope/query.cpp:309 ../src/youtube/scope/query.cpp:778
 msgid "Favorites"
-msgstr "Favoritos"
+msgstr "מועדפים"
 
 #: ../src/youtube/scope/query.cpp:310 ../src/youtube/scope/query.cpp:779
 msgid "Watch Later"
-msgstr "Ver más tarde"
+msgstr "צפייה בהמשך"
 
 #: ../src/youtube/scope/query.cpp:321
 #, c-format
 msgid "1 subscriber"
 msgid_plural "%d subscribers"
-msgstr[0] "1 suscriptor"
-msgstr[1] "%d suscriptores"
+msgstr[0] "מנוי אחד"
+msgstr[1] "%d מנויים"
 
 #: ../src/youtube/scope/query.cpp:360
 #, c-format
 msgid "1 video"
 msgid_plural "%d videos"
-msgstr[0] "1 vídeo"
-msgstr[1] "%d vídeos"
+msgstr[0] "סרטון אחד"
+msgstr[1] "%d סרטונים"
 
 #: ../src/youtube/scope/query.cpp:403
 msgid "</b> videos"
-msgstr "</b> vídeos"
+msgstr "</b> סרטונים"
 
 #: ../src/youtube/scope/query.cpp:404
 msgid "</b> views"
-msgstr "</b> vistas"
+msgstr "</b> צפיות"
 
 #: ../src/youtube/scope/query.cpp:405
 msgid "</b> subscribers"
-msgstr "</b> suscriptores"
+msgstr "</b> מנויים"
 
 #: ../src/youtube/scope/query.cpp:460
 msgid "Log-in to YouTube"
-msgstr "Iniciar sesión en YouTube"
+msgstr "כניסה ל־YouTube"
 
 #: ../src/youtube/scope/query.cpp:565
 msgid "Uploads"
-msgstr "Vídeos subidos"
+msgstr "העלאות"
 
 #: ../src/youtube/scope/query.cpp:585 ../src/youtube/scope/query.cpp:889
 msgid "Videos"
-msgstr "Vídeos"
+msgstr "סרטונים"
 
 #: ../src/youtube/scope/query.cpp:612
 msgid "No video can be found in this channel"
-msgstr "No se ha encontrado ningún vídeo en este canal"
+msgstr "לא ניתן למצוא סרטונים בערוץ הזה"
 
 #: ../src/youtube/scope/query.cpp:623 ../src/youtube/scope/query.cpp:901
 msgid "Channels"
-msgstr "Canales"
+msgstr "ערוצים"
 
 #: ../src/youtube/scope/query.cpp:637
 msgid "No channel can be found"
-msgstr "No se ha encontrado ningún canal"
+msgstr "לא נמצא ערוץ כזה"
 
 #: ../src/youtube/scope/query.cpp:648 ../src/youtube/scope/query.cpp:895
 msgid "Playlists"
-msgstr "Listas de reproducción"
+msgstr "רשימות נגינה"
 
 #: ../src/youtube/scope/query.cpp:676
 msgid "No playlist can be found in this channel"
-msgstr "No hay ninguna lista de reproducción en este canal"
+msgstr "לא ניתן למצוא רשימות נגינה בערוץ זה"
 
 #: ../src/youtube/scope/query.cpp:687
 msgid "Playlist contents"
-msgstr "Contenido de la lista"
+msgstr "תכני רשימת הנגינה"
 
 #: ../src/youtube/scope/query.cpp:704
 msgid "Channel contents"
-msgstr "Contenido del canal"
+msgstr "תכני הערוץ"
 
 #: ../src/youtube/scope/query.cpp:724
 msgid "No video can be found"
-msgstr "No se ha encontrado ningún vídeo"
+msgstr "לא ניתן למצוא סרטונים"
 
 #: ../src/youtube/scope/query.cpp:777
 msgid "Likes"
-msgstr "Me gusta"
+msgstr "סימוני אהבתי"
 
 #: ../src/youtube/scope/query.cpp:798 ../src/youtube/scope/query.cpp:840
 msgid "My Subscriptions"
-msgstr "Mis suscripciones"
+msgstr "המינויים שלי"
 
 #: ../src/youtube/scope/query.cpp:808 ../src/youtube/scope/query.cpp:861
 msgid "My Playlist"
-msgstr "Mi lista de reproducción"
+msgstr "רשימת הנגינה שלי"
 
 #: ../src/youtube/scope/query.cpp:1035
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
-msgstr[0] "1 resultado de YouTube"
-msgstr[1] "%d resultados de YouTube"
+msgstr[0] "תוצאה אחת מ־YouTube"
+msgstr[1] "%d תוצאות מ־YouTube"
 
 #: ../src/youtube/scope/query.cpp:1049
 msgid "YouTube requires an internet connection"
-msgstr "YouTube necesita una conexión a Internet"
+msgstr "השימוש ב־YouTube דורש חיבור לאינטרנט"
 
 #: ../src/youtube/scope/preview.cpp:79
 msgid " views"
-msgstr " vistas"
+msgstr " צפיות"
 
 #: ../src/youtube/scope/preview.cpp:97
 msgid "<br/>  Published on: </b>"
-msgstr "<br/>  Publicado: </b>"
+msgstr "<br/>  פורסם במועד: </b>"
 
 #: ../src/youtube/scope/preview.cpp:102
 msgid "Please login to post a comment  "
-msgstr "Acceda para enviar un comentario  "
+msgstr "נא להיכנס כדי לפרסם תגובה  "
 
 #: ../src/youtube/scope/preview.cpp:108
 msgid "open"
-msgstr "abierto"
+msgstr "פתיחה"
 
 #: ../src/youtube/scope/preview.cpp:109
 msgid "Login to youtube"
-msgstr "Acceder a Youtube"
+msgstr "כניסה ל־youtube"
 
 #: ../src/youtube/scope/preview.cpp:130
 msgid "Unsubscribe"
-msgstr "Darse de baja"
+msgstr "ביטול מינוי"
 
 #: ../src/youtube/scope/preview.cpp:130
 msgid "Subscribe"
-msgstr "Suscribirse"
+msgstr "מינוי"
 
 #: ../src/youtube/scope/preview.cpp:134
 msgid "Thumb up"
-msgstr "Me gusta"
+msgstr "בעד"
 
 #: ../src/youtube/scope/preview.cpp:138
 msgid "Thumb down"
-msgstr "No me gusta"
+msgstr "נגד"
 
 #: ../src/youtube/scope/preview.cpp:142
 msgid "Add to watch list"
-msgstr "Añadir a la lista de seguimiento"
+msgstr "הוספה לרשימת הצפייה"
 
 #: ../src/youtube/scope/preview.cpp:146
 msgid "Add to favorites list"
-msgstr "Añadir a la lista de favoritos"
+msgstr "הוספה לרשימת המועדפים"
 
 #: ../src/youtube/scope/preview.cpp:152 ../src/youtube/scope/preview.cpp:297
 msgid "User channel"
-msgstr "Canal de usuario"
+msgstr "ערוץ משתמש"
 
 #: ../src/youtube/scope/preview.cpp:161
 msgid "Post"
-msgstr "Publicar"
+msgstr "פרסום"
 
 #: ../src/youtube/scope/preview.cpp:290
 msgid "View in browser"
-msgstr "Ver en el navegador"
+msgstr "הצגה בדפדפן"
