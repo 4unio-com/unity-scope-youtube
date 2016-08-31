@@ -1,22 +1,24 @@
-# French translation for unity-scope-youtube
-# Copyright (c) 2015 Rosetta Contributors and Canonical Ltd 2015
+# Gaelic; Scottish translation for unity-scope-youtube
+# Copyright (c) 2016 Rosetta Contributors and Canonical Ltd 2016
 # This file is distributed under the same license as the unity-scope-youtube package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
-#
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+# GunChleoc <fios@foramnagaidhlig.net>, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: unity-scope-youtube\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-08-19 09:13+0000\n"
-"PO-Revision-Date: 2016-08-30 15:12+0000\n"
-"Last-Translator: Jean-Marc <Unknown>\n"
-"Language-Team: French <fr@li.org>\n"
+"PO-Revision-Date: 2016-08-29 22:39+0000\n"
+"Last-Translator: GunChleoc <Unknown>\n"
+"Language-Team: Fòram na Gàidhlig\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"Plural-Forms: nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : "
+"(n > 2 && n < 20) ? 2 : 3;\n"
 "X-Launchpad-Export-Date: 2016-08-31 06:39+0000\n"
 "X-Generator: Launchpad (build 18179)\n"
+"Language: gd\n"
 
 #: ../data/com.ubuntu.scopes.youtube.ini.in.h:1
 #: ../src/youtube/scope/query.cpp:733
@@ -25,161 +27,167 @@ msgstr "YouTube"
 
 #: ../data/com.ubuntu.scopes.youtube.ini.in.h:2
 msgid "Search YouTube for videos and browse channels"
-msgstr "Recherchez des vidéos sur YouTube et parcourez des chaînes"
+msgstr "Lorg videothan ann an YouTube is brabhsaich sna seanailean"
 
 #: ../src/youtube/scope/query.cpp:309 ../src/youtube/scope/query.cpp:778
 msgid "Favorites"
-msgstr "Favoris"
+msgstr "Annsachdan"
 
 #: ../src/youtube/scope/query.cpp:310 ../src/youtube/scope/query.cpp:779
 msgid "Watch Later"
-msgstr "Regarder plus tard"
+msgstr "Coimhead air uaireigin eile"
 
 #: ../src/youtube/scope/query.cpp:321
 #, c-format
 msgid "1 subscriber"
 msgid_plural "%d subscribers"
-msgstr[0] "1 abonné"
-msgstr[1] "%d abonnés"
+msgstr[0] "%d fho-sgrìobhaiche"
+msgstr[1] "%d fho-sgrìobhaiche"
+msgstr[2] "%d fo-sgrìobhaichean"
+msgstr[3] "%d fo-sgrìobhaiche"
 
 #: ../src/youtube/scope/query.cpp:360
 #, c-format
 msgid "1 video"
 msgid_plural "%d videos"
-msgstr[0] "1 vidéo"
-msgstr[1] "%d vidéos"
+msgstr[0] "%d video"
+msgstr[1] "%d video"
+msgstr[2] "%d videothan"
+msgstr[3] "%d video"
 
 #: ../src/youtube/scope/query.cpp:403
 msgid "</b> videos"
-msgstr "</b> vidéos"
+msgstr "</b> video(than)"
 
 #: ../src/youtube/scope/query.cpp:404
 msgid "</b> views"
-msgstr "</b> vues"
+msgstr "</b> sealladh"
 
 #: ../src/youtube/scope/query.cpp:405
 msgid "</b> subscribers"
-msgstr "</b> abonnés"
+msgstr "</b> fo-sgrìobhaiche(an)"
 
 #: ../src/youtube/scope/query.cpp:460
 msgid "Log-in to YouTube"
-msgstr "Se connecter à YouTube"
+msgstr "Clàraich a-steach gu YouTube"
 
 #: ../src/youtube/scope/query.cpp:565
 msgid "Uploads"
-msgstr "Téléversements"
+msgstr "Luchdaidhean suas"
 
 #: ../src/youtube/scope/query.cpp:585 ../src/youtube/scope/query.cpp:889
 msgid "Videos"
-msgstr "Vidéos"
+msgstr "Videothan"
 
 #: ../src/youtube/scope/query.cpp:612
 msgid "No video can be found in this channel"
-msgstr "Aucune vidéo n'a pu être trouvée dans cette chaîne"
+msgstr "Cha deach video a lorg san t-seanail seo"
 
 #: ../src/youtube/scope/query.cpp:623 ../src/youtube/scope/query.cpp:901
 msgid "Channels"
-msgstr "Chaînes"
+msgstr "Seanailean"
 
 #: ../src/youtube/scope/query.cpp:637
 msgid "No channel can be found"
-msgstr "Aucune chaîne n'a pu être trouvée"
+msgstr "Cha deach seanail a lorg"
 
 #: ../src/youtube/scope/query.cpp:648 ../src/youtube/scope/query.cpp:895
 msgid "Playlists"
-msgstr "Listes de lecture"
+msgstr "Liostaichean-cluiche"
 
 #: ../src/youtube/scope/query.cpp:676
 msgid "No playlist can be found in this channel"
-msgstr "Aucune liste de lecture ne peut être trouvée sur cette chaîne"
+msgstr "Cha deach liosta-chluiche a lorg san t-seanail seo"
 
 #: ../src/youtube/scope/query.cpp:687
 msgid "Playlist contents"
-msgstr "Contenus de la liste de lecture"
+msgstr "Susbaint na liosta-cluiche"
 
 #: ../src/youtube/scope/query.cpp:704
 msgid "Channel contents"
-msgstr "Contenus de la chaîne"
+msgstr "Susbaint na seanaile"
 
 #: ../src/youtube/scope/query.cpp:724
 msgid "No video can be found"
-msgstr "Aucune vidéo ne peut être trouvée"
+msgstr "Cha deach video a lorg"
 
 #: ../src/youtube/scope/query.cpp:777
 msgid "Likes"
-msgstr "J'aime"
+msgstr "Nas toigh leam"
 
 #: ../src/youtube/scope/query.cpp:798 ../src/youtube/scope/query.cpp:840
 msgid "My Subscriptions"
-msgstr "Mes abonnements"
+msgstr "Na fo-sgrìobhaidhean agam"
 
 #: ../src/youtube/scope/query.cpp:808 ../src/youtube/scope/query.cpp:861
 msgid "My Playlist"
-msgstr "Ma liste de lecture"
+msgstr "Na liostaichean-cluiche agam"
 
 #: ../src/youtube/scope/query.cpp:1035
 #, c-format
 msgid "1 result from YouTube"
 msgid_plural "%d results from YouTube"
-msgstr[0] "1 résultat sur YouTube"
-msgstr[1] "%d résultats sur YouTube"
+msgstr[0] "%d toradh o YouTube"
+msgstr[1] "%d thoradh o YouTube"
+msgstr[2] "%d toraidhean o YouTube"
+msgstr[3] "%d toradh o YouTube"
 
 #: ../src/youtube/scope/query.cpp:1049
 msgid "YouTube requires an internet connection"
-msgstr "YouTube a besoin d'une connexion à Internet"
+msgstr "Tha YouTube feumach air ceangal ris an eadar-lìon"
 
 #: ../src/youtube/scope/preview.cpp:79
 msgid " views"
-msgstr " vues"
+msgstr " sealladh"
 
 #: ../src/youtube/scope/preview.cpp:97
 msgid "<br/>  Published on: </b>"
-msgstr "<br/>  Publiés le : </b>"
+msgstr "<br/>  Air fhoillseachadh: </b>"
 
 #: ../src/youtube/scope/preview.cpp:102
 msgid "Please login to post a comment  "
-msgstr "Veuillez vous connecter pour publier un commentaire  "
+msgstr "Clàraich a-steach gus do bheachd a chur ris  "
 
 #: ../src/youtube/scope/preview.cpp:108
 msgid "open"
-msgstr "ouvert"
+msgstr "fosgail"
 
 #: ../src/youtube/scope/preview.cpp:109
 msgid "Login to youtube"
-msgstr "Se connecter à YouTube"
+msgstr "Clàraich a-steach gu YouTube"
 
 #: ../src/youtube/scope/preview.cpp:130
 msgid "Unsubscribe"
-msgstr "Se désabonner"
+msgstr "Cuir crìoch air an fho-sgrìobhadh"
 
 #: ../src/youtube/scope/preview.cpp:130
 msgid "Subscribe"
-msgstr "S'abonner"
+msgstr "Fo-sgrìobh"
 
 #: ../src/youtube/scope/preview.cpp:134
 msgid "Thumb up"
-msgstr "Pouce levé"
+msgstr "Math fhèin"
 
 #: ../src/youtube/scope/preview.cpp:138
 msgid "Thumb down"
-msgstr "Pouce baissé"
+msgstr "Mo chreach"
 
 #: ../src/youtube/scope/preview.cpp:142
 msgid "Add to watch list"
-msgstr "Ajouter à la liste de surveillance"
+msgstr "Cuir air a' chlàr-fhaire"
 
 #: ../src/youtube/scope/preview.cpp:146
 msgid "Add to favorites list"
-msgstr "Ajouter à la liste des favoris"
+msgstr "Cuir ris liosta nan annsachdan"
 
 #: ../src/youtube/scope/preview.cpp:152 ../src/youtube/scope/preview.cpp:297
 msgid "User channel"
-msgstr "Chaîne utilisateur"
+msgstr "Seanail a' chleachdaiche"
 
 #: ../src/youtube/scope/preview.cpp:161
 msgid "Post"
-msgstr "Publier"
+msgstr "Postaich"
 
 #: ../src/youtube/scope/preview.cpp:290
 msgid "View in browser"
-msgstr "Voir dans le navigateur"
+msgstr "Seall sa bhrabhsair"
